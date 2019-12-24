@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "943655019235",
+    "firebase_url": "https://vocab-3fdd5.firebaseio.com",
+    "project_id": "vocab-3fdd5",
+    "storage_bucket": "vocab-3fdd5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943655019235:android:0bab813fdd46e989395bd6",
+        "android_client_info": {
+          "package_name": "com.jeremiehouet.vocab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "943655019235-p7u1rpoag8gg4uvlddk8i4l2j5229pvj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaMsCSjJpwo21fFxIFcx_ZY6aVhqDbhS0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "943655019235-p7u1rpoag8gg4uvlddk8i4l2j5229pvj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
