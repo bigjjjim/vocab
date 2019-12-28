@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
+import 'dart:async';
+import 'package:provider/provider.dart';
+
 
 var finalScore = 0;
 var questionNumber = 0;
-// var quiz = Quiz();
 
 class Quiz extends StatefulWidget {
   final String difficulty;
@@ -24,49 +26,260 @@ class _QuizState extends State<Quiz> {
 
 
 
-
   @override
   Widget build(BuildContext context) {
+
     int start = widget.indexFirstWord;
     int end = widget.indexLastWord;
+    final db = DatabaseService(start, end);
 
-    return Scaffold(
-      appBar: AppBar(title: Text("Quiz")),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance
-            .collection('words')
-            .orderBy('index')
-            .where('index')
-            .startAt([start]).endAt([end]).snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) 
-        {
+    return Column(children: <Widget>[
 
-          if (!snapshot.hasData) {
-            return Text("Loading..");
+      StreamProvider<List<Words>>.value(
+        value: db.streamWords(),
+        child: Container(
+          height:  MediaQuery.of(context).size.height,
+          child: WordsList()),
+        )
+    ],);
+
+
+   
+               
+    }
+
+}
+
+
+
+class QuizBack extends StatefulWidget {
+  QuizBack({this.question, this.answersMapQuiz, this.correctAnswers, this.answersList });
+  final question;
+  final answersMapQuiz;
+  final correctAnswers;
+  final answersList;
+
+  @override
+  _QuizBackState createState() => _QuizBackState();
+}
+
+class _QuizBackState extends State<QuizBack> {
+  @override
+  Widget build(BuildContext context) {
+    final _wordsback = Provider.of<List<Words>>(context,listen: false);
+    
+
+          void updateQuestion() {
+            setState(() {
+              if (questionNumber == widget.question.length - 1) {
+                Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (context) => Summary(
+                              score: finalScore,
+                            )));
+              } else {
+                
+               questionNumber++;
+
+               
+              }
+            });
           }
 
+          void resetQuiz() {
+            setState(() {
+              Navigator.pop(context);
+              finalScore = 0;
+              questionNumber = 0;
+            });
+          }
+          // print(widget.answersMapQuiz[0][0].francais);
+          // print(widget.answersMapQuiz[1][0].francais);
           
-          // List x = _createWords(snapshot.data);
-          final wordlist = snapshot.data.documents;
-// final Words worditem;
+          // print(widget.question);
+          // print(widget.correctAnswers);
+          // print(widget.answersList);
 
-          // }
+    return WillPopScope(
+            onWillPop: () async => false,
+            child: Scaffold(
+              body: Container(
+                height: MediaQuery.of(context).size.height,
+                margin: const EdgeInsets.all(10.0),
+                alignment: Alignment.topCenter,
+                child: Column(children: <Widget>[
+                  Padding(padding: EdgeInsets.all(20.0)),
 
-          List<Words> worditems = [];
-          for (var wo in wordlist) {
-            final wordindex = wo.data['index'];
-            final wordfrancais = wo.data['francais'];
-            final wordportugais = wo.data['portugais'];
+                  Container(
+                    alignment: Alignment.centerRight,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          "Question ${questionNumber + 1} of ${widget.question.length}",
+                          style: TextStyle(fontSize: 22.0),
+                        ),
+                        Text(
+                          "Score: $finalScore",
+                          style: TextStyle(fontSize: 22.0),
+                        )
+                      ],
+                    ),
+                  ),
 
-            final Words worditem = Words(
-                francais: wordfrancais,
-                portugais: wordportugais,
-                index: wordindex);
-            worditems.add(worditem);
-          }
-          int wordcount = worditems.length;
+                  Padding(padding: EdgeInsets.all(10.0)),
 
-          List<Words> getListForEachElement(int i, List l) {
+                  //  Image.asset(
+                  //     "images/${quiz.images[questionNumber]}.jpg",
+                  //   ),
+
+                  Padding(padding: EdgeInsets.all(10.0)),
+
+                  Text(
+                    widget.question[questionNumber],
+                    style: new TextStyle(
+                      fontSize: 20.0,
+                    ),
+                  ),
+
+                  Padding(padding: EdgeInsets.all(10.0)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      //button 1
+                      MaterialButton(
+                        minWidth: 120.0,
+                        color: Colors.blueGrey,
+                        onPressed: () {
+                          if (widget.answersList[questionNumber][0] ==
+                              widget.correctAnswers[questionNumber]) {
+                            debugPrint("Correct");
+                            finalScore++;
+                          } else {
+                            debugPrint("Wrong");
+                          }
+                         
+                          updateQuestion();
+
+                          
+                        },
+                        child: Text(
+                          widget.answersList[questionNumber][0],
+                          style: TextStyle(fontSize: 20.0, color: Colors.white),
+                        ),
+                      ),
+                      MaterialButton(
+                        minWidth: 120.0,
+                        color: Colors.blueGrey,
+                        onPressed: () {
+                          if (widget.answersList[questionNumber][1] ==
+                              widget.correctAnswers[questionNumber]) {
+                            debugPrint("Correct");
+                            finalScore++;
+                          } else {
+                            debugPrint("Wrong");
+                          }
+                          updateQuestion();
+                        },
+                        child: Text(
+                          widget.answersList[questionNumber][1],
+                          style: TextStyle(fontSize: 20.0, color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  new Padding(padding: EdgeInsets.all(10.0)),
+
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      MaterialButton(
+                        minWidth: 120.0,
+                        color: Colors.blueGrey,
+                        onPressed: () {
+                          if (widget.answersList[questionNumber][2] ==
+                              widget.correctAnswers[questionNumber]) {
+                            debugPrint("Correct");
+                            finalScore++;
+                          } else {
+                            debugPrint("Wrong");
+                          }
+                          updateQuestion();
+                        },
+                        child: Text(
+                          widget.answersList[questionNumber][2],
+                          style: TextStyle(fontSize: 20.0, color: Colors.white),
+                        ),
+                      ),
+                      MaterialButton(
+                        minWidth: 120.0,
+                        color: Colors.blueGrey,
+                        onPressed: () {
+                          if (widget.answersList[questionNumber][3] ==
+                              widget.correctAnswers[questionNumber]) {
+                            debugPrint("Correct");
+                            finalScore++;
+                          } else {
+                            debugPrint("Wrong");
+                          }
+                          updateQuestion();
+                        },
+                        child: Text(
+                          widget.answersList[questionNumber][3],
+                          style: TextStyle(fontSize: 20.0, color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  new Padding(padding: EdgeInsets.all(15.0)),
+
+                  new Container(
+                    alignment: Alignment.bottomCenter,
+                    child: new MaterialButton(
+                        minWidth: 240.0,
+                        height: 30.0,
+                        color: Colors.red,
+                        onPressed: resetQuiz,
+                        child: new Text(
+                          "Quit",
+                          style: new TextStyle(
+                              fontSize: 18.0, color: Colors.white),
+                        )),
+                  ),
+                ]),
+              ),
+            ),
+          );
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+class WordsList extends StatefulWidget {
+  
+  @override
+  _WordsListState createState() => _WordsListState();
+}
+
+class _WordsListState extends State<WordsList> {
+  @override
+  Widget build(BuildContext context) {
+    var _wordsback = Provider.of<List<Words>>(context);
+    int _wordcount = _wordsback.length ;
+
+  List<Words> getListForEachElement(int i, List l) {
             List<Words> list2= [];
             List<Words> list3=[];
                   list2 = List<Words>.from(l);
@@ -82,22 +295,20 @@ class _QuizState extends State<Quiz> {
                   return list3;
   }
 
-
-          //getting words for quiz
-          List<List<Words>> randomList() {
+   List<List<Words>> randomList() {
 
             int quizLength;
-            if ((wordcount >= 10) && (wordcount <= 20)) {
+            if ((_wordcount >= 10) && (_wordcount <= 20)) {
               //no quiz if less than 10 words, need to put catch errors in dialog.dart
-              quizLength = (wordcount / 1.67).round();
-            } else if ((wordcount > 20) && (wordcount <= 40)) {
-              quizLength = (wordcount / 2).round();
-            } else if (wordcount > 40) {
+              quizLength = (_wordcount / 1.67).round();
+            } else if ((_wordcount > 20) && (_wordcount <= 40)) {
+              quizLength = (_wordcount / 2).round();
+            } else if (_wordcount > 40) {
               quizLength = 20;
             }
 
             List<Words> newList = [];
-            newList = List<Words>.from(worditems);
+            newList = List<Words>.from(_wordsback);
             newList.shuffle();
             List<Words> listQuiz = newList.sublist(0, quizLength);
             List<List<Words>> answersQuiz = [];
@@ -113,8 +324,6 @@ class _QuizState extends State<Quiz> {
 
             return answersQuiz; //return list of list of 4 words for quiz
           }
-         
-
 
           List<List<Words>> answersMapQuiz = randomList(); 
           var r = Random(56);
@@ -154,232 +363,43 @@ class _QuizState extends State<Quiz> {
 
           } 
 
-          void updateQuestion() {
-            setState(() {
-              if (questionNumber == question.length - 1) {
-                Navigator.push(
-                    context,
-                    new MaterialPageRoute(
-                        builder: (context) => Summary(
-                              score: finalScore,
-                            )));
-              } else {
-                
-               questionNumber++;
+    return QuizBack(question: question, answersList: answersList,answersMapQuiz: answersMapQuiz,correctAnswers: correctAnswers, );
+        } 
+  }
 
-               
-              }
-            });
-          }
 
-          void resetQuiz() {
-            setState(() {
-              Navigator.pop(context);
-              finalScore = 0;
-              questionNumber = 0;
-            });
-          }
-          print(answersMapQuiz[0][0].francais);
-          print(answersMapQuiz[1][0].francais);
-          
-          print(question);
-          print(correctAnswers);
-          print(answersList);
-
-          return 
-          
-          WillPopScope(
-            onWillPop: () async => false,
-            child: Scaffold(
-              body: Container(
-                margin: const EdgeInsets.all(10.0),
-                alignment: Alignment.topCenter,
-                child: Column(children: <Widget>[
-                  Padding(padding: EdgeInsets.all(20.0)),
-
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          "Question ${questionNumber + 1} of ${question.length}",
-                          style: TextStyle(fontSize: 22.0),
-                        ),
-                        Text(
-                          "Score: $finalScore",
-                          style: TextStyle(fontSize: 22.0),
-                        )
-                      ],
-                    ),
-                  ),
-
-                  Padding(padding: EdgeInsets.all(10.0)),
-
-                  //  Image.asset(
-                  //     "images/${quiz.images[questionNumber]}.jpg",
-                  //   ),
-
-                  Padding(padding: EdgeInsets.all(10.0)),
-
-                  Text(
-                    question[questionNumber],
-                    style: new TextStyle(
-                      fontSize: 20.0,
-                    ),
-                  ),
-
-                  Padding(padding: EdgeInsets.all(10.0)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      //button 1
-                      MaterialButton(
-                        minWidth: 120.0,
-                        color: Colors.blueGrey,
-                        onPressed: () {
-                          if (answersList[questionNumber][0] ==
-                              correctAnswers[questionNumber]) {
-                            debugPrint("Correct");
-                            finalScore++;
-                          } else {
-                            debugPrint("Wrong");
-                          }
-                         
-                          updateQuestion();
-
-                          
-                        },
-                        child: Text(
-                          answersList[questionNumber][0],
-                          style: TextStyle(fontSize: 20.0, color: Colors.white),
-                        ),
-                      ),
-                      MaterialButton(
-                        minWidth: 120.0,
-                        color: Colors.blueGrey,
-                        onPressed: () {
-                          if (answersList[questionNumber][1] ==
-                              correctAnswers[questionNumber]) {
-                            debugPrint("Correct");
-                            finalScore++;
-                          } else {
-                            debugPrint("Wrong");
-                          }
-                          updateQuestion();
-                        },
-                        child: Text(
-                          answersList[questionNumber][1],
-                          style: TextStyle(fontSize: 20.0, color: Colors.white),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  new Padding(padding: EdgeInsets.all(10.0)),
-
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      MaterialButton(
-                        minWidth: 120.0,
-                        color: Colors.blueGrey,
-                        onPressed: () {
-                          if (answersList[questionNumber][2] ==
-                              correctAnswers[questionNumber]) {
-                            debugPrint("Correct");
-                            finalScore++;
-                          } else {
-                            debugPrint("Wrong");
-                          }
-                          updateQuestion();
-                        },
-                        child: Text(
-                          answersList[questionNumber][2],
-                          style: TextStyle(fontSize: 20.0, color: Colors.white),
-                        ),
-                      ),
-                      MaterialButton(
-                        minWidth: 120.0,
-                        color: Colors.blueGrey,
-                        onPressed: () {
-                          if (answersList[questionNumber][3] ==
-                              correctAnswers[questionNumber]) {
-                            debugPrint("Correct");
-                            finalScore++;
-                          } else {
-                            debugPrint("Wrong");
-                          }
-                          updateQuestion();
-                        },
-                        child: Text(
-                          answersList[questionNumber][3],
-                          style: TextStyle(fontSize: 20.0, color: Colors.white),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  new Padding(padding: EdgeInsets.all(15.0)),
-
-                  new Container(
-                    alignment: Alignment.bottomCenter,
-                    child: new MaterialButton(
-                        minWidth: 240.0,
-                        height: 30.0,
-                        color: Colors.red,
-                        onPressed: resetQuiz,
-                        child: new Text(
-                          "Quit",
-                          style: new TextStyle(
-                              fontSize: 18.0, color: Colors.white),
-                        )),
-                  ),
-                ]),
-              ),
-            ),
-          );
-        },
-      ),
+class Words {
+  final String francais;
+  final String portugais;
+  final int index;
+  Words({this.francais, this.portugais, this.index});
+  
+  factory Words.fromFirestore(DocumentSnapshot doc) {
+    Map data = doc.data;
+    return Words(index: data['index'] ?? '',
+    francais: data['francais'] ?? '',
+    portugais: data['portugais'] ?? ''
     );
   }
 }
 
-class Words {
-  Words({this.francais, this.portugais, this.index});
-  final String francais;
-  final String portugais;
-  final int index;
-  bool selected = false;
+class DatabaseService {
+  DatabaseService(this.start, this.end);
+  final Firestore _db = Firestore.instance;
+  int start;
+  int end;
+
+  /// Get a stream of a single document
+  Stream<List<Words>> streamWords() {
+
+    var ref = _db.collection('words').orderBy('index')
+            .where('index')
+            .startAt([start]).endAt([end]);
+
+    return ref.snapshots().map((list) => 
+    list.documents.map((doc) => Words.fromFirestore(doc)).toList());
+  }
 }
-
-// ListView.builder(
-//             itemExtent: 80.0,
-//             itemCount: test.length,
-
-//             itemBuilder: (context, index) {
-//                 // List<Words> randomListObject = randomList();
-
-//               return Card(
-//                   child: Padding(
-//                   padding: const EdgeInsets.all(8.0),
-//                   child: Row(
-//                     children: [
-//                       // _buildList(
-//                       //     context, snapshot.data.documents[index], 'francais'),
-//                       // _buildList(
-//                       //     context, snapshot.data.documents[index], 'portugais'),
-//                       // _buildList2(context, randomListObject[index])
-
-//                       // Text(test[0][index].francais)
-//                       // Text(question[index])
-//                       Text(answersList[0][index])
-//                     ],
-//                   ),
-//                 ),
-//               );
-//             },
-//           );
 
 class Summary extends StatelessWidget{
   final int score;

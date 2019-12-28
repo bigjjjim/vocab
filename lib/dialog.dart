@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'quiz.dart';
+import 'quiz2.dart';
 import 'constant.dart';
 import 't.dart';
 
