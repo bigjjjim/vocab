@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:vocab/app_custom_nav.dart';
+import 'package:vocab/table.dart';
 import 'paginated.dart';
+import 'quiz2.dart';
 
 // Adapted from the data table demo in offical flutter gallery:
 // https://github.com/flutter/flutter/blob/master/examples/flutter_gallery/lib/demo/material/data_table_demo.dart
 
 
 class TableVocab extends StatefulWidget {
+
   @override
   _TableVocabState createState() => _TableVocabState();
 }
@@ -20,7 +24,7 @@ class _TableVocabState extends State<TableVocab> {
   Widget build(BuildContext context) {
     return Scaffold(
       
-      appBar: AppBar(title: Text("Vocabulary")),
+      // appBar: AppBar(title: Text("Vocabulary")),
       body: StreamBuilder<QuerySnapshot>(
           stream: Firestore.instance.collection('words').orderBy('index').snapshots(),
           builder:
@@ -39,7 +43,14 @@ class _TableVocabState extends State<TableVocab> {
   worditems.add(worditem); 
   }
   int wordcount = worditems.length;
-  WordDataSource dts = WordDataSource(worditems);
+
+  // List selectedList() {
+    
+  // }
+
+  WordDataSource dts = WordDataSource(worditems, );
+
+
   var tableItemsCount = dts.rowCount;
   var defaultRowsPerPage = Paginated.defaultRowsPerPage;
   var isRowCountLessDefaultRowsPerPage = tableItemsCount < defaultRowsPerPage;
@@ -58,6 +69,7 @@ class _TableVocabState extends State<TableVocab> {
           });
         },
         columns: kTableColumns,
+        
         source: dts,
       ),
                 
@@ -80,19 +92,21 @@ const kTableColumns = <DataColumn>[
 
 ////// Data class. 
 class Words {
-  Words({this.francais, this.portugais});
+  Words({this.francais, this.portugais, this.index});
   final String francais;
   final String portugais;
   bool selected = false;
+  final int index;
 }
 
 class WordDataSource extends DataTableSource {
   WordDataSource(this.xx);
   int _selectedCount = 0;
   List<Words> xx;
+  // final Function onRowSelected;
   // int wordcount;
 
-  
+
   @override
   
   DataRow getRow(int index) {  
@@ -103,12 +117,38 @@ class WordDataSource extends DataTableSource {
         index: index,
         selected: word.selected,
         onSelectChanged: (bool value) {
+          checkIfLikedOrNot(index) async{
+            
+       DocumentSnapshot ds = await Firestore.instance.collection("wordsSelected").document(index).get();
+       return ds;
+        // this.setState(() {
+        //   isLiked = ds.exists;
+        // });
+
+    }
+          
           if (word.selected != value) {
             _selectedCount += value ? 1 : -1;
             assert(_selectedCount >= 0);
             word.selected = value;
             notifyListeners();
+            // need to create entry on firestore here
+           if (value == true) {
+             print('${word.francais} selected');
+            Firestore.instance.collection('wordsSelected').document('$index').setData(
+               {'index': index, 'francais': word.francais, 'portugais': word.portugais} );
+             
+            } else if (value == false) {
+              
+              if (checkIfLikedOrNot(index.toString()) != null) { 
+              Firestore.instance.collection('wordsSelected').document('$index').delete();
+
+              }
+
+            }
+          //   onRowSelected();
           }
+           
         },
         cells: <DataCell>[
           

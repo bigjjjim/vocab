@@ -2,40 +2,18 @@ import 'package:flutter/material.dart';
 import 'quiz2.dart';
 import 'constant.dart';
 import 't.dart';
-import 'main.dart';
-// import 'app_custom_nav.dart';
-import 'appwithnav.dart';
-import 'package:custom_navigator/custom_navigation.dart';
 
+class TransitionQuiz extends StatefulWidget {
+  final firstWordIndex;
+  final lastWordIndex;
+  final description;
 
-class CustomDialog extends StatefulWidget {
-  final String title, description, buttonTextClose, buttonTextQuiz;
-  final Image image;
-  final int firstWordIndex;
-  final int lastWordIndex;
-  final ValueChanged<int> onPush;
-  Future<Function> showQuiz;
-  
-
-  CustomDialog({
-  
-    this.showQuiz,
-     this.title,
-     this.description,
-     this.buttonTextClose,
-     this.buttonTextQuiz,
-    this.image,
-    this.firstWordIndex,
-    this.lastWordIndex,
-    this.onPush,
-
-  });
-
+  TransitionQuiz({this.firstWordIndex, this.lastWordIndex, this.description});
   @override
-  _CustomDialogState createState() => _CustomDialogState();
+  _TransitionQuizState createState() => _TransitionQuizState();
 }
 
-class _CustomDialogState extends State<CustomDialog> {
+class _TransitionQuizState extends State<TransitionQuiz> {
   String dropdownValue = 'Facile';
   String value;
   TextEditingController quizStartController = TextEditingController();
@@ -75,20 +53,16 @@ class _CustomDialogState extends State<CustomDialog> {
     });
   }
 
+
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      elevation: 0.0,
-      backgroundColor: Colors.transparent,
-      child: dialogContent(context),
-    );
-  }
-  
-
-  dialogContent(BuildContext context) {
     return SingleChildScrollView(
       child: Stack(
         children: <Widget>[
@@ -116,7 +90,7 @@ class _CustomDialogState extends State<CustomDialog> {
             child: Column(
               mainAxisSize: MainAxisSize.min, // To make the card compact
               children: <Widget>[
-                Text(widget.title, style: kwidgetTitleStyle),
+                Text('Options', style: kwidgetTitleStyle),
                 SizedBox(height: 16.0),
                 Text(widget.description,
                     textAlign: TextAlign.center, style: kdialogueDescripStyle),
@@ -158,8 +132,10 @@ class _CustomDialogState extends State<CustomDialog> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-                        child: textFieldDialogue(
-                            _focusNode, quizStartController, _hint,
+                        child:textFieldDialogue(
+                             _focusNode, 
+                            quizStartController, 
+                              _hint,
                             (String newValue) {
                           setState(() {
                             _hint = newValue;
@@ -197,11 +173,11 @@ class _CustomDialogState extends State<CustomDialog> {
                           // To close the dialog
                           Navigator.of(context).pop();
                         },
-                        child: Text(widget.buttonTextClose),
+                        child: Text('Fermer'),
                       ),
                       
                       FlatButton(
-                       child: Text(widget.buttonTextQuiz),
+                       child: Text('Commencer'),
 
                         onPressed: ()  { 
 // _openDetailsPage(context);
@@ -214,48 +190,11 @@ class _CustomDialogState extends State<CustomDialog> {
                       //   //  _homeScreen.currentState.push(MaterialPageRoute(builder: (context) => Quiz(difficulty: dropdownValue,indexFirstWord: int.parse(_hint),indexLastWord: int.parse(_hint2),)));
 
                         } 
-                        
-
-
-                        // => _openDetailsPage(context), child: Text(widget.buttonTextQuiz)
-                        
-                       
-                        
-                      //   _openDetailsPage(BuildContext context) => 
-                      // _openDetailsPage(context);
-
-                      // navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => Quiz(difficulty: dropdownValue,indexFirstWord: sta,indexLastWord: end,)));
 
                         
                        ) // Proceed to quiz
 
-                         
-                          // sta > end ? _validate = true: _validate = false;
-
-                        //  Navigator(key: navigatorKey, initialRoute: '/', onGenerateRoute: (routeSettings) {
-                        //    return MaterialPageRoute(builder: (context) => Quiz(
-                        //         difficulty: dropdownValue,
-                        //         //need to check a few things for errors, smaller, not bigger than, etc
-                        //         indexFirstWord: sta,
-                        //         indexLastWord: end,
-                        //       ), );
-                        //  }, );
-
-                          // Navigator.of(context).push(
-                            
-                          //   MaterialPageRoute(
-                          //     builder: (context) => Quiz(
-                          //       difficulty: dropdownValue,
-                          //       //need to check a few things for errors, smaller, not bigger than, etc
-                          //       indexFirstWord: sta,
-                          //       indexLastWord: end,
-                          //     ),
-                          //   ),
-                          // );
-
-                          
-                        
-                        
+   
                     ]),
                 ),
               ]),
@@ -263,16 +202,12 @@ class _CustomDialogState extends State<CustomDialog> {
               ],
             ),
     );
-        
-      
+    
+    
+    
+    
+    
   }
-  
-// _openDetailsPage(BuildContext context) {
-//   // String diff;
-//   // int sta;
-//   // int end;
-// return _openDetailsPage(context);
-// }
-
-
 }
+
+    // Quiz(difficulty: 'facile', indexFirstWord: 1, indexLastWord: 10,);

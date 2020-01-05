@@ -4,7 +4,14 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/material.dart';
+import 'package:vocab/app_custom_nav.dart';
+import 'package:vocab/main.dart';
+import 'package:vocab/modiftable.dart';
+import 'package:vocab/transitionQuiz.dart';
 import 'dialog.dart';
+import 'memoire.dart';
+import 'quiz2.dart';
+
 
 class Paginated extends StatefulWidget {
   Paginated({
@@ -52,6 +59,7 @@ class Paginated extends StatefulWidget {
         }()),
         assert(source != null),
         super(key: key);
+
 
   final Widget header;
 
@@ -145,14 +153,20 @@ class PaginatedState extends State<Paginated> {
     if ((widget.onPageChanged != null) && (oldFirstRowIndex != _firstRowIndex))
       widget.onPageChanged(_firstRowIndex);
   }
+ 
 
   DataRow _getBlankRowFor(int index) {
     return DataRow.byIndex(
+      
       index: index,
       cells: widget.columns
           .map<DataCell>((DataColumn column) => DataCell.empty)
           .toList(),
-    );
+      
+      
+      );
+           
+    
   }
 
   DataRow _getProgressIndicatorRowFor(int index) {
@@ -170,8 +184,12 @@ class PaginatedState extends State<Paginated> {
       cells[0] = const DataCell(CircularProgressIndicator());
     }
     return DataRow.byIndex(
+     
       index: index,
       cells: cells,
+      
+      
+      
     );
   }
 
@@ -190,9 +208,12 @@ class PaginatedState extends State<Paginated> {
       }
       row ??= _getBlankRowFor(index);
       result.add(row);
+      
     }
     return result;
   }
+
+  
 
   void _handlePrevious() {
     pageTo(math.max(_firstRowIndex - widget.rowsPerPage, 0));
@@ -291,26 +312,55 @@ class PaginatedState extends State<Paginated> {
     // FOOTER
     // themeData.textTheme.caption;
     final List<Widget> footerWidgets = <Widget>[];
+  //  Future<Function>  ShowQuiz(BuildContext context) {
+
+  //   return Navigator.of(context).push(MaterialPageRoute(builder: (context) => Quiz(difficulty: 'facile', indexFirstWord: _firstRowIndex +1, indexLastWord: widget.rowsPerPage  + _firstRowIndex,)));
+
+
+
+  //   }
+
+//      void ShowAlertDia(int firstwordindex, int last, String dif, BuildContext context) {
+
+// showDialog(
+//             context:  context,
+//             builder: (BuildContext context) => CustomDialog(
+
+//               title: 'voca',
+//               description: 'Il y a trois niveau de difficulté (...). Aussi possible de choisir nombre de mots a prendre en compte.',
+//               buttonTextClose: 'fermer',
+//               buttonTextQuiz: 'Commencer',
+//               firstWordIndex: _firstRowIndex +1,
+//               lastWordIndex:  widget.rowsPerPage  + _firstRowIndex,
+//             ),                                
+              
+//           );
+
+//      }
 
     footerWidgets.addAll(<Widget>[
       FlatButton(
         child: Text('Quiz'),
         onPressed: () {
+          // Quiz(difficulty: 'facile', indexFirstWord: 1, indexLastWord: 10,);
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TransitionQuiz(firstWordIndex:  _firstRowIndex +1, lastWordIndex:widget.rowsPerPage  + _firstRowIndex, description: 'Il y a trois niveau de difficulté (...). Aussi possible de choisir nombre de mots a prendre en compte.' )),);
 
-          showDialog(
-            context: context,
-            builder: (BuildContext context) => CustomDialog(
+          // showDialog(
+          //   context:  context,
+          //   builder: (BuildContext context) => CustomDialog(
 
-              title: 'voca',
-              description: 'Il y a trois niveau de difficulté (...). Aussi possible de choisir nombre de mots a prendre en compte.',
-              buttonTextClose: 'fermer',
-              buttonTextQuiz: 'Commencer',
-              firstWordIndex: _firstRowIndex +1,
-              lastWordIndex:  widget.rowsPerPage  + _firstRowIndex,
-            ),                                
+          //     title: 'voca',
+          //     description: 'Il y a trois niveau de difficulté (...). Aussi possible de choisir nombre de mots a prendre en compte.',
+          //     buttonTextClose: 'fermer',
+          //     buttonTextQuiz: 'Commencer',
+          //     firstWordIndex: _firstRowIndex +1,
+          //     lastWordIndex:  widget.rowsPerPage  + _firstRowIndex,
+          //     // showQuiz: ShowQuiz(context)
+          //   ),);                                
               
-          );
-
+          // );
+        // Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+        // ShowAlertDia(_firstRowIndex +1, widget.rowsPerPage  + _firstRowIndex, 'facile', context);
 
         },
       ),
@@ -337,69 +387,75 @@ class PaginatedState extends State<Paginated> {
     ]);
 
     // CARD
-    return Card(
-      semanticContainer: false,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        DefaultTextStyle(
-          style: _selectedRowCount > 0
-              ? themeData.textTheme.subhead
-                  .copyWith(color: themeData.accentColor)
-              : themeData.textTheme.title
-                  .copyWith(fontWeight: FontWeight.w400, fontSize: 15),
-          child: IconTheme.merge(
-            data: const IconThemeData(opacity: 0.54),
-            child: Ink(
-              height: 64.0,
-              color:
-                  _selectedRowCount > 0 ? themeData.secondaryHeaderColor : null,
-              child: Padding(
-                padding:
-                    EdgeInsetsDirectional.only(start: startPadding, end: 3.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: headerWidgets,
+    return Container(
+      height:  MediaQuery.of(context).size.height,
+          child: Card(
+        semanticContainer: false,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          DefaultTextStyle(
+            style: _selectedRowCount > 0
+                ? themeData.textTheme.subhead
+                    .copyWith(color: themeData.accentColor)
+                : themeData.textTheme.title
+                    .copyWith(fontWeight: FontWeight.w400, fontSize: 15),
+            child: IconTheme.merge(
+              data: const IconThemeData(opacity: 0.54),
+              child: Ink(
+                height: MediaQuery.of(context).size.height * 0.2,
+                color:
+                    _selectedRowCount > 0 ? themeData.secondaryHeaderColor : null,
+                child: Padding(
+                  padding:
+                      EdgeInsetsDirectional.only(start: startPadding, end: 3.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: headerWidgets,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        Container(
-          height: MediaQuery.of(context).size.height * 0.7,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            dragStartBehavior: widget.dragStartBehavior,
-            child: DataTable(
-              key: _tableKey,
-              columns: widget.columns,
-              sortColumnIndex: widget.sortColumnIndex,
-              sortAscending: widget.sortAscending,
-              onSelectAll: widget.onSelectAll,
-              dataRowHeight: widget.dataRowHeight,
-              headingRowHeight: widget.headingRowHeight,
-              horizontalMargin: widget.horizontalMargin,
-              columnSpacing: widget.columnSpacing,
-              rows: _getRows(_firstRowIndex, widget.rowsPerPage),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.58,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              dragStartBehavior: widget.dragStartBehavior,
+              child: DataTable(
+                key: _tableKey,
+                columns: widget.columns,
+                sortColumnIndex: widget.sortColumnIndex,
+                sortAscending: widget.sortAscending,
+                onSelectAll: widget.onSelectAll,
+                dataRowHeight: widget.dataRowHeight,
+                headingRowHeight: widget.headingRowHeight,
+                horizontalMargin: widget.horizontalMargin,
+                columnSpacing: widget.columnSpacing,
+                rows: _getRows(_firstRowIndex, widget.rowsPerPage),
+              ),
             ),
           ),
-        ),
-        DefaultTextStyle(
-          style: footerTextStyle,
-          child: IconTheme.merge(
-            data: const IconThemeData(opacity: 0.54),
-            child: Container(
-              height: 56.0,
-              child: SingleChildScrollView(
-                dragStartBehavior: widget.dragStartBehavior,
-                scrollDirection: Axis.horizontal,
-                reverse: true,
-                child: Row(
-                  children: footerWidgets,
+          DefaultTextStyle(
+            style: footerTextStyle,
+            child: IconTheme.merge(
+              data: const IconThemeData(opacity: 0.54),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.12,
+                child: SingleChildScrollView(
+                  dragStartBehavior: widget.dragStartBehavior,
+                  scrollDirection: Axis.horizontal,
+                  reverse: true,
+                  child: Row(
+                    children: footerWidgets,
+                  ),
                 ),
               ),
             ),
           ),
-        )
-      ]),
+          // Expanded(child: Container(child: BottomNavigationBar())),
+        ]),
+
+        // height: MediaQuery.of(context).size.height * 0.1
+      ),
     );
   }
 }
