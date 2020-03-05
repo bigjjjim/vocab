@@ -18,8 +18,7 @@ var questionNumber = 0;
 List<int> scorelist = [];
 List<int> indexanswerQuiz = [0, 1, 2, 3];
 
-MyApp myapp = MyApp();
-
+// MyApp myapp = MyApp();
 
 class Quiz extends StatefulWidget {
   final String difficulty;
@@ -27,19 +26,20 @@ class Quiz extends StatefulWidget {
   final int indexLastWord;
   // final Iterable<Words> data;
 
-  const Quiz(
-      {Key key, this.difficulty, this.indexFirstWord, this.indexLastWord, })
-      : super(key: key);
+  const Quiz({
+    Key key,
+    this.difficulty,
+    this.indexFirstWord,
+    this.indexLastWord,
+  }) : super(key: key);
   @override
   _QuizState createState() => _QuizState();
 }
 
 class _QuizState extends State<Quiz> {
+  final _auth = FirebaseAuth.instance;
 
-   final _auth = FirebaseAuth.instance;
-
-@override
-
+  @override
   void initState() {
     super.initState();
     getCurrentUser();
@@ -48,57 +48,50 @@ class _QuizState extends State<Quiz> {
   void getCurrentUser() async {
     try {
       final user = await _auth.currentUser();
-      
-
 
       if (user != null) {
         loggedInUser = user;
         setState(() {
-      userid = user.uid;
-    });
-
+          userid = user.uid;
+        });
 
         print(loggedInUser.email);
-        
       }
     } catch (e) {
       print(e);
     }
   }
-  Future<bool> _onBackPressed() async {
 
+  Future<bool> _onBackPressed() async {
 // Navigator.pop(context, true);
-                      //  Navigator.of(context).pop();
-                       return false;}
-  
+    //  Navigator.of(context).pop();
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     int start = widget.indexFirstWord;
     int end = widget.indexLastWord;
     final db = DatabaseService(start, end);
-      //  final data = widget.data.elementAt(start).
+    //  final data = widget.data.elementAt(start).
 
-    
     return WillPopScope(
-      onWillPop: _onBackPressed,
-      child: 
-        
-           Scaffold(
-                        body: Column(
-        children: <Widget>[
-          StreamProvider<List<Words>>.value(
-              value: db.streamWords(),
-              child: 
-              
-              Container(
-                  height: MediaQuery.of(context).size.height, child: WordsList(),
-          
-         
-              ),),],
-      
-    ),
-           
-      ));
+        onWillPop: _onBackPressed,
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                StreamProvider<List<Words>>.value(
+                  value: db.streamWords(),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: WordsList(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 }
 
@@ -170,119 +163,118 @@ class _QuizBackState extends State<QuizBack> {
       return scorelist;
     }
 
- 
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      margin: const EdgeInsets.all(10.0),
+      alignment: Alignment.topCenter,
+      child: Column(children: <Widget>[
+        Padding(padding: EdgeInsets.all(20.0)),
 
-    return 
-        
         Container(
-          height: MediaQuery.of(context).size.height,
-          margin: const EdgeInsets.all(10.0),
-          alignment: Alignment.topCenter,
-          child: Column(children: <Widget>[
-            Padding(padding: EdgeInsets.all(20.0)),
-
-            Container(
-              alignment: Alignment.centerRight,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    "Question ${questionNumber + 1} of ${widget.question.length}",
-                    style: TextStyle(fontSize: 22.0),
-                  ),
-                  Text(
-                    "Score: $finalScore",
-                    style: TextStyle(fontSize: 22.0),
-                  )
-                ],
+          alignment: Alignment.centerRight,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                "Question ${questionNumber + 1} of ${widget.question.length}",
+                style: TextStyle(fontSize: 22.0),
               ),
+              Text(
+                "Score: $finalScore",
+                style: TextStyle(fontSize: 22.0),
+              )
+            ],
+          ),
+        ),
+
+        Padding(padding: EdgeInsets.all(10.0)),
+
+        //  Image.asset(
+        //     "images/${quiz.images[questionNumber]}.jpg",
+        //   ),
+
+        Padding(padding: EdgeInsets.all(10.0)),
+
+        Text(
+          widget.question[questionNumber],
+          style: new TextStyle(
+            fontSize: 20.0,
+          ),
+        ),
+
+        Padding(padding: EdgeInsets.all(10.0)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            //button 1
+
+            QuizButton(
+              onPressed: () {
+                quizAnswerChecker(indexanswerQuiz[0]);
+              },
+              word: widget.answersList[questionNumber][indexanswerQuiz[0]],
             ),
 
-            Padding(padding: EdgeInsets.all(10.0)),
+            QuizButton(
+              onPressed: () {
+                quizAnswerChecker(indexanswerQuiz[1]);
+              },
+              word: widget.answersList[questionNumber][indexanswerQuiz[1]],
+            )
+          ],
+        ),
 
-            //  Image.asset(
-            //     "images/${quiz.images[questionNumber]}.jpg",
-            //   ),
+        Padding(padding: EdgeInsets.all(10.0)),
 
-            Padding(padding: EdgeInsets.all(10.0)),
-
-            Text(
-              widget.question[questionNumber],
-              style: new TextStyle(
-                fontSize: 20.0,
-              ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            QuizButton(
+              onPressed: () {
+                quizAnswerChecker(indexanswerQuiz[2]);
+              },
+              word: widget.answersList[questionNumber][indexanswerQuiz[2]],
             ),
+            QuizButton(
+              onPressed: () {
+                quizAnswerChecker(indexanswerQuiz[3]);
+              },
+              word: widget.answersList[questionNumber][indexanswerQuiz[3]],
+            )
+          ],
+        ),
 
-            Padding(padding: EdgeInsets.all(10.0)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                //button 1
+        Padding(padding: EdgeInsets.all(15.0)),
 
-                QuizButton(
-                  onPressed: () {
-                    quizAnswerChecker(indexanswerQuiz[0]);
-                  },
-                  word: widget.answersList[questionNumber][indexanswerQuiz[0]],
-                ),
-
-                QuizButton(
-                  onPressed: () {
-                    quizAnswerChecker(indexanswerQuiz[1]);
-                  },
-                  word: widget.answersList[questionNumber][indexanswerQuiz[1]],
-                )
-              ],
-            ),
-
-            Padding(padding: EdgeInsets.all(10.0)),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                QuizButton(
-                  onPressed: () {
-                    quizAnswerChecker(indexanswerQuiz[2]);
-                  },
-                  word: widget.answersList[questionNumber][indexanswerQuiz[2]],
-                ),
-                QuizButton(
-                  onPressed: () {
-                    quizAnswerChecker(indexanswerQuiz[3]);
-                  },
-                  word: widget.answersList[questionNumber][indexanswerQuiz[3]],
-                )
-              ],
-            ),
-
-            Padding(padding: EdgeInsets.all(15.0)),
-
-            Container(
-              alignment: Alignment.bottomCenter,
-              child: MaterialButton(
-                  minWidth: 240.0,
-                  height: 30.0,
-                  color: Colors.red,
-                  onPressed: resetQuiz,
-                  child: Text(
-                    "Quit",
-                    style: TextStyle(fontSize: 18.0, color: Colors.white),
-                  )),
-            ),
-                      //  Expanded(child: TabsScreen(0))
-
-          ]),
-          
-        );
-
-    
+        Container(
+          alignment: Alignment.bottomCenter,
+          child: MaterialButton(
+              minWidth: 240.0,
+              height: 30.0,
+              color: Colors.red,
+              onPressed:  () {questionNumber = 0;
+                      finalScore = 0;
+                      scorelist = [];
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => TableVocab()));
+                      Navigator.of(context).popUntil((route) => route.isFirst);
+              },
+              child: Text(
+                "Quit",
+                style: TextStyle(fontSize: 18.0, color: Colors.white),
+              )),
+        ),
+        //  Expanded(child: TabsScreen(0))
+      ]),
+    );
   }
 }
 
 class WordsList extends StatefulWidget {
-
   // final Iterable<Words> data;
-  WordsList();
+  // WordsList();
   @override
   _WordsListState createState() => _WordsListState();
 }
@@ -290,21 +282,21 @@ class WordsList extends StatefulWidget {
 class _WordsListState extends State<WordsList> {
   @override
   Widget build(BuildContext context) {
-    var _wordsback = 
-    // widget.data;
-    Provider.of<List<Words>>(context);
+    final _wordsback =
+        // widget.data;
+        Provider.of<List<Words>>(context);
     //list of words here
 
     List<Words> getListForEachElement(int i, List l) {
-      List<Words> list2 = [];
-      List<Words> list3 = [];
-      list2 = List<Words>.from(l);
+      final List<Words> list2 = List<Words>.from(l);
+      final List<Words> list3 = list2.sublist(0, 3);
+      // list2 = 
       // print(list);
       list2.remove(l[i]);
       // print(list2);
       list2.shuffle();
       // print(list2);
-      list3 = list2.sublist(0, 3);
+      // list3 = 
       // print(list3);
       list3.add(l[i]);
       // print(list3);
@@ -403,7 +395,6 @@ class DatabaseService {
   int start;
   int end;
 
-  
   //  List<Words> myWordsSnapShot(DocumentSnapshot snapshot) {
   //   return snapshot.data['words'].map((doc) {
   //     return Words(
@@ -416,36 +407,36 @@ class DatabaseService {
   //   return _db.collection('wordLists').document(userid).snapshots().map(myWordsSnapShot);
   // }
 
-  Stream<List<Words>>  streamWords() {
-   
-    var ref =  _db.collection('words')
+  Stream<List<Words>> streamWords() {
+    var ref = _db
+        .collection('words')
         .orderBy('index')
         .where('index')
         .startAt([start]).endAt([end]);
 
-print(ref.snapshots().map((list) =>
-        list.documents.map((doc) => Words.fromFirestore(doc))));
+    print(ref
+        .snapshots()
+        .map((list) => list.documents.map((doc) => Words.fromFirestore(doc))));
 
-return ref.snapshots().map((list) =>
+    return ref.snapshots().map((list) =>
         list.documents.map((doc) => Words.fromFirestore(doc)).toList());
-
   }
 }
 // //     var ref = _db.collection('wordLists').document(userid);
-    
+
 // //   print(ref.snapshots().map((list) =>
 // //         list.data['words'].map((doc) => Words.fromFirestore(doc)).toList()));
-  
+
 // //     return ref.snapshots().documents.map((doc) => Words.fromFirestore(doc)).toList();
 // //   }
 // }
 
-  // snapshots();
-    
-    // _db
-    //     .collection('words')
-    //     .orderBy('index')
-    //     .where('index')
+// snapshots();
+
+// _db
+//     .collection('words')
+//     .orderBy('index')
+//     .where('index')
 //     //     .startAt([start]).endAt([end]);
 // print(ref.snapshots().map((list) =>
 //         list.data['words'].values.map((doc) => Words.fromFirestore(doc)).startAt([start]).endAt([end])));
@@ -460,6 +451,8 @@ class Summary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -484,7 +477,7 @@ class Summary extends StatelessWidget {
                       //     context,
                       //     MaterialPageRoute(
                       //         builder: (context) => TableVocab()));
-                       Navigator.of(context).popUntil((route) => route.isFirst);
+                      Navigator.of(context).popUntil((route) => route.isFirst);
                       // Navigator.of(context).push(MaterialPageRoute(
                       //         builder: (context) => TableVocab()));
                     },
@@ -493,20 +486,28 @@ class Summary extends StatelessWidget {
                       style: TextStyle(fontSize: 20.0, color: Colors.white),
                     ),
                   ),
-                  SizedBox(width: 50,),
-                  MaterialButton(
-                    color: Colors.red,
-                    onPressed: () {
-                      questionNumber = 0;
-                      finalScore = 0;
-                      scorelist = [];
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      "Reset Quiz",
-                      style: TextStyle(fontSize: 20.0, color: Colors.white),
-                    ),
+                  SizedBox(
+                    width: 50,
                   ),
+
+    //do we need a button to reset quiz? +> not really fuck that
+
+                  // MaterialButton(
+                  //   color: Colors.red,
+                  //   onPressed: 
+                    
+                  //   // () {
+                  //   //   questionNumber = 0;
+                  //   //   finalScore = 0;
+                  //   //   scorelist = [];
+                  //   //   Navigator.pop(context);
+                  //   // }
+                  //   ,
+                  //   child: Text(
+                  //     "Reset Quiz",
+                  //     style: TextStyle(fontSize: 20.0, color: Colors.white),
+                  //   ),
+                  // ),
                 ],
               ),
               Container(
@@ -554,4 +555,3 @@ class Summary extends StatelessWidget {
     );
   }
 }
-

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:vocab/Pages/memoire.dart';
 // import 'package:vocab/Pages/modiftable.dart';
 import 'Pages/home2.dart';
-import 'appwithnav.dart';
 import 'authentification/welcomeScreen.dart';
 import 'package:vocab/authentification/login.dart';
 import 'package:vocab/authentification/registration.dart';

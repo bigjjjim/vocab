@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:vocab/appwithnav.dart';
 import 'package:vocab/Components/constant.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -11,7 +10,6 @@ import 'package:flutter/rendering.dart';
 // import 'package:memender/services/sign_in.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:vocab/Pages/modiftable.dart';
 import 'package:vocab/authentification/sign_in.dart';
 import 'package:vocab/home.dart';
 
@@ -19,19 +17,23 @@ import 'package:vocab/home.dart';
 // import 'home.dart';
 
 class MyGlobals {
-  GlobalKey _scaffoldKey;
+  static GlobalKey _scaffoldKey;
   MyGlobals() {
     _scaffoldKey = GlobalKey();
   }
-  GlobalKey get scaffoldKey => _scaffoldKey;
+  static GlobalKey get scaffoldKey => _scaffoldKey;
 }
 
 MyGlobals myGlobals = new MyGlobals();
+
+
 
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
+
+
 
 class _LoginScreenState extends State<LoginScreen> {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -300,10 +302,11 @@ class _LoginScreenState extends State<LoginScreen> {
         });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: myGlobals.scaffoldKey,
+        key: MyGlobals.scaffoldKey,
         body: Stack(
           children: <Widget>[
             Container(

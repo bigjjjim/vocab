@@ -5,7 +5,7 @@ import 'package:vocab/Components/Paginated.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:vocab/Module/words.dart';
 
-FirebaseUser loggedInUser;
+FirebaseUser loggedInUser; 
 String userid;
 var isRowCountLessDefaultRowsPerPage;
 WordDataSource dts;

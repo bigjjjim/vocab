@@ -5,6 +5,7 @@ import 'package:vocab/Components/Paginated.dart';
 import 'package:vocab/Module/words.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:vocab/main.dart';
 import 'Pages/memoire.dart';
 import 'Pages/translator.dart';
 import 'Pages/annexe.dart';
@@ -40,7 +41,7 @@ class _HomeState extends State<Home> {
 //   final _annexeScreen = GlobalKey<NavigatorState>();
 //   final _favouriteScreen = GlobalKey<NavigatorState>();
 //   final _translatorScreen = GlobalKey<NavigatorState>();
-  //  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   void initState() {
@@ -114,7 +115,7 @@ class _HomeState extends State<Home> {
       //  _requestPop,
       child:
        Scaffold(
-        // key: navigatorKey,
+        key: navigatorKey,
         appBar: AppBar(
           leading: null,
           actions: <Widget>[
@@ -122,9 +123,16 @@ class _HomeState extends State<Home> {
                 icon: Icon(Icons.close),
                 onPressed: () {
                   //Implement logout functionality
-                   Navigator.pop(context);
+                  //  Navigator.pop(context);
                   handleSignOut();
                   // Navigator.of(context).popUntil((route) => route.isFirst);
+                  // _HomeState().dispose();
+
+                  Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) {
+                      return LoginScreen();
+                    })
+                    , ModalRoute.withName('/'));
                 }),
           ],
         ),

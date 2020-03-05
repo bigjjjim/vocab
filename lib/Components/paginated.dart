@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/material.dart';
-import 'package:vocab/Pages/modiftable.dart';
 import 'package:vocab/transitionQuiz.dart';
 import 'package:vocab/Module/words.dart';
 // import 'package:vocab/Pages/home2.dart';
