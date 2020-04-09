@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'Pages/quiz2.dart';
+import 'Pages/quizPage.dart';
 import 'package:vocab/Components/constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+// import 'home.dart';
+// import 'main.dart';
 
 
 FirebaseUser loggedInUser;
@@ -96,6 +98,7 @@ Future<bool> _onBackPressed() async {
             children: <Widget>[
               //...bottom card part,
               Container(
+                // height: MediaQuery.of(context).size.height,
                 padding: EdgeInsets.only(
                   top: Consts.avatarRadius + Consts.padding,
                   bottom: Consts.padding,
@@ -211,8 +214,25 @@ Future<bool> _onBackPressed() async {
                               int sta = int.parse(_hint);
                             int end = int.parse(_hint2);
 
-                    
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => Quiz(difficulty: dropdownValue, indexFirstWord: sta, indexLastWord: end,)));
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //   builder: (context) {
+                          //       return
+                          // MyQuiz(difficulty: dropdownValue, indexFirstWord: sta, indexLastWord: end,);
+                          
+                          //   } 
+                    // rootNavigator: true
+                            Navigator.of(context).pushReplacement( 
+                            MaterialPageRoute(builder: (context) => 
+                            MyQuiz(difficulty: dropdownValue, indexFirstWord: sta, indexLastWord: end,)
+
+                            // Navigator.of(context, rootNavigator: true).popAndPushNamed('/Quiz', arguments: { 'difficulty': dropdownValue, 'indexFirstWord': sta, 'indexLastWord': end });
+                            
+                            ),);
+
+                          // Quiz(difficulty: dropdownValue, indexFirstWord: sta, indexLastWord: end,)
+                          // )
+                          
+                          // );
 
                             } 
                             

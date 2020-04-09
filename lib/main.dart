@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vocab/Pages/memoire.dart';
 // import 'package:vocab/Pages/modiftable.dart';
-import 'Pages/home2.dart';
-import 'authentification/welcomeScreen.dart';
+import 'Pages/home4.dart';
 import 'package:vocab/authentification/login.dart';
-import 'package:vocab/authentification/registration.dart';
 
 import 'Pages/translator.dart';
 import 'Pages/annexe.dart';
@@ -12,12 +10,13 @@ import 'authentification/login.dart';
 import 'home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'Module/authservice.dart';
+import 'package:vocab/Pages/quizPage.dart';
 
 AuthService appAuth = new AuthService();
 
 void main() => runApp(MyApp());
 
-GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
+// GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   @override
@@ -48,11 +47,13 @@ class MyApp extends StatelessWidget {
       // initialRoute: WelcomeScreen.id,
       routes: {
         '/': (BuildContext context) =>  _handleWindowDisplay(),
-        '/homeTable': (BuildContext context) => HomeTable(),
+        '/homeTable': (BuildContext context) => HomeTable()
+         ,
         '/loginscreen': (BuildContext context) => LoginScreen(),
         '/Annexe': (BuildContext context) => Annexe(),
         '/favourite': (BuildContext context) => Memoire(),
         '/translator': (BuildContext context) => Translator(),
+        '/Quiz': ( BuildContext context) => MyQuiz(),
 
 
 

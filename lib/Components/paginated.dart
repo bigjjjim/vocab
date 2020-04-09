@@ -4,10 +4,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/material.dart';
 import 'package:vocab/transitionQuiz.dart';
-import 'package:vocab/Module/words.dart';
-// import 'package:vocab/Pages/home2.dart';
-
-
+// import 'package:vocab/Module/words.dart';
+import 'package:vocab/Pages/home4.dart';
 
 class Paginated extends StatefulWidget {
   Paginated({
@@ -23,7 +21,8 @@ class Paginated extends StatefulWidget {
     this.headingRowHeight = 56.0,
     this.horizontalMargin = 24.0,
     this.columnSpacing = 10.0,
-    this.initialFirstRowIndex = 0,
+    this.initialFirstRowIndex,
+    // this.firstRowIndex = defaultFirstIndex,
     this.onPageChanged,
     this.rowsPerPage = defaultRowsPerPage,
     this.availableRowsPerPage = const <int>[
@@ -57,8 +56,10 @@ class Paginated extends StatefulWidget {
         assert(source != null),
         super(key: key);
 
-  final List<Words> dataquiz;
+  final List<Words2> dataquiz;
   final Widget header;
+
+  // final int firstRowIndex;
 
   final List<Widget> actions;
 
@@ -86,6 +87,8 @@ class Paginated extends StatefulWidget {
 
   static const int defaultRowsPerPage = 10;
 
+  // static const int defaultFirstIndex = 0;
+
   final List<int> availableRowsPerPage;
 
   final ValueChanged<int> onRowsPerPageChanged;
@@ -98,7 +101,7 @@ class Paginated extends StatefulWidget {
   PaginatedState createState() => PaginatedState();
 }
 
-class PaginatedState extends State<Paginated> {
+class PaginatedState extends State<Paginated>  {
   int _firstRowIndex;
   int _rowCount;
   bool _rowCountApproximate;
@@ -108,9 +111,13 @@ class PaginatedState extends State<Paginated> {
   @override
   void initState() {
     super.initState();
-    _firstRowIndex = PageStorage.of(context)?.readState(context) as int ??
-        widget.initialFirstRowIndex ??
-        0;
+    setState(() {
+      _firstRowIndex = PageStorage.of(context)?.readState(context, identifier: ValueKey(
+              '${dts.index }')  ) as int ??
+          widget.initialFirstRowIndex ??
+          0;
+    });
+
     widget.source.addListener(_handleDataSourceChanged);
     _handleDataSourceChanged();
   }
@@ -133,6 +140,9 @@ class PaginatedState extends State<Paginated> {
 
   void _handleDataSourceChanged() {
     setState(() {
+      // _getRows(_firstRowIndex, _rowCount);
+      // _firstRowIndex = widget.source.initialFirstRowIndex;
+      // _firstRowIndex = widget.source.firstrowindex;
       _rowCount = widget.source.rowCount;
       _rowCountApproximate = widget.source.isRowCountApproximate;
       _selectedRowCount = widget.source.selectedRowCount;
@@ -145,25 +155,20 @@ class PaginatedState extends State<Paginated> {
     final int oldFirstRowIndex = _firstRowIndex;
     setState(() {
       final int rowsPerPage = widget.rowsPerPage;
+      // final int firstRowIndex = widget.firstRowIndex;
       _firstRowIndex = (rowIndex ~/ rowsPerPage) * rowsPerPage;
     });
     if ((widget.onPageChanged != null) && (oldFirstRowIndex != _firstRowIndex))
       widget.onPageChanged(_firstRowIndex);
   }
- 
 
   DataRow _getBlankRowFor(int index) {
     return DataRow.byIndex(
-      
       index: index,
       cells: widget.columns
           .map<DataCell>((DataColumn column) => DataCell.empty)
           .toList(),
-      
-      
-      );
-           
-    
+    );
   }
 
   DataRow _getProgressIndicatorRowFor(int index) {
@@ -181,12 +186,8 @@ class PaginatedState extends State<Paginated> {
       cells[0] = const DataCell(CircularProgressIndicator());
     }
     return DataRow.byIndex(
-     
       index: index,
       cells: cells,
-      
-      
-      
     );
   }
 
@@ -205,12 +206,9 @@ class PaginatedState extends State<Paginated> {
       }
       row ??= _getBlankRowFor(index);
       result.add(row);
-      
     }
     return result;
   }
-
-  
 
   void _handlePrevious() {
     pageTo(math.max(_firstRowIndex - widget.rowsPerPage, 0));
@@ -307,21 +305,25 @@ class PaginatedState extends State<Paginated> {
     }
 
     final List<Widget> footerWidgets = <Widget>[];
-  
+
     footerWidgets.addAll(<Widget>[
       FlatButton(
-        child: Text('Quiz'),
-        onPressed: () {
-          
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TransitionQuiz( firstWordIndex:  _firstRowIndex +1, lastWordIndex:widget.rowsPerPage  + _firstRowIndex, description: 'Il y a trois niveau de difficulté (...). Aussi possible de choisir nombre de mots a prendre en compte.' )),);
-
-    
-
-        },
-      ),
-
+          child: Text('Quiz'),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => TransitionQuiz(
+                      firstWordIndex: _firstRowIndex + 1,
+                      lastWordIndex: widget.rowsPerPage + _firstRowIndex,
+                      description:
+                          'Il y a trois niveau de difficulté (...). Aussi possible de choisir nombre de mots a prendre en compte.')
+                  // Navigator.of(context).pushNamed(MaterialPageRoute(builder: (context) => '/Quiz');
+                  // MyQuiz()
+                  // Navigator.pushNamed(context, '/MyQuiz');
+                  ),
+            );
+          }),
       Container(width: 150.0),
-
       IconButton(
         icon: const Icon(Icons.chevron_left),
         padding: EdgeInsets.zero,
@@ -343,8 +345,8 @@ class PaginatedState extends State<Paginated> {
 
     // CARD
     return Container(
-      height:  MediaQuery.of(context).size.height,
-          child: Card(
+      height: MediaQuery.of(context).size.height,
+      child: Card(
         semanticContainer: false,
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           DefaultTextStyle(
@@ -357,8 +359,9 @@ class PaginatedState extends State<Paginated> {
               data: const IconThemeData(opacity: 0.54),
               child: Ink(
                 height: MediaQuery.of(context).size.height * 0.1,
-                color:
-                    _selectedRowCount > 0 ? themeData.secondaryHeaderColor : null,
+                color: _selectedRowCount > 0
+                    ? themeData.secondaryHeaderColor
+                    : null,
                 child: Padding(
                   padding:
                       EdgeInsetsDirectional.only(start: startPadding, end: 3.0),

@@ -1,25 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:nested_navigators/nested_nav_item.dart';
-import 'package:vocab/Components/Paginated.dart';
-import 'package:vocab/Module/words.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:vocab/main.dart';
 import 'Pages/memoire.dart';
 import 'Pages/translator.dart';
 import 'Pages/annexe.dart';
 // import 'Pages/modiftable.dart';
-import 'Pages/home2.dart';
+import 'Pages/home4.dart';
 import 'authentification/sign_in.dart';
-import 'package:nested_navigators/nested_navigators.dart';
 import 'dart:async';
 import 'authentification/login.dart';
 
 FirebaseUser loggedInUser;
-
-
 enum TabItem { homeTable, annexe, favourite, translator }
+// final quizNav = GlobalKey<NavigatorState>();
 
 class Home extends StatefulWidget {
   @override
@@ -27,9 +19,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  
+  String userId;
   final FirebaseAuth auth = FirebaseAuth.instance;
   int _selectedIndex = 0;
-  String userId;
+  
 
   Map<TabItem, GlobalKey<NavigatorState>> navkeys = {
     TabItem.homeTable: GlobalKey<NavigatorState>(),
@@ -37,11 +32,12 @@ class _HomeState extends State<Home> {
     TabItem.favourite: GlobalKey<NavigatorState>(),
     TabItem.translator: GlobalKey<NavigatorState>(),
   };
-// final _homeScreen = GlobalKey<NavigatorState>();
+
+  
 //   final _annexeScreen = GlobalKey<NavigatorState>();
 //   final _favouriteScreen = GlobalKey<NavigatorState>();
 //   final _translatorScreen = GlobalKey<NavigatorState>();
-   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  //  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   void initState() {
@@ -74,48 +70,51 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+   
     return
         // _selectedIndex==0 ? () async => Future<bool>.value(false):,
         // !await navkeys[_selectedIndex].currentState.maybePop());
         // return navkeys['home'].currentState.popUntil((r) => r.isFirst),
 
         // }
-        WillPopScope(
-      onWillPop: () async {
-        if (_selectedIndex == 0) {
-          return Future.value(false);
+      //   WillPopScope(
+      // onWillPop: 
+      
+      // () async {
+      //   if (_selectedIndex == 0) {
+      //     return Future.value(false);
 
-        } else if (_selectedIndex == 1) {
-          setState(() {
-            _selectedIndex = 0;
-          });
-          return Future.value(false);
-        }
-        else if (_selectedIndex == 2) {
-          setState(() {
-            _selectedIndex = 0;
-          });
-          return Future.value(false);
-        }
-        else if (_selectedIndex == 3) {
-          setState(() {
-            _selectedIndex = 0;
-          });
-          return Future.value(false);
-        }
-        return Future.value(false);
-        // _selectedIndex==0;
+      //   } else if (_selectedIndex == 1) {
+      //     setState(() {
+      //       _selectedIndex = 0;
+      //     });
+      //     return Future.value(false);
+      //   }
+      //   else if (_selectedIndex == 2) {
+      //     setState(() {
+      //       _selectedIndex = 0;
+      //     });
+      //     return Future.value(false);
+      //   }
+      //   else if (_selectedIndex == 3) {
+      //     setState(() {
+      //       _selectedIndex = 0;
+      //     });
+      //     return Future.value(false);
+      //   }
+      //   return Future.value(false);
+      //   // _selectedIndex==0;
 
-        // return Future.value(false);
+      //   // return Future.value(false);
 
-        //  return _selectedIndex==0 ? 
+      //   //  return _selectedIndex==0 ? 
           
-        //    Future<bool>.value(false):Future<bool>.value(true);
-      },
+      //   //    Future<bool>.value(false):Future<bool>.value(true);
+      // },
       //  _requestPop,
-      child:
+      // child:
        Scaffold(
-        key: navigatorKey,
+        key: navkeys[TabItem.homeTable],
         appBar: AppBar(
           leading: null,
           actions: <Widget>[
@@ -140,6 +139,7 @@ class _HomeState extends State<Home> {
         body: IndexedStack(
           index: _selectedIndex,
           children: <Widget>[
+            
             Navigator(
               key: navkeys['homeTable'],
               onGenerateRoute: (route) => MaterialPageRoute(
@@ -147,10 +147,18 @@ class _HomeState extends State<Home> {
                 builder: (context) => HomeTable(),
               ),
             ),
-            // TableVocab(),
-            // Annexe(),
-            // Memoire(),
-            // Tr
+            // Offstage(
+            //   offstage: _selectedIndex != 0,
+            //   child: HomeTable(),),
+            //  Offstage(
+            //   offstage: _selectedIndex != 0,
+            //   child: Annexe(),),
+            //  Offstage(
+            //   offstage: _selectedIndex != 0,
+            //   child: Memoire(),),
+            //  Offstage(
+            //   offstage: _selectedIndex != 0,
+            //   child: Translator())
 
             Navigator(
               key: navkeys['annexe'],
@@ -178,6 +186,7 @@ class _HomeState extends State<Home> {
 
         //  _widgetOptions.elementAt(_selectedIndex),
         bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.black,
           elevation: 0.0,
           selectedItemColor: Colors.pink,
@@ -185,7 +194,7 @@ class _HomeState extends State<Home> {
           showSelectedLabels: false,
           showUnselectedLabels: false,
           onTap: (val) => _onTap(val, context),
-          items: <BottomNavigationBarItem>[
+          items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.library_books),
               title: Text('Home'),
@@ -205,26 +214,38 @@ class _HomeState extends State<Home> {
           ],
         ),
       
-    ),);
+    );
   }
 
-  void _onTap(int val, BuildContext context) {
+  void _onTap(val, BuildContext context) {
+    // void onTabTapped(int index) {
+  //  setState(() {
+    
+  //  });
+//  }
+
     if (_selectedIndex == val) {
+     
+     
       switch (val) {
         case 0:
           // navkeys['home'].currentState.pop();
           // Navigator.of(context).popUntil((route) => route.isFirst);
           // Navigator.of(context).pop();
-          _selectedIndex = 0;
-
+           setState(() {
+        
+           _selectedIndex = 0;
+           });
           //          setState(() {
           //   _selectedIndex = 0;
           // });
           break;
         case 1:
           setState(() {
+        
             _selectedIndex = 1;
           });
+          
           break;
         case 2:
           setState(() {
@@ -236,17 +257,25 @@ class _HomeState extends State<Home> {
             _selectedIndex = 3;
           });
           break;
+          
 
         default:
       }
+       
     } else {
       if (mounted) {
-        setState(() {
-          _selectedIndex = val;
-        });
+       setState(() {
+       _selectedIndex = val;
+
+       });
+       
       }
+      
     }
   }
+    
+    
+  
 
   Future<bool> _requestPop() {
     //  _selectedIndex = 0;
@@ -269,5 +298,7 @@ class _HomeState extends State<Home> {
 //                        return false;
 
 // }
+
+
 
 }

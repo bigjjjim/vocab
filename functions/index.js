@@ -24,9 +24,12 @@ const db = admin.firestore();
 
 const storage = new Storage();
 
+// const settings = {timestampsInSnapshots: true};
+// firestore.settings(settings);
 
 exports.createUserDoc = functions.auth.user().onCreate((user) => {
   const userUid = user.uid;
+  // const data = data;
   const userScheme = {
      email: user.email,
      displayName: user.displayName,
@@ -34,9 +37,22 @@ exports.createUserDoc = functions.auth.user().onCreate((user) => {
    //   favorite: [],
    //   uploaded: [],
      dateCreation: new Date(),
-     words: data
-   }
+    //  words: data
 
+   };
+  //  const scorescheme = {
+  //    1: 0,
+  //    2: 0,
+  //    3: 0,
+  //    4: 0,
+  //  }
+  const datascheme = {
+    useruid: userUid,
+    words: data
+  };
+  // const datascheme = data;
+   
+  //  const dataIndex = data.index
   //  const wordList = {
      
 
@@ -45,11 +61,40 @@ exports.createUserDoc = functions.auth.user().onCreate((user) => {
   //  }
    db.collection('users').doc(user.uid).set(userScheme);
   //  db.collection('users').doc(user.uid).collection('wordLists').doc('words').set(wordList);
- 
 
+  db.collection('users').doc(user.uid).collection('wordsscore').doc('wordssc').set(datascheme);
 
+//     Object.keys(data).forEach(docKey => {
 
+        // db.collection('users').doc(user.uid).collection(collectionKey).doc(docKey).set(data[docKey]);
+// });
 });
+
+  // for (const index of Object.keys(data)) {
+
+  //   db.collection('users').doc(user.uid).collection('wordLists').doc(data[index]).set(wordList);
+
+
+  //   // 	get value
+  //       Object.values(data[index]).forEach(key =>{
+  //         console.log(key)
+  //       })
+  //   //   get keys
+  //       Object.keys(data[index]).forEach(key =>{
+  //         console.log(key)
+  //       })
+  //   //   or get both
+  //       Object.entries(data[index]).forEach(entry =>{
+  //         console.log(entry)
+  //       })
+    
+    
+      //  }
+
+
+  //  db.collection('users').doc(user.uid).collection('wordLists').doc('words').set(wordList);
+
+// });
 
 
 
