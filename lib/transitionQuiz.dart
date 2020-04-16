@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'Pages/quizPage.dart';
 import 'package:vocab/Components/constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+
 // import 'home.dart';
 // import 'main.dart';
 
@@ -90,7 +92,9 @@ Future<bool> _onBackPressed() async {
 
   @override
   Widget build(BuildContext context) {
-    return 
+    return Scaffold(
+      
+      body: 
       WillPopScope(
         onWillPop: _onBackPressed,
               child: SingleChildScrollView(
@@ -127,6 +131,7 @@ Future<bool> _onBackPressed() async {
                         textAlign: TextAlign.center, style: kdialogueDescripStyle),
                     SizedBox(height: 24.0),
                     Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Text(
                           'Difficulté:',
@@ -221,13 +226,13 @@ Future<bool> _onBackPressed() async {
                           
                           //   } 
                     // rootNavigator: true
-                            Navigator.of(context).pushReplacement( 
-                            MaterialPageRoute(builder: (context) => 
-                            MyQuiz(difficulty: dropdownValue, indexFirstWord: sta, indexLastWord: end,)
+                            Navigator.push( 
+                            context, MaterialPageRoute(builder: (BuildContext context) =>
+                            MyQuiz(difficulty: dropdownValue, indexFirstWord: sta, indexLastWord: end,)));
 
-                            // Navigator.of(context, rootNavigator: true).popAndPushNamed('/Quiz', arguments: { 'difficulty': dropdownValue, 'indexFirstWord': sta, 'indexLastWord': end });
-                            
-                            ),);
+                            // Navigator.of(context, rootNavigator: ).popAndPushNamed('/Quiz', arguments: { 'difficulty': dropdownValue, 'indexFirstWord': sta, 'indexLastWord': end });
+                            // Navigator.of(context).pushNamedAndRemoveUntil('/Quiz' , (route) => false, arguments: { 'difficulty': dropdownValue, 'indexFirstWord': sta, 'indexLastWord': end });
+                            // ),);
 
                           // Quiz(difficulty: dropdownValue, indexFirstWord: sta, indexLastWord: end,)
                           // )
@@ -246,7 +251,7 @@ Future<bool> _onBackPressed() async {
                   ],
                 ),
         ),
-      );
+      ),);
  
     
     

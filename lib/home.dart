@@ -8,10 +8,14 @@ import 'Pages/home4.dart';
 import 'authentification/sign_in.dart';
 import 'dart:async';
 import 'authentification/login.dart';
+import 'package:flutter/cupertino.dart';
+import 'Pages/quizPage.dart';
+
 
 FirebaseUser loggedInUser;
 enum TabItem { homeTable, annexe, favourite, translator }
 // final quizNav = GlobalKey<NavigatorState>();
+
 
 class Home extends StatefulWidget {
   @override
@@ -19,25 +23,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
-  
   String userId;
   final FirebaseAuth auth = FirebaseAuth.instance;
   int _selectedIndex = 0;
-  
 
   Map<TabItem, GlobalKey<NavigatorState>> navkeys = {
     TabItem.homeTable: GlobalKey<NavigatorState>(),
     TabItem.annexe: GlobalKey<NavigatorState>(),
     TabItem.favourite: GlobalKey<NavigatorState>(),
-    TabItem.translator: GlobalKey<NavigatorState>(),
   };
-
-  
-//   final _annexeScreen = GlobalKey<NavigatorState>();
-//   final _favouriteScreen = GlobalKey<NavigatorState>();
-//   final _translatorScreen = GlobalKey<NavigatorState>();
-  //  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   void initState() {
@@ -48,204 +42,100 @@ class _HomeState extends State<Home> {
   getUserRef() async {
     final FirebaseUser user = await auth.currentUser();
     final uid = user.uid;
-   
-    // DocumentReference userRef =
-    //     Firestore.instance.collection('users').document(uid);
 
     setState(() {
       userId = user.uid;
-
     });
-    // here you write the codes to input the data into firestore
   }
-
-// static List<Widget> _widgetOptions =
-
-//FUNTCION FOR BOTTOM BAR
-  // void _onItemTapped(int index) {
-  //   setState(() {
-  //     _selectedIndex = index;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
-   
-    return
-        // _selectedIndex==0 ? () async => Future<bool>.value(false):,
-        // !await navkeys[_selectedIndex].currentState.maybePop());
-        // return navkeys['home'].currentState.popUntil((r) => r.isFirst),
 
-        // }
-      //   WillPopScope(
-      // onWillPop: 
-      
-      // () async {
-      //   if (_selectedIndex == 0) {
-      //     return Future.value(false);
-
-      //   } else if (_selectedIndex == 1) {
-      //     setState(() {
-      //       _selectedIndex = 0;
-      //     });
-      //     return Future.value(false);
-      //   }
-      //   else if (_selectedIndex == 2) {
-      //     setState(() {
-      //       _selectedIndex = 0;
-      //     });
-      //     return Future.value(false);
-      //   }
-      //   else if (_selectedIndex == 3) {
-      //     setState(() {
-      //       _selectedIndex = 0;
-      //     });
-      //     return Future.value(false);
-      //   }
-      //   return Future.value(false);
-      //   // _selectedIndex==0;
-
-      //   // return Future.value(false);
-
-      //   //  return _selectedIndex==0 ? 
-          
-      //   //    Future<bool>.value(false):Future<bool>.value(true);
-      // },
-      //  _requestPop,
-      // child:
-       Scaffold(
-        key: navkeys[TabItem.homeTable],
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+          child: Scaffold(
         appBar: AppBar(
-          leading: null,
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  //Implement logout functionality
-                  //  Navigator.pop(context);
-                  handleSignOut();
-                  // Navigator.of(context).popUntil((route) => route.isFirst);
-                  // _HomeState().dispose();
-
-                  Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) {
-                      return LoginScreen();
-                    })
-                    , ModalRoute.withName('/'));
-                }),
-          ],
-        ),
-        // appBar: AppBar(title: Text("Vocabulary")),
-        body: IndexedStack(
-          index: _selectedIndex,
-          children: <Widget>[
-            
-            Navigator(
-              key: navkeys['homeTable'],
-              onGenerateRoute: (route) => MaterialPageRoute(
-                settings: route,
-                builder: (context) => HomeTable(),
+            title: new Text('Minilo'),
+            backgroundColor: Colors.green[800],
+            actions: [
+              // action button
+              FlatButton(
+                child:  Text('Log out',),
+                onPressed: () { 
+                   handleSignOut();
+                  //  Navigator.of(context).popUntil((route) => route.isFirst); 
+                  Navigator.of(context).pushNamed('/');
+                },
               ),
-            ),
-            // Offstage(
-            //   offstage: _selectedIndex != 0,
-            //   child: HomeTable(),),
-            //  Offstage(
-            //   offstage: _selectedIndex != 0,
-            //   child: Annexe(),),
-            //  Offstage(
-            //   offstage: _selectedIndex != 0,
-            //   child: Memoire(),),
-            //  Offstage(
-            //   offstage: _selectedIndex != 0,
-            //   child: Translator())
-
-            Navigator(
-              key: navkeys['annexe'],
-              onGenerateRoute: (route) => MaterialPageRoute(
-                settings: route,
-                builder: (context) => Annexe(),
-              ),
-            ),
-            Navigator(
-              key: navkeys['favourite'],
-              onGenerateRoute: (route) => MaterialPageRoute(
-                settings: route,
-                builder: (context) => Memoire(),
-              ),
-            ),
-            Navigator(
-              key: navkeys['translator'],
-              onGenerateRoute: (route) => MaterialPageRoute(
-                settings: route,
-                builder: (context) => Translator(),
-              ),
-            ),
-          ],
-        ),
-
-        //  _widgetOptions.elementAt(_selectedIndex),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.black,
-          elevation: 0.0,
-          selectedItemColor: Colors.pink,
-          currentIndex: _selectedIndex,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          onTap: (val) => _onTap(val, context),
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.library_books),
-              title: Text('Home'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.list),
-              title: Text('Annexe'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.star),
-              title: Text('Favourite'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.compare_arrows),
-              title: Text('Translator'),
-            ),
-          ],
-        ),
-      
+            ],),
+        body: IndexedStack(index: _selectedIndex, children: <Widget>[
+                  Offstage(
+                    offstage:  _selectedIndex != 0,
+                    child:
+                    Navigator(
+                    key: navkeys['homeTable'],
+                    onGenerateRoute: (route) => MaterialPageRoute(
+                      settings: route,
+                      builder: (context) => HomeTable(),
+                    ),
+                  ),),               
+                  Navigator(
+                    key: navkeys['annexe'],
+                    onGenerateRoute: (route) => MaterialPageRoute(
+                      settings: route,
+                      builder: (context) => Annexe(),
+                    ),
+                  ),
+                  Navigator(
+                    key: navkeys['favourite'],
+                    onGenerateRoute: (route) => MaterialPageRoute(
+                      settings: route,
+                      builder: (context) => Memoire(),
+                    ),
+                  ),
+                ]),
+        bottomNavigationBar: BottomNavigationBar(items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.library_books),
+                  title: Text('Home'),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.list),
+                  title: Text('Annexe'),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.star),
+                  title: Text('Favourite'),
+                ),
+              ],
+              selectedItemColor: Colors.orange,
+              onTap: (val) => _onTap(val, context),
+              currentIndex: _selectedIndex) ,
+        
+      ),
     );
-  }
+  }  
+    
+  
+
+  
+
 
   void _onTap(val, BuildContext context) {
-    // void onTabTapped(int index) {
-  //  setState(() {
-    
-  //  });
-//  }
-
     if (_selectedIndex == val) {
-     
-     
       switch (val) {
         case 0:
-          // navkeys['home'].currentState.pop();
-          // Navigator.of(context).popUntil((route) => route.isFirst);
-          // Navigator.of(context).pop();
-           setState(() {
-        
-           _selectedIndex = 0;
-           });
-          //          setState(() {
-          //   _selectedIndex = 0;
-          // });
+       
+          setState(() {
+            _selectedIndex = 0;
+          });
+     
           break;
         case 1:
           setState(() {
-        
             _selectedIndex = 1;
           });
-          
+
           break;
         case 2:
           setState(() {
@@ -257,48 +147,38 @@ class _HomeState extends State<Home> {
             _selectedIndex = 3;
           });
           break;
-          
 
         default:
       }
-       
     } else {
       if (mounted) {
-       setState(() {
-       _selectedIndex = val;
-
-       });
-       
+        setState(() {
+          _selectedIndex = val;
+        });
       }
-      
     }
   }
-    
-    
-  
 
-  Future<bool> _requestPop() {
-    //  _selectedIndex = 0;
-    // setState(() {
-    // _selectedIndex = 0;
-    //  Navigator.of(context).popUntil((route) => route.isFirst);
+  // Future<bool> _requestPop() {
+  //   //  _selectedIndex = 0;
+  //   // setState(() {
+  //   // _selectedIndex = 0;
+  //   //  Navigator.of(context).popUntil((route) => route.isFirst);
 
-    // });
-    
-    return Future.value(false);
-  }
+  //   // });
 
-// Future<bool> _onBackPressed() async {
+  //   return Future.value(false);
+  // }
 
-// // Navigator.pop(context, true);
-//                        Navigator.of(context).popUntil((route) => route.isFirst);
-//   //                      setState(() {
-//   //   _selectedIndex = 0;
-//   // });
-//                        return false;
+Future<bool> _onBackPressed() async {
 
-// }
+// Navigator.pop(context, true);
+                       Navigator.of(context).popUntil((route) => route.isFirst);
+  //                      setState(() {
+  //   _selectedIndex = 0;
+  // });
+                       return false;
 
-
+}
 
 }

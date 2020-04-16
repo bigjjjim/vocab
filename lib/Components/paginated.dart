@@ -310,7 +310,7 @@ class PaginatedState extends State<Paginated>  {
       FlatButton(
           child: Text('Quiz'),
           onPressed: () {
-            Navigator.of(context).push(
+            Navigator.of(context, rootNavigator: true).push(
               MaterialPageRoute(
                   builder: (context) => TransitionQuiz(
                       firstWordIndex: _firstRowIndex + 1,

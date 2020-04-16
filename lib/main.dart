@@ -16,31 +16,19 @@ AuthService appAuth = new AuthService();
 
 void main() => runApp(MyApp());
 
-// GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  // var _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
  
-//  return 
-//  MaterialApp(
-//       navigatorKey: mainNavigatorKey,
-      
-//       title: 'Flutter Demo',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: TabsScreen()
-//     );
- 
- 
-//  void connect() async {
-//    Widget _defaultHome = LoginScreen();
-//     bool _result = await appAuth.login();
-//   if (_result) {
-//     _defaultHome =  Home();
-  
-//  }}
+    
  
     return MaterialApp(
       
@@ -63,31 +51,11 @@ class MyApp extends StatelessWidget {
     );
   }
 
+
   Widget _handleWindowDisplay() {
   //Check if user is logged in or not
   print('HERRRRE WHEN YOU GO HOME AND BACK');
-  // return Container(
-  //   height: 500.0,
-  //   width: 500.0,
-  //   color: kBackgroundColor,
-  //   child: StreamBuilder(
-  //     stream: FirebaseAuth.instance.onAuthStateChanged,
-  //     builder: (BuildContext context, snapshot) {
-  //       if (snapshot.connectionState == ConnectionState.waiting) {
-  //         return Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFCFB4F1))));
-  //       } else {
-  //         if (snapshot.hasData) {
-  //           return Home();
-  //         } else {
-  //           return LoginScreen();
-  //         }
-  //       }
-  //     },
-      
-  //   ),
 
-  
-  // );
 
    return FutureBuilder<FirebaseUser>(
             future: FirebaseAuth.instance.currentUser(),

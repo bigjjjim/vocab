@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:vocab/Components/Paginated.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:vocab/Module/words.dart';
-// import 'package:provider/provider.dart';
+import 'package:vocab/home.dart';
+import 'quizPage.dart';
 
 FirebaseUser loggedInUser;
 String userid;
 var isRowCountLessDefaultRowsPerPage;
 WordDataSource dts;
-
   void sortingList(List a){
     a.sort((a,b) => a.index.cast .compareTo(b.index));
   }
@@ -19,8 +18,8 @@ WordDataSource dts;
 class HomeTable extends StatefulWidget {
   @override
   _HomeTableState createState() => _HomeTableState();
+  
 }
-// StreamController<String> streamController = StreamController();
 
 class _HomeTableState extends State<HomeTable>  {
     // var _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -28,18 +27,11 @@ class _HomeTableState extends State<HomeTable>  {
   final _auth = FirebaseAuth.instance;
   int _rowsPerPage = Paginated.defaultRowsPerPage;
   int _rowsPerPage1 = Paginated.defaultRowsPerPage;
-  StreamController _streamController ;
-  Stream _stream;
 
-  // int _firstRowToShow = Paginated.defaultFirstIndex;
-  // int _firstRowToShow1 = Paginated.defaultFirstIndex;
   @override
   void initState() {
     super.initState();
     getCurrentUser();
-    // getWords();
-    _streamController = StreamController();
-    // _stream = _streamController.
   }
 
   void getCurrentUser() async {
@@ -70,8 +62,6 @@ class _HomeTableState extends State<HomeTable>  {
     return WillPopScope(
       onWillPop: _requestPop,
       child: Scaffold(
-        // key: _scaffoldKey,
-       
         body: SingleChildScrollView(
                   child: StreamBuilder(
               stream: getWords().snapshots(),
@@ -82,55 +72,27 @@ class _HomeTableState extends State<HomeTable>  {
                     snapshots.data.data != null) {
                   List<Words2> worditems = [];
                   final wordlist = snapshots.data['words'];
-                  // (wordlist as List).sort((a,b) => a['index'].compareTo(b['index']));
-
-                  // Stream.fromIterable(wordlist).asyncMap((event) => event.toList());
-                  // List.generate(length, (index) => null)
 
                   for (var wo in wordlist.values)  {
                     final wordfrancais = wo['francais'];
                     final wordportugais = wo['portugais'];
                     final wordindex = wo['index'];
+                    final wordQuiz1 = wo['quiz1'];
+                    final wordQuiz2 = wo['quiz2'];
 
                     final item = 
-                        Words2(francais: wordfrancais, portugais: wordportugais, index: wordindex);
+                        Words2(francais: wordfrancais, portugais: wordportugais, index: wordindex,quiz1: wordQuiz1, quiz2: wordQuiz2 );
                     worditems.add(item);
 
                   }
 
-                  
-                  // worditems.sort((a,b) => a.index)
-                  // wordlist.values.foreach((index, value) {
-                  //   final wordfrancais = wordlist.values['francais'];
-                  //   final wordportugais = wordlist.values['francais'];
-                  //   final item = Words2(francais: wordfrancais, portugais: wordportugais);
-                  //   worditems.add(item);
-                  // });
-                //  var values= wordlist.values;
-                //   values.forEach((key, value) {
-                //     print(value['francais']);
-                //     });
-                //  objects.sort((a, b) {
-  // return a.value['name'].toString().toLowerCase().compareTo(b.value['name'].toString().toLowerCase());
-// });            
-                // if (worditems.length == 1000) {
-                  // worditems.sort((a,b) => a.index.compareTo(b.index));
-                // }
-
-                
-                
-
                   dts =  WordDataSource(worditems, );
                   var tableItemsCount = dts.rowCount;
                   
-                  // var defaultFirstIndex = Paginated.defaultFirstIndex;
                   var defaultRowsPerPage = Paginated.defaultRowsPerPage;
                   isRowCountLessDefaultRowsPerPage = tableItemsCount < defaultRowsPerPage;
                   _rowsPerPage = isRowCountLessDefaultRowsPerPage ? tableItemsCount : defaultRowsPerPage;
-                  // _firstRowToShow = defaultFirstIndex;
                   return 
-                  // PaginatedTable(worditems);
-               
                   Paginated(
           // horizontalMargin: 10,
           header: Text('Vocabulaire'),
@@ -149,10 +111,6 @@ class _HomeTableState extends State<HomeTable>  {
             ));
             
           }),
-          
-          
-          
-
           source: dts,
           dataquiz: dts.xx,
           rowsPerPage: 
@@ -194,25 +152,35 @@ class WordDataSource extends DataTableSource {
 
 
   DataRow getRow(int index) {
-    
-    // xx.sort((a,b) => (a.index).compareTo(b.index));
-  // (productList[i]['sizes'] as List).sort((a, b) => a['price'].compareTo(b['price']))
-    // (xx[index] as List).sort((a,b) => a.index.compareTo(b.index));
     xx.sort((a,b) => (a.index).compareTo(b.index));
-
-
 
     assert(index >= 0);
     if (index >= xx.length) return null;
     final Words2 word = xx[index];
     return DataRow.byIndex(index: index,
         // selected: word.selected,
+        cells: 
+        ( xx[index].quiz1 == 1)? 
+
         
 
-        cells: <DataCell>[
+        <DataCell>[
+          
+          DataCell(Container(width: 200, child: Text('${word.francais}', style: TextStyle(color: Colors.green)))),
+          DataCell(Container(width: 200, child: Text('${word.portugais}',  style: TextStyle(color: Colors.green)))),
+        ] : ( xx[index].quiz1 == -1) ? 
+        
+        <DataCell>[
+          
+          DataCell(Container(width: 200, child: Text('${word.francais}',  style: TextStyle(color: Colors.red)))),
+          DataCell(Container(width: 200, child: Text('${word.portugais}', style: TextStyle(color: Colors.red)))),
+        ]: <DataCell>[
+          
           DataCell(Container(width: 200, child: Text('${word.francais}'))),
           DataCell(Container(width: 200, child: Text('${word.portugais}'))),
-        ]);
+        ]
+        
+        ) ;
   }
 
   @override
@@ -234,7 +202,9 @@ class Words2 {
   final String francais;
   final String portugais;
   final int index;
-  Words2({this.francais, this.portugais, this.index});
+  final int quiz1;
+  final int quiz2;
+  Words2({this.francais, this.portugais, this.index, this.quiz1, this.quiz2});
 }
 
 DocumentReference getWords() {
