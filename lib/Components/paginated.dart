@@ -3,14 +3,19 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/material.dart';
+import 'package:vocab/Components/constant.dart';
 import 'package:vocab/transitionQuiz.dart';
 // import 'package:vocab/Module/words.dart';
 import 'package:vocab/Pages/home4.dart';
+import 'tabledata.dart' as tab;
+import 'package:vocab/Components/datasource.dart' as tabsource;
+
+
 
 class Paginated extends StatefulWidget {
   Paginated({
     Key key,
-    @required this.header,
+    this.header,
     this.actions,
     @required this.dataquiz,
     @required this.columns,
@@ -22,7 +27,6 @@ class Paginated extends StatefulWidget {
     this.horizontalMargin = 24.0,
     this.columnSpacing = 10.0,
     this.initialFirstRowIndex,
-    // this.firstRowIndex = defaultFirstIndex,
     this.onPageChanged,
     this.rowsPerPage = defaultRowsPerPage,
     this.availableRowsPerPage = const <int>[
@@ -34,7 +38,8 @@ class Paginated extends StatefulWidget {
     this.onRowsPerPageChanged,
     this.dragStartBehavior = DragStartBehavior.start,
     @required this.source,
-  })  : assert(header != null),
+  })  : 
+  // assert(header != null),
         assert(columns != null),
         assert(dragStartBehavior != null),
         assert(columns.isNotEmpty),
@@ -63,7 +68,7 @@ class Paginated extends StatefulWidget {
 
   final List<Widget> actions;
 
-  final List<DataColumn> columns;
+  final List<tab.DataColumn> columns;
 
   final int sortColumnIndex;
 
@@ -93,7 +98,7 @@ class Paginated extends StatefulWidget {
 
   final ValueChanged<int> onRowsPerPageChanged;
 
-  final DataTableSource source;
+  final tabsource.DataTableSource source;
 
   final DragStartBehavior dragStartBehavior;
 
@@ -106,7 +111,7 @@ class PaginatedState extends State<Paginated>  {
   int _rowCount;
   bool _rowCountApproximate;
   int _selectedRowCount;
-  final Map<int, DataRow> _rows = <int, DataRow>{};
+  final Map<int, tab.DataRow> _rows = <int, tab.DataRow>{};
 
   @override
   void initState() {
@@ -162,41 +167,41 @@ class PaginatedState extends State<Paginated>  {
       widget.onPageChanged(_firstRowIndex);
   }
 
-  DataRow _getBlankRowFor(int index) {
-    return DataRow.byIndex(
+  tab.DataRow _getBlankRowFor(int index) {
+    return tab.DataRow.byIndex(
       index: index,
       cells: widget.columns
-          .map<DataCell>((DataColumn column) => DataCell.empty)
+          .map<tab.DataCell>((tab.DataColumn column) => tab.DataCell.empty)
           .toList(),
     );
   }
 
-  DataRow _getProgressIndicatorRowFor(int index) {
+  tab.DataRow _getProgressIndicatorRowFor(int index) {
     bool haveProgressIndicator = false;
-    final List<DataCell> cells =
-        widget.columns.map<DataCell>((DataColumn column) {
+    final List<tab.DataCell> cells =
+        widget.columns.map<tab.DataCell>((tab.DataColumn column) {
       if (!column.numeric) {
         haveProgressIndicator = true;
-        return const DataCell(CircularProgressIndicator());
+        return const tab.DataCell(CircularProgressIndicator());
       }
-      return DataCell.empty;
+      return tab.DataCell.empty;
     }).toList();
     if (!haveProgressIndicator) {
       haveProgressIndicator = true;
-      cells[0] = const DataCell(CircularProgressIndicator());
+      cells[0] = const tab.DataCell(CircularProgressIndicator());
     }
-    return DataRow.byIndex(
+    return tab.DataRow.byIndex(
       index: index,
       cells: cells,
     );
   }
 
-  List<DataRow> _getRows(int firstRowIndex, int rowsPerPage) {
-    final List<DataRow> result = <DataRow>[];
+  List<tab.DataRow> _getRows(int firstRowIndex, int rowsPerPage) {
+    final List<tab.DataRow> result = <tab.DataRow>[];
     final int nextPageFirstRowIndex = firstRowIndex + rowsPerPage;
     bool haveProgressIndicator = false;
     for (int index = firstRowIndex; index < nextPageFirstRowIndex; index += 1) {
-      DataRow row;
+      tab.DataRow row;
       if (index < _rowCount || _rowCountApproximate) {
         row = _rows.putIfAbsent(index, () => widget.source.getRow(index));
         if (row == null && !haveProgressIndicator) {
@@ -259,7 +264,8 @@ class PaginatedState extends State<Paginated>  {
     // }
 
     final TextStyle footerTextStyle =
-        TextStyle(fontSize: 15, color: Colors.black);
+        TextStyle(fontSize: 19, color: Colors.black);
+
     if (widget.onRowsPerPageChanged != null) {
       final List<Widget> availableRowsPerPage = widget.availableRowsPerPage
           .where(
@@ -267,71 +273,133 @@ class PaginatedState extends State<Paginated>  {
           .map<DropdownMenuItem<int>>((int value) {
         return DropdownMenuItem<int>(
           value: value,
-          child: Text('$value'),
+          child: Text('$value  mots'),
         );
       }).toList();
+    //Gotta do all over with media query and double check when 1000 / 1000
       headerWidgets.addAll(<Widget>[
+        // Container( width: MediaQuery.of(context).size.width*0.01), // to match trailing padding in case we overflow and end up scrolling
+        
         Container(
-            width:
-                10.0), // to match trailing padding in case we overflow and end up scrolling
-        Text('# Mots:'),
-        ConstrainedBox(
-          constraints: const BoxConstraints(
-              minWidth: 50.0), // 40.0 for the text, 24.0 for the icon
-          child: Align(
-            alignment: AlignmentDirectional.centerEnd,
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<int>(
-                items: availableRowsPerPage.cast<DropdownMenuItem<int>>(),
-                value: widget.rowsPerPage,
-                onChanged: widget.onRowsPerPageChanged,
-                style: footerTextStyle,
-                iconSize: 24.0,
+          height: 30,
+          padding: EdgeInsets.only(left: 5),
+          alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  // color: Colors.orange,
+                  // shape: BoxShape.rectangle,
+                  border: Border.all(
+                    width: 2.0,
+                    color: Colors.orange,
+                  ),
+                  borderRadius:  BorderRadius.all(
+                    Radius.circular(10),
+                    ),
+                    
+                ),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+                minWidth: 50.0), // 40.0 for the text, 24.0 for the icon
+            child:  Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: DropdownButtonHideUnderline(
+                child:  DropdownButton<int>(
+                  // hint: Text('mots ', style: TextStyle(color: Colors.black)) ,
+                   
+                  items: availableRowsPerPage.cast<DropdownMenuItem<int>>(),
+                  
+                  value: widget.rowsPerPage,
+                  
+                  onChanged: widget.onRowsPerPageChanged,
+                  style: footerTextStyle,
+                  iconSize: 24.0,
+                ),
               ),
             ),
           ),
         ),
-        Container(width: 85.0),
-        Text(
-          localizations.pageRowsInfoTitle(
-            _firstRowIndex + 1,
-            _firstRowIndex + widget.rowsPerPage,
-            _rowCount,
-            _rowCountApproximate,
+      
+
+
+
+        
+        Container(width: MediaQuery.of(context).size.width*0.15),
+        Container(
+          height: 30,
+          padding: EdgeInsets.only(left: 5, right: 5),
+          alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  // color: Colors.orange,
+                  // shape: BoxShape.rectangle,
+                  border: Border.all(
+                    width: 2.0,
+                    color: Colors.orange,
+                  ),
+                  borderRadius:  BorderRadius.all(
+                    Radius.circular(10),
+                    ),
+                    
+                ),
+          
+          child: Text(
+            localizations.pageRowsInfoTitle(//changed source code here
+              _firstRowIndex + 1,
+              _firstRowIndex + widget.rowsPerPage,
+              _rowCount,
+              _rowCountApproximate,
+            ),
+            style: footerTextStyle,
           ),
         ),
-        Container(width: 55.0),
+        Container(width: MediaQuery.of(context).size.width*0.05),
       ]);
     }
 
     final List<Widget> footerWidgets = <Widget>[];
 
     footerWidgets.addAll(<Widget>[
-      FlatButton(
-          child: Text('Quiz'),
-          onPressed: () {
-            Navigator.of(context, rootNavigator: true).push(
-              MaterialPageRoute(
-                  builder: (context) => TransitionQuiz(
-                      firstWordIndex: _firstRowIndex + 1,
-                      lastWordIndex: widget.rowsPerPage + _firstRowIndex,
-                      description:
-                          'Il y a trois niveau de difficulté (...). Aussi possible de choisir nombre de mots a prendre en compte.')
-                  // Navigator.of(context).pushNamed(MaterialPageRoute(builder: (context) => '/Quiz');
-                  // MyQuiz()
-                  // Navigator.pushNamed(context, '/MyQuiz');
-                  ),
-            );
-          }),
-      Container(width: 150.0),
       IconButton(
+        color: Colors.orange,
         icon: const Icon(Icons.chevron_left),
         padding: EdgeInsets.zero,
         tooltip: localizations.previousPageTooltip,
         onPressed: _firstRowIndex <= 0 ? null : _handlePrevious,
       ),
-      Container(width: 15.0),
+      Container(width: MediaQuery.of(context).size.width*0.08),
+      Container(
+        height: 40,
+        width: 140,
+        
+        decoration: BoxDecoration(
+          color: Colors.orange,
+          borderRadius:  BorderRadius.all(
+                    Radius.circular(7),
+                    ),
+        ),
+        child: FlatButton(
+            child: Text('Quiz', style: TextStyle(
+              color: Colors.white,
+              fontSize: 19,
+            ),),
+            onPressed: () {
+              Navigator.of(context, rootNavigator: true).push(
+                MaterialPageRoute(
+                    builder: (context) => TransitionQuiz(
+                        firstWordIndex: _firstRowIndex + 1,
+                        lastWordIndex: widget.rowsPerPage + _firstRowIndex,
+                        description:
+                            'Il y a trois niveau de difficulté (...). Aussi possible de choisir nombre de mots a prendre en compte.')
+                    // Navigator.of(context).pushNamed(MaterialPageRoute(builder: (context) => '/Quiz');
+                    // MyQuiz()
+                    // Navigator.pushNamed(context, '/MyQuiz');
+                    ),
+              );
+            }),
+      ),
+      // Container(width: 150.0),
+      
+      Container(width: MediaQuery.of(context).size.width*0.08),
       IconButton(
+        color: Colors.orange,
         icon: const Icon(Icons.chevron_right),
         padding: EdgeInsets.zero,
         tooltip: localizations.nextPageTooltip,
@@ -340,14 +408,17 @@ class PaginatedState extends State<Paginated>  {
             ? null
             : _handleNext,
       ),
-      Container(width: 5.0),
+      // Container(width: 5.0),
     ]);
 
     // CARD
     return Container(
       height: MediaQuery.of(context).size.height,
-      child: Card(
-        semanticContainer: false,
+      width: MediaQuery.of(context).size.width ,
+      color: kcolorbackground,
+      // child: Card(
+      //   color: Colors.white,
+      //   semanticContainer: false,
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           DefaultTextStyle(
             style: _selectedRowCount > 0
@@ -358,7 +429,7 @@ class PaginatedState extends State<Paginated>  {
             child: IconTheme.merge(
               data: const IconThemeData(opacity: 0.54),
               child: Ink(
-                height: MediaQuery.of(context).size.height * 0.1,
+                height: MediaQuery.of(context).size.height * 0.10,
                 color: _selectedRowCount > 0
                     ? themeData.secondaryHeaderColor
                     : null,
@@ -366,7 +437,7 @@ class PaginatedState extends State<Paginated>  {
                   padding:
                       EdgeInsetsDirectional.only(start: startPadding, end: 3.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center ,
                     children: headerWidgets,
                   ),
                 ),
@@ -374,11 +445,12 @@ class PaginatedState extends State<Paginated>  {
             ),
           ),
           Container(
-            height: MediaQuery.of(context).size.height * 0.58,
+            height: MediaQuery.of(context).size.height * 0.55,
+            width: MediaQuery.of(context).size.width*0.8,
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               dragStartBehavior: widget.dragStartBehavior,
-              child: DataTable(
+              child: tab.DataTable(
                 key: _tableKey,
                 columns: widget.columns,
                 sortColumnIndex: widget.sortColumnIndex,
@@ -389,6 +461,7 @@ class PaginatedState extends State<Paginated>  {
                 horizontalMargin: widget.horizontalMargin,
                 columnSpacing: widget.columnSpacing,
                 rows: _getRows(_firstRowIndex, widget.rowsPerPage),
+                // dividerThickness: 0,
               ),
             ),
           ),
@@ -397,7 +470,7 @@ class PaginatedState extends State<Paginated>  {
             child: IconTheme.merge(
               data: const IconThemeData(opacity: 0.54),
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.12,
+                height: MediaQuery.of(context).size.height * 0.15,
                 child: SingleChildScrollView(
                   dragStartBehavior: widget.dragStartBehavior,
                   scrollDirection: Axis.horizontal,
@@ -410,10 +483,11 @@ class PaginatedState extends State<Paginated>  {
             ),
           ),
           // Expanded(child: Container(child: BottomNavigationBar())),
+          // Divider(color: Colors.orange,thickness: 1, height: 1,),
         ]),
 
         // height: MediaQuery.of(context).size.height * 0.1
-      ),
+      // ),
     );
   }
 }

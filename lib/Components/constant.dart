@@ -6,6 +6,9 @@ class Consts {
   static const double padding = 16.0;
   static const double avatarRadius = 66.0;
 }
+const TextStyle tableTextStyle =
+        TextStyle(fontSize: 17, color: Colors.black);
+
 
 const kwidgetTitleStyle = TextStyle(fontSize: 24.0,
                     fontWeight: FontWeight.w700,);
@@ -13,19 +16,26 @@ const kdialogueDescripStyle = TextStyle(
                     fontSize: 16.0,
                   );
 
+const kcolorbackground = Color(0xFFf6fff6);
 
-
-TextField textFieldDialogue(FocusNode focus, TextEditingController controller, String hint, Function onchanged) {
+TextField textFieldDialogue(FocusNode focus, TextEditingController controller, String hint, Function onchanged, ) {
     
     return TextField(
                           focusNode: focus,
                           controller: controller,
                           keyboardType: TextInputType.number,
                           onChanged: onchanged,
+                          textAlign: TextAlign.center,
+                          // style: TextStyle(textBaseline: TextBaseline.alphabetic),
                           decoration: InputDecoration.collapsed(
                             hintText: hint,
-                            // errorText: _validate ? 'Le premiere index doit etre plus petit que le deuxieme' : null,
-                          )
+                            // fillColor: Colors.white,
+                             border: OutlineInputBorder( )
+                            // hintStyle: TextStyle(height:1.0)
+                            
+                          ),
+                          // onEditingComplete : validate,
+                          
                           );
   }
 

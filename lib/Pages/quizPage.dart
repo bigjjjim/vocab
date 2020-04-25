@@ -9,28 +9,29 @@ import 'package:vocab/Components/buttonQuiz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:vocab/Pages/home4.dart';
-import 'package:vocab/home.dart';
-
+import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 
 var finalScore = 0;
 var questionNumber = 0;
 List<int> scorelist = [];
+
 final List<int> indexanswerQuiz = [0, 1, 2, 3];
 
 Future<bool> _onBackPressed() async {
   return false;
 }
 
-
 class MyQuiz extends StatefulWidget {
   final String difficulty ;
   final int indexFirstWord;
   final int indexLastWord;
+  final int numberQuestion;
   MyQuiz({
     this.difficulty,
     this.indexFirstWord,
     this.indexLastWord,
+    this.numberQuestion
   });
 
 
@@ -49,6 +50,7 @@ class _MyQuizState extends State<MyQuiz>  with AutomaticKeepAliveClientMixin {
   Widget build(BuildContext context) {
     int start = widget.indexFirstWord;
     int end = widget.indexLastWord;
+    
     final db = DatabaseServiceQuiz(start, end);
     super.build(context);
     
@@ -68,9 +70,7 @@ class _MyQuizState extends State<MyQuiz>  with AutomaticKeepAliveClientMixin {
                   child: Container(
                     height: MediaQuery.of(context).size.height,
                   
-                      child: Entire(),
-                      
-                                         
+                      child: Entire(widget.numberQuestion),                                                              
                   ),
                 ),
               ],
@@ -89,6 +89,9 @@ class _MyQuizState extends State<MyQuiz>  with AutomaticKeepAliveClientMixin {
 
 
 class Entire extends StatefulWidget {
+ final int numberQuestion;
+  Entire(this.numberQuestion);
+
 
  @override
   _EntireState createState() => _EntireState();
@@ -100,39 +103,30 @@ class _EntireState extends State<Entire>  {
   @override
   Widget build(BuildContext context) {
     final _wordsback = Provider.of<List<Words>>(context, );
- 
-    // print(_wordsback);
-    List<Words> getListForEachElement(int i, List l) {
+     List<Words> getListForEachElement(int i, List l) {
     final List<Words> list2 = List<Words>.from(l);
        list2.remove(l[i]);
-      // print(list2);
        list2.shuffle();
-      // print(list2);
-      // list3 = 
-      // print(list3);
       final List<Words> list3 = list2.sublist(0,3);
       list3.add(l[i]);
-      // print(list3);
       return list3;
     }
-
     List<List<Words>> answersQuiz() {
-      int _wordcount = _wordsback.length;
+      // int _wordcount = _wordsback.length;
 
-      int quizLength;
-      if ((_wordcount >= 10) && (_wordcount <= 20)) {
-        //no quiz if less than 10 words, need to put catch errors in dialog.dart
-        quizLength = (_wordcount / 1.67).round();
-      } else if ((_wordcount > 20) && (_wordcount <= 40)) {
-        quizLength = (_wordcount / 2).round();
-      } else if (_wordcount > 40) {
-        quizLength = 20;
-      }
+      int quizLength = widget.numberQuestion; //have to view this again
+      // if ((_wordcount >= 10) && (_wordcount <= 20)) {
+      //   quizLength = (_wordcount / 1.67).round();
+      // } else if ((_wordcount > 20) && (_wordcount <= 40)) {
+      //   quizLength = (_wordcount / 2).round();
+      // } else if (_wordcount > 40) {
+      //   quizLength = 20;
+      // }
 
       List<Words> newList = [];
       newList = List<Words>.from(_wordsback);
       newList.shuffle();
-      List<Words> listQuiz = newList.sublist(0, quizLength);
+      List<Words> listQuiz = newList.length > quizLength? newList.sublist(0, quizLength): newList;
       final List<List<Words>> answersQuiz = [];
 
       //here insert function in a loop?
@@ -147,9 +141,10 @@ class _EntireState extends State<Entire>  {
     final List<List<Words>> answersMapQuiz = answersQuiz();
     
     var r = Random(56);
-    double proportion = ((r.nextInt(100)) / 100);
+    // double proportion = ((r.nextInt(100)) / 100);
 
-    int lengthFirstLang = (proportion * answersMapQuiz.length).round();
+    int lengthFirstLang = (answersMapQuiz.length/2).round();
+    // (proportion * answersMapQuiz.length).round();
     List question = []; //thats my question words
     List<List> answersList = [];
     List answers = [];
@@ -231,24 +226,6 @@ class DatabaseServiceQuiz {
 }
 
 
-// List shuffle(var items) {
-//   var random = new Random();
-
-//   // Go through all elements.
-//   for (var i = items.length - 1; i > 0; i--) {
-
-//     // Pick a pseudorandom number according to the list length
-//     var n = random.nextInt(i + 1);
-
-//     var temp = items[i];
-//     items[i] = items[n];
-//     items[n] = temp;
-//   }
-
-//   return items;
-// }
-
-
 class QuizFront extends StatefulWidget  {
   QuizFront(
       {this.question,
@@ -266,12 +243,14 @@ class QuizFront extends StatefulWidget  {
 
 class _QuizFrontState extends State<QuizFront>  {    
   
+  // List<int> scorelist2 = List.generate(52, (index) => 0); // attention que bientot able to change number of question heyyyyy
+
   @override
   Widget build(BuildContext context) {
-   
+
     void updateQuestion() {
       setState(() {
-        if (questionNumber == widget.question.length - 1) {
+        if (questionNumber == widget.question.length -1 ) {
           
           Navigator.push(
             context,
@@ -289,26 +268,27 @@ class _QuizFrontState extends State<QuizFront>  {
         }
       });
     }
-
     quizAnswerChecker(
       int indexAnswer,
     ) {
       if (widget.answersList[questionNumber][indexAnswer] ==
           widget.correctAnswers[questionNumber]) {
         debugPrint("Correct");
-  
+        // print(scorelist2);
         finalScore++;
         setState(() {
           scorelist.add(1);
+          // scorelist2[questionNumber ] = 1;
         });
       } else {
         debugPrint("Wrong");
         setState(() {
           scorelist.add(0);
+          // scorelist2[questionNumber ] = -1;
         });
       }
       updateQuestion();
-
+      
       return scorelist;
     }
     int count = 0;
@@ -329,15 +309,27 @@ class _QuizFrontState extends State<QuizFront>  {
                 "Question ${questionNumber + 1} of ${widget.question.length}",
                 style: TextStyle(fontSize: 22.0),
               ),
+                
+                
               Text(
                 "Score: $finalScore",
                 style: TextStyle(fontSize: 22.0),
               )
             ],
           ),
+          
         ),
 
         Padding(padding: EdgeInsets.all(10.0)),
+
+        // StepProgressIndicator(
+        //           totalSteps: widget.question.length,
+        //           currentStep: questionNumber ,
+        //           customColor: (index) => scorelist2[index] == 1? Colors.green: scorelist2[index] == -1? Colors.red : Colors.white,
+        //           ),
+        LinearProgressIndicator( value: (questionNumber / widget.question.length),
+
+        ),
         Padding(padding: EdgeInsets.all(10.0)),
         
         Text(
@@ -391,7 +383,6 @@ class _QuizFrontState extends State<QuizFront>  {
         ),
 
         Padding(padding: EdgeInsets.all(15.0)),
-
         Container(
           alignment: Alignment.bottomCenter,
           child: MaterialButton(
@@ -415,12 +406,7 @@ class _QuizFrontState extends State<QuizFront>  {
       ]),
     );
   }
-
 }
-
-
-
-
 
 FirebaseUser loggedInUser;
 
@@ -452,14 +438,9 @@ class _SummaryState extends State<Summary> {
     final FirebaseUser user = await auth.currentUser();
     final uid = user.uid;
    debugPrint(uid);
-    // DocumentReference userRef =
-    //     Firestore.instance.collection('users').document(uid);
-
     setState(() {
       userId = user.uid;
-
     });
-    // here you write the codes to input the data into firestore
   }
   
   @override
@@ -467,27 +448,12 @@ class _SummaryState extends State<Summary> {
 
     print(widget.listinQuiz[0][3].index);
   
-
-    // for (var h in widget.listscore) {
-    //   print(h);
-    // }
-    // print(widget.listscore);
-    // Firestore.instance.collection('users')
-    //   .document(userid)
-    //   .collection('wordsscore')
-    //   .document('wordssc').updateData({'words.1.quiz1': 1});
-
-
-
-
-        var i;
+  var i;
   var docRef =Firestore.instance.collection('users')
       .document(userid)
       .collection('wordsscore')
       .document('wordssc');
-      
-//       updateData({'words.$indexWordsToUp.quiz1': 1});
-    
+
     for (i=0; i< widget.listscore.length; i++) {
       var indexToUp = widget.listinQuiz[i][3].index;
 
@@ -497,9 +463,7 @@ class _SummaryState extends State<Summary> {
     } else if (widget.listscore[i] == 0){
         docRef.updateData({'words.$indexToUp.quiz1': -1});
     }
-   
-    }
-
+ }
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -523,8 +487,7 @@ class _SummaryState extends State<Summary> {
                       finalScore = 0;
                       scorelist = [];
 
-                      Navigator.of(context).popUntil((route) => route.isFirst); //nned to find another way
-                      // Navigator.of(context).pop();
+                      Navigator.of(context).popUntil((route) => route.isFirst); 
                     },
                     child: Text(
                       "Back to liste",
@@ -540,7 +503,6 @@ class _SummaryState extends State<Summary> {
               Container(
                 height: 300,
                 child:
-                    // Text(listinQuiz.length.toString())
                     ListView.builder(
                   itemCount: widget.listscore.length,
                   itemBuilder: (context, index) {
@@ -583,14 +545,3 @@ class _SummaryState extends State<Summary> {
     );
   }
 }
-
-// void updateData() {
-//   try {
-//     databaseReference
-//         .collection('books')
-//         .document('1')
-//         .updateData({'description': 'Head First Flutter'});
-//   } catch (e) {
-//     print(e.toString());
-//   }
-// }

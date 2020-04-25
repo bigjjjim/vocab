@@ -1,20 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:vocab/Components/constant.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
-// import 'package:memender/services/sign_in.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:vocab/authentification/sign_in.dart';
 import 'package:vocab/home.dart';
-
-
-// import 'home.dart';
 
 class MyGlobals {
   static GlobalKey _scaffoldKey;

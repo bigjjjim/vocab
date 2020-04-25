@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vocab/Pages/memoire.dart';
-// import 'package:vocab/Pages/modiftable.dart';
 import 'Pages/home4.dart';
 import 'package:vocab/authentification/login.dart';
-
 import 'Pages/translator.dart';
 import 'Pages/annexe.dart';
 import 'authentification/login.dart';
@@ -23,17 +21,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // var _currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
  
     
  
     return MaterialApp(
-      
-      // initialRoute: WelcomeScreen.id,
-      routes: {
+            routes: {
         '/': (BuildContext context) =>  _handleWindowDisplay(),
         '/homeTable': (BuildContext context) => HomeTable()
          ,
@@ -42,11 +36,6 @@ class _MyAppState extends State<MyApp> {
         '/favourite': (BuildContext context) => Memoire(),
         '/translator': (BuildContext context) => Translator(),
         '/Quiz': ( BuildContext context) => MyQuiz(),
-
-
-
-       
-
       },
     );
   }
@@ -71,16 +60,3 @@ class _MyAppState extends State<MyApp> {
           );
 }
 }
-
-
-
-
-// MaterialApp(
-//       navigatorKey: mainNavigatorKey,
-      
-//       title: 'Flutter Demo',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: TabsScreen()
-//     );
