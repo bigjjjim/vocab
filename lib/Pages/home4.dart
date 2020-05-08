@@ -170,16 +170,19 @@ class WordDataSource extends tabsource.DataTableSource {
                     // color: Color(0xFFe6ffe7),
                     child: Row(children: [
                       Container(
-                          width: MediaQuery.of(context).size.width*0.3,
+                          width: MediaQuery.of(context).size.width*0.35,
 
                           // padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.1 ), //need to find work around because no context so no  MediaQuery.of(context).size.height
                           child: Text(
                             '${word.francais}',
                             style: tableTextStyle,
-                          )),
-                      Icon(
-                        Icons.check,
-                        color: Colors.green,
+                          ),),
+                      Container(
+                        //  width: MediaQuery.of(context).size.width*0.05,
+                        child: Icon(
+                          Icons.check,
+                          color: Colors.green,
+                        ),
                       )
                     ]),
                   ),
@@ -204,7 +207,7 @@ class WordDataSource extends tabsource.DataTableSource {
                   Container(
                     child: Row(children: [
                       Container(
-                          width: MediaQuery.of(context).size.width*0.3,
+                          width: MediaQuery.of(context).size.width*0.35,
                           // padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.1 ), //need to find work around because no context so no  MediaQuery.of(context).size.height
                           child: Text(
                             '${word.francais}',
@@ -239,7 +242,7 @@ class WordDataSource extends tabsource.DataTableSource {
                   Container(
                     child: Row(children: [
                       Container(
-                          width: MediaQuery.of(context).size.width*0.3,
+                          width: MediaQuery.of(context).size.width*0.35,
                           // padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.1 ), //need to find work around because no context so no  MediaQuery.of(context).size.height
                           child: Text(
                             '${word.francais}',

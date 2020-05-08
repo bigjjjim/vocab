@@ -15,8 +15,20 @@ const kwidgetTitleStyle = TextStyle(fontSize: 24.0,
 const kdialogueDescripStyle = TextStyle(
                     fontSize: 16.0,
                   );
+const kbackgroundAppbar = Color(0xFF2e7d32);
 
 const kcolorbackground = Color(0xFFf6fff6);
+const kcolorgrise = Color(0xFFfffcf8);
+const krow2 = Color(0xFFfffcf8);
+const krow1 = Color(0xFFe6ffe7);
+const kerror = Color(0xFFfe9b94);
+const kcorrect = Color(0xFFb7e9af);
+const kcolorblacktext = Color(0xFF353842);
+
+const stylegrammaireheader = TextStyle( fontSize: 20, color: kcolorblacktext,  fontWeight: FontWeight.w400);
+const stylemodeverb = TextStyle( fontSize: 18, color: kcolorblacktext,  fontWeight: FontWeight.w300);
+const styletempsverb = TextStyle( fontSize: 16, color: kcolorblacktext,  fontWeight: FontWeight.w300);
+
 
 TextField textFieldDialogue(FocusNode focus, TextEditingController controller, String hint, Function onchanged, ) {
     

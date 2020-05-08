@@ -7,10 +7,11 @@ import 'dart:async';
 import 'package:provider/provider.dart';
 import 'package:vocab/Components/buttonQuiz.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:vocab/Pages/home4.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
-
+// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:vocab/Components/constant.dart';
+// import 'package:vocab/Pages/home4.dart';
+import 'package:vocab/authentification/sign_in.dart';
+import 'summaryQuiz.dart';
 
 var finalScore = 0;
 var questionNumber = 0;
@@ -19,7 +20,7 @@ List<int> scorelist = [];
 final List<int> indexanswerQuiz = [0, 1, 2, 3];
 
 Future<bool> _onBackPressed() async {
-  return false;
+  return true;
 }
 
 class MyQuiz extends StatefulWidget {
@@ -40,7 +41,7 @@ class MyQuiz extends StatefulWidget {
   _MyQuizState createState() => _MyQuizState();
 }
 
-class _MyQuizState extends State<MyQuiz>  with AutomaticKeepAliveClientMixin {
+class _MyQuizState extends State<MyQuiz>   {
    @override
   void initState() {
     super.initState();
@@ -52,28 +53,64 @@ class _MyQuizState extends State<MyQuiz>  with AutomaticKeepAliveClientMixin {
     int end = widget.indexLastWord;
     
     final db = DatabaseServiceQuiz(start, end);
-    super.build(context);
+    // super.build(context);
     
     return WillPopScope(
         onWillPop: _onBackPressed,
         child: Scaffold(
-       
-          body: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                StreamProvider<List<Words>>.value(
-                  value:  db.streamWord(),
-                  lazy: true,
-                  
-                  initialData: 
-                  [Words(francais: '', portugais: '', index: 0), Words(francais: '', portugais: '', index: 0), Words(francais: '', portugais: '', index: 0), Words(francais: '', portugais: '', index: 0)],
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                  
-                      child: Entire(widget.numberQuestion),                                                              
-                  ),
+        appBar: AppBar(
+        title: new Text('Minilo'),
+        automaticallyImplyLeading: false,
+
+        backgroundColor: Color(0xFF2e7d32),
+        actions: [
+          FlatButton(
+            child: Container(
+              width: 70,
+              height: 30,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: Color(0xFF123214),
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+
+              // color: Color(0xFF123214),
+              child: Text(
+                'Log out',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            onPressed: () {
+              handleSignOut();
+              Navigator.of(context).pushNamed('/');
+            },
+          ),
+        ],
+      ),
+          body: Container(
+                            height: MediaQuery.of(context).size.height,
+                color: kcolorbackground,
+
+            child: SingleChildScrollView(
+              child: Container(
+                // color: kcolorbackground,
+                child: Column(
+                  children: <Widget>[
+                    StreamProvider<List<Words>>.value(
+                      value:  db.streamWord(),
+                      lazy: true,
+                      
+                      initialData: 
+                      [Words(francais: '', portugais: '', index: 0), Words(francais: '', portugais: '', index: 0), Words(francais: '', portugais: '', index: 0), Words(francais: '', portugais: '', index: 0)],
+                      child: Container(
+                        // height: MediaQuery.of(context).size.height,
+                      
+                          child: Entire(widget.numberQuestion),                                                              
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ));
@@ -82,8 +119,8 @@ class _MyQuizState extends State<MyQuiz>  with AutomaticKeepAliveClientMixin {
   void dispose() {
     super.dispose();
   }
-   @override
-  bool get wantKeepAlive => true;
+  //  @override
+  // bool get wantKeepAlive => true;
 }
   
 
@@ -123,8 +160,7 @@ class _EntireState extends State<Entire>  {
       //   quizLength = 20;
       // }
 
-      List<Words> newList = [];
-      newList = List<Words>.from(_wordsback);
+      List<Words> newList =  List<Words>.from(_wordsback);
       newList.shuffle();
       List<Words> listQuiz = newList.length > quizLength? newList.sublist(0, quizLength): newList;
       final List<List<Words>> answersQuiz = [];
@@ -241,14 +277,22 @@ class QuizFront extends StatefulWidget  {
   _QuizFrontState createState() => _QuizFrontState();
 }
 
-class _QuizFrontState extends State<QuizFront>  {    
+class _QuizFrontState extends State<QuizFront> with SingleTickerProviderStateMixin  {    
   
-  // List<int> scorelist2 = List.generate(52, (index) => 0); // attention que bientot able to change number of question heyyyyy
 
+  // Animation<double> _animation;
+  // AnimationController _animationController;
+  List<int> color1 = List.generate(52, (index) => 0); // attention que bientot able to change number of question heyyyyy
+  List<int> color2 = List.generate(52, (index) => 0);
+  List<int> color3 = List.generate(52, (index) => 0);
+  List<int> color4 = List.generate(52, (index) => 0);
+  
   @override
   Widget build(BuildContext context) {
 
+
     void updateQuestion() {
+
       setState(() {
         if (questionNumber == widget.question.length -1 ) {
           
@@ -268,8 +312,10 @@ class _QuizFrontState extends State<QuizFront>  {
         }
       });
     }
+ 
+
     quizAnswerChecker(
-      int indexAnswer,
+      int indexAnswer, List color
     ) {
       if (widget.answersList[questionNumber][indexAnswer] ==
           widget.correctAnswers[questionNumber]) {
@@ -278,270 +324,184 @@ class _QuizFrontState extends State<QuizFront>  {
         finalScore++;
         setState(() {
           scorelist.add(1);
-          // scorelist2[questionNumber ] = 1;
+          color[questionNumber ] = 1;
         });
       } else {
         debugPrint("Wrong");
+
         setState(() {
           scorelist.add(0);
-          // scorelist2[questionNumber ] = -1;
+          color[questionNumber ] = -1;
         });
       }
+      Future.delayed(const Duration(milliseconds: 500), () {
       updateQuestion();
+      });
       
       return scorelist;
     }
     int count = 0;
 
     return Container(
-      height: MediaQuery.of(context).size.height,
-      margin: const EdgeInsets.all(10.0),
+      // height: MediaQuery.of(context).size.height,
+      // margin: const EdgeInsets.all(10.0),
       alignment: Alignment.topCenter,
       child: Column(children: <Widget>[
+        
         Padding(padding: EdgeInsets.all(20.0)),
 
         Container(
           alignment: Alignment.centerRight,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                "Question ${questionNumber + 1} of ${widget.question.length}",
-                style: TextStyle(fontSize: 22.0),
+                "Question: ${questionNumber + 1} / ${widget.question.length}", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold ),
+                
               ),
                 
                 
-              Text(
-                "Score: $finalScore",
-                style: TextStyle(fontSize: 22.0),
-              )
+              // Text(
+              //   "Score: $finalScore",
+              //   style: TextStyle(fontSize: 22.0),
+              // )
             ],
           ),
           
         ),
 
-        Padding(padding: EdgeInsets.all(10.0)),
+        Padding(padding: EdgeInsets.all(5.0)),
 
         // StepProgressIndicator(
         //           totalSteps: widget.question.length,
         //           currentStep: questionNumber ,
         //           customColor: (index) => scorelist2[index] == 1? Colors.green: scorelist2[index] == -1? Colors.red : Colors.white,
         //           ),
-        LinearProgressIndicator( value: (questionNumber / widget.question.length),
+        LinearProgressIndicator( 
+          value: (questionNumber / widget.question.length),
+          backgroundColor: Color(0xFFe6ffe7),
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
 
         ),
-        Padding(padding: EdgeInsets.all(10.0)),
+        Padding(padding: EdgeInsets.all(20.0)),
         
-        Text(
-          
-          widget.question[questionNumber],
-          style: TextStyle(
-            fontSize: 20.0,
+        ClipRRect(
+                  child: Container(
+            width: 500,
+            // MediaQuery.of(context).size.width,
+            height: 60,
+            margin: const EdgeInsets.only(bottom: 1.0),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              // shape: BoxShape.rectangle,
+              color: krow1,
+              boxShadow: [BoxShadow(color: Colors.grey[600], offset: Offset(0.0, 1.0), //(x,y)
+                      blurRadius: 6.0, )],
+              border: Border(top: BorderSide(width: 1,color: Colors.black),
+              bottom:  BorderSide(width: 1,color: Colors.black),),
+              
+            ),
+            child: Text(
+              
+              widget.question[questionNumber],
+              style: TextStyle(
+                fontSize: 25.0,
+                fontWeight: FontWeight.bold
+              ),
+            ),
           ),
         ), 
 
-        Padding(padding: EdgeInsets.all(10.0)),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
+        Padding(padding: EdgeInsets.all(35.0)),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //   children: <Widget>[
             //button 1
 
+          
+              //   QuizButton(
+              //   onPressed: () {
+              //     quizAnswerChecker(indexanswerQuiz[0]);
+              //   },
+              //   word: widget.answersList[questionNumber][indexanswerQuiz[0]],
+                
+              // ),
             QuizButton(
               onPressed: () {
-                quizAnswerChecker(indexanswerQuiz[0]);
+                quizAnswerChecker(indexanswerQuiz[0], color1);
               },
+              color: color1[questionNumber] == 1 ? kcorrect : color1[questionNumber] == -1 ? kerror : Colors.white,
               word: widget.answersList[questionNumber][indexanswerQuiz[0]],
             ),
 
             QuizButton(
               onPressed: () {
-                quizAnswerChecker(indexanswerQuiz[1]);
+                quizAnswerChecker(indexanswerQuiz[1], color2);
               },
+              color:  color2[questionNumber] == 1 ? kcorrect : color2[questionNumber] == -1 ? kerror : Colors.white,
               word: widget.answersList[questionNumber][indexanswerQuiz[1]],
-            )
-          ],
-        ),
+            ),
+        //   ],
+        // ),
 
-        Padding(padding: EdgeInsets.all(10.0)),
+        // Padding(padding: EdgeInsets.all(10.0)),
 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //   children: <Widget>[
             QuizButton(
               onPressed: () {
-                quizAnswerChecker(indexanswerQuiz[2]);
+                quizAnswerChecker(indexanswerQuiz[2], color3);
               },
+              color:  color3[questionNumber] == 1 ? kcorrect : color3[questionNumber] == -1 ? kerror : Colors.white,
               word: widget.answersList[questionNumber][indexanswerQuiz[2]],
             ),
             QuizButton(
               onPressed: () {
-                quizAnswerChecker(indexanswerQuiz[3]);
+                quizAnswerChecker(indexanswerQuiz[3], color4);
               },
+              color: color4[questionNumber] == 1 ? kcorrect : color4[questionNumber] == -1 ? kerror : Colors.white,
               word: widget.answersList[questionNumber][indexanswerQuiz[3]],
-            )
-          ],
-        ),
+            ),
+        //   ],
+        // ),
 
-        Padding(padding: EdgeInsets.all(15.0)),
-        Container(
-          alignment: Alignment.bottomCenter,
-          child: MaterialButton(
-              minWidth: 240.0,
-              height: 30.0,
-              color: Colors.red,
-              onPressed: () {
-                questionNumber = 0;
-                finalScore = 0;
-                scorelist = [];
-               
-                Navigator.of(context).popUntil((route) => route.isFirst);
-               
-              },
-              
-              child: Text(
-                "Quit",
-                style: TextStyle(fontSize: 18.0, color: Colors.white),
-              )),
+        Padding(padding: EdgeInsets.all(25.0)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            // Container(
+            //   width: 140,
+              // decoration: BoxDecoration(
+              //   shape: BoxShape.rectangle,
+              //   // color: Colors.grey[300],
+              //   border: Border.all(color: Colors.red)
+              // ),
+              // alignment: Alignment.bottomCenter,
+              // child: 
+              MaterialButton(
+                  // minWidth: 60.0,
+                  height: 30.0,
+                  
+                  onPressed: () {
+                    questionNumber = 0;
+                    finalScore = 0;
+                    scorelist = [];
+                   
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+                   
+                  },
+                  
+                  child: Text(
+                    "Quitter",
+                    style: TextStyle(fontSize: 17.0, color: Colors.grey[500]),
+                  )),
+            
+          ],
         ),
       ]),
     );
   }
 }
 
-FirebaseUser loggedInUser;
-
-class Summary extends StatefulWidget {
-  final int score;
-  final List listscore;
-  final List<dynamic> listinQuiz;
-
-  Summary({Key key, @required this.score, this.listscore, this.listinQuiz})
-      : super(key: key);
-
-  @override
-  _SummaryState createState() => _SummaryState();
-}
-
-class _SummaryState extends State<Summary> {
-
-
-  String userId;
-  final FirebaseAuth auth = FirebaseAuth.instance;
-
-   @override
-  void initState() {
-    super.initState();
-    getUserRef();
-  }
-
-  getUserRef() async {
-    final FirebaseUser user = await auth.currentUser();
-    final uid = user.uid;
-   debugPrint(uid);
-    setState(() {
-      userId = user.uid;
-    });
-  }
-  
-  @override
-  Widget build(BuildContext context) {
-
-    print(widget.listinQuiz[0][3].index);
-  
-  var i;
-  var docRef =Firestore.instance.collection('users')
-      .document(userid)
-      .collection('wordsscore')
-      .document('wordssc');
-
-    for (i=0; i< widget.listscore.length; i++) {
-      var indexToUp = widget.listinQuiz[i][3].index;
-
-      if (widget.listscore[i] == 1) {
-        docRef.updateData({'words.$indexToUp.quiz1': 1});
-      
-    } else if (widget.listscore[i] == 0){
-        docRef.updateData({'words.$indexToUp.quiz1': -1});
-    }
- }
-
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-       
-        body: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                "Final Score: ${widget.score}",
-                style: TextStyle(fontSize: 35.0),
-              ),
-              Padding(padding: EdgeInsets.all(30.0)),
-              Row(
-                children: <Widget>[
-                  MaterialButton(
-                    color: Colors.red,
-                    onPressed: () {
-                      questionNumber = 0;
-                      finalScore = 0;
-                      scorelist = [];
-
-                      Navigator.of(context).popUntil((route) => route.isFirst); 
-                    },
-                    child: Text(
-                      "Back to liste",
-                      style: TextStyle(fontSize: 20.0, color: Colors.white),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 50,
-                  ),
-                ],
-              ),
-              
-              Container(
-                height: 300,
-                child:
-                    ListView.builder(
-                  itemCount: widget.listscore.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 15,
-                              child: Icon(
-                                  IconData(59539,
-                                      fontFamily: 'MaterialIcons',
-                                      matchTextDirection: true),
-                                  color: widget.listscore[index] == 1
-                                      ? Colors.green
-                                      : Colors.red),
-                            ),
-                            SizedBox(width: 50),
-                            Container(
-                                width: 120,
-                                child: Text(widget.listinQuiz[index][3].francais)),
-                                 
-                            SizedBox(width: 30),
-                            Container(
-                                width: 120,
-                                child: Text(widget.listinQuiz[index][3].portugais)),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}

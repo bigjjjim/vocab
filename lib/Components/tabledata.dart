@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'constant.dart';
 // import 'checkbox.dart';
 // import 'colors.dart';
 // import 'constants.dart';
@@ -635,11 +636,11 @@ class DataTable extends StatelessWidget {
     // );
     final BoxDecoration _kUnselectedDecorationEven = new BoxDecoration(
       border: new Border(bottom: Divider.createBorderSide(context, width: 1.0)),
-      color: Color(0xFFe6ffe7),
+      color: krow1,
     );
     final BoxDecoration _kUnselectedDecorationOdd = new BoxDecoration(
       border: new Border(bottom: Divider.createBorderSide(context, width: 1.0)),
-      color: Color(0xFFfffcf8),
+      color: krow2,
     );
 
     final bool displayCheckboxColumn = showCheckboxColumn && rows.any((DataRow row) => row.onSelectChanged != null);

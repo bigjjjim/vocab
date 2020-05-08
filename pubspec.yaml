@@ -41,7 +41,7 @@ dependencies:
   google_sign_in: ^4.0.4
   # nested_navigators: ^1.0.7
   # flutter_bloc: ^3.2.0
-  step_progress_indicator: ^0.2.1+4
+  # step_progress_indicator: ^0.2.1+4
   
 
   
@@ -65,8 +65,10 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #  - images/a_dot_burr.jpeg
+  assets:
+   - images/elephant.png
+   - images/Flag_of_France.png
+   - assets/data.json
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

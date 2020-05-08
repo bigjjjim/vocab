@@ -6,9 +6,16 @@ import 'Pages/home4.dart';
 import 'authentification/sign_in.dart';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:vocab/Pages/nombres.dart';
+import 'package:vocab/Pages/jours.dart';
+import 'package:vocab/Pages/expressionPage.dart';
+import 'package:vocab/Pages/VerbPage.dart';
+import 'package:vocab/Pages/VerbDetail.dart';
+
 
 FirebaseUser loggedInUser;
-enum TabItem { homeTable, annexe, favourite, translator }
+enum TabItem { homeTable, annexe, favourite, }
+List tab = ["homeTable", "annexe", "favourite",];
 
 class Home extends StatefulWidget {
   @override
@@ -41,11 +48,43 @@ class _HomeState extends State<Home> {
     });
   }
 
+  // void _selectTab(TabItem tabItem) {
+  //   if (tabItem == _selectedIndex) {
+  //     // pop to first route
+  //     _selectedIndex[tabItem].currentState.popUntil((route) => route.isFirst);
+  //   } else {
+  //     setState(() => _currentTab = tabItem);
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _onBackPressed,
-      child: Scaffold(
+    // print(TabItem.values[0]);
+    return 
+    WillPopScope(
+      onWillPop:
+      () async {
+        final isFirstRouteInCurrentTab =
+            !await navkeys[TabItem.values[_selectedIndex]].currentState.maybePop();
+        if (isFirstRouteInCurrentTab) {
+          // if not on the 'main' tab
+          if (_selectedIndex != 0) {
+            // select 'main' tab
+            // _selectTab(TabItem.homeTable);
+            // back button handled by app
+            setState(() {
+              _selectedIndex = 0;
+
+            });
+            return false;
+          }
+        }
+        // let system handle back button if we're on the first route
+        return isFirstRouteInCurrentTab;
+      },
+     
+      child:
+       Scaffold(
         appBar: AppBar(
           title: new Text('Minilo'),
           backgroundColor: Color(0xFF2e7d32),
@@ -78,27 +117,68 @@ class _HomeState extends State<Home> {
           Offstage(
             offstage: _selectedIndex != 0,
             child: Navigator(
-              key: navkeys['homeTable'],
+              key: navkeys[TabItem.homeTable],
               onGenerateRoute: (route) => MaterialPageRoute(
                 settings: route,
                 builder: (context) => HomeTable(),
               ),
             ),
           ),
-          Navigator(
-            key: navkeys['annexe'],
-            onGenerateRoute: (route) => MaterialPageRoute(
-              settings: route,
-              builder: (context) => Annexe(),
+          Offstage(
+            offstage: _selectedIndex != 1,
+              child: Navigator(
+                initialRoute: 'annexe'
+                ,
+              key: navkeys[TabItem.annexe],
+              onGenerateRoute:  (settings) {
+                switch (settings.name) {
+                case 'annexe':
+                return MaterialPageRoute(builder: (context) => Annexe(), settings: settings);
+                break;
+
+                case 'grammairePage':
+                return MaterialPageRoute(builder: (context) => GrammairePage(), settings: settings);
+               break;
+                case 'nombresPage':
+                return MaterialPageRoute(builder: (context) => NombresPage(), settings: settings);
+               break;
+               case 'joursPage':
+                return MaterialPageRoute(builder: (context) => JoursPage(), settings: settings);
+               break;
+               case 'expressionsPage':
+                return MaterialPageRoute(builder: (context) => ExpressionsPage(), settings: settings);
+               break;
+
+               default: throw Exception("Invalid route");
+                }
+              }
+              
+              //  MaterialPageRoute(
+              //   settings: route,
+              //   builder: (context) => Annexe(),
+              // ),
             ),
           ),
-          Navigator(
-            key: navkeys['favourite'],
-            onGenerateRoute: (route) => MaterialPageRoute(
-              settings: route,
-              builder: (context) => Memoire(),
-            ),
-          ),
+        Offstage(
+          offstage: _selectedIndex != 2,
+          child: Navigator(
+            key: navkeys[TabItem.favourite],
+            initialRoute: 'verbPage',
+            onGenerateRoute: (settings) {
+              switch (settings.name) {
+                case 'verbPage':
+                return MaterialPageRoute(builder: (context) => VerbPage(), settings: settings);
+                break;
+
+                case 'VerbDetailPage':
+                return MaterialPageRoute(builder: (context) => Verbdetail(), settings: settings);
+                break;
+
+                default: throw Exception("Invalid route");
+                }
+            }),),
+            
+            
         ]),
         bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
@@ -111,8 +191,8 @@ class _HomeState extends State<Home> {
                 title: Text('Annexe'),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.star),
-                title: Text('Favourite'),
+                icon: Icon(Icons.search),
+                title: Text('Verbes'),
               ),
             ],
             selectedItemColor: Colors.orange,
@@ -125,6 +205,8 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
+ 
 
   void _onTap(val, BuildContext context) {
     if (_selectedIndex == val) {
@@ -164,7 +246,8 @@ class _HomeState extends State<Home> {
   }
 
   Future<bool> _onBackPressed() async {
-    Navigator.of(context).popUntil((route) => route.isFirst);
+    // Navigator.of(context).popUntil((route) => route.isFirst);
+  //  _selectedIndex = 0;
     return false;
   }
 }

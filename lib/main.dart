@@ -9,6 +9,7 @@ import 'home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'Module/authservice.dart';
 import 'package:vocab/Pages/quizPage.dart';
+import 'Components/constant.dart';
 
 AuthService appAuth = new AuthService();
 
@@ -27,12 +28,23 @@ class _MyAppState extends State<MyApp> {
     
  
     return MaterialApp(
+       theme: ThemeData(
+    textTheme: TextTheme(
+      bodyText1: TextStyle(),
+      bodyText2: TextStyle(),
+      // subtitle2: TextStyle(),
+      // subhead: TextStyle(),
+    ).apply(
+      bodyColor: kcolorblacktext, 
+      //  displayColor: Colors.red
+      // displayColor: Colors.blue, 
+    ),),
             routes: {
         '/': (BuildContext context) =>  _handleWindowDisplay(),
         '/homeTable': (BuildContext context) => HomeTable()
          ,
         '/loginscreen': (BuildContext context) => LoginScreen(),
-        '/Annexe': (BuildContext context) => Annexe(),
+        // '/Annexe': (BuildContext context) => Annexe(),
         '/favourite': (BuildContext context) => Memoire(),
         '/translator': (BuildContext context) => Translator(),
         '/Quiz': ( BuildContext context) => MyQuiz(),

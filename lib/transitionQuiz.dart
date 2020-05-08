@@ -85,7 +85,7 @@ class _TransitionQuizState extends State<TransitionQuiz> {
 
   Future<bool> _onBackPressed() async {
     Navigator.of(context).popUntil((route) => route.isFirst);
-    return true;
+    return false;
   }
 
 // double _value = 6.0;
@@ -123,7 +123,9 @@ class _TransitionQuizState extends State<TransitionQuiz> {
     return Scaffold(
       appBar: AppBar(
         title: new Text('Minilo'),
-        backgroundColor: Color(0xFF2e7d32),
+        // leading: new Container(),
+        automaticallyImplyLeading: false,
+        backgroundColor: kbackgroundAppbar,
         actions: [
           FlatButton(
             child: Container(
@@ -148,205 +150,220 @@ class _TransitionQuizState extends State<TransitionQuiz> {
           ),
         ],
       ),
-      body: WillPopScope(
-        onWillPop: _onBackPressed,
-        child: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            color: kcolorbackground,
-            child: Stack(children: <Widget>[
-              //...bottom card part,
-            Column(children: <Widget>[
-              SizedBox(height: MediaQuery.of(context).size.height*0.25),
+      body:  DefaultTextStyle(
+
+  style: TextStyle(color: kcolorblacktext, fontWeight: FontWeight.w400, fontSize: 15),
+  child:
+      
+       Container(
+          height: MediaQuery.of(context).size.height,
+
+        color: kcolorbackground,
+        child: GestureDetector(
+          onTap: () {
+
+    FocusScope.of(context).requestFocus(new FocusNode());
+  },
+                child: WillPopScope(
+            onWillPop: _onBackPressed,
+            child: SingleChildScrollView(
+              child: Container(
+                
+                child: Stack(children: <Widget>[
+                  //...bottom card part,
+                Column(children: <Widget>[
+                  SizedBox(height: MediaQuery.of(context).size.height*0.25),
 
 
-              Container( 
-                width: MediaQuery.of(context).size.width,
-                // alignment: Alignment.center,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                  Icon(Icons.settings, color: Colors.orange,size: 40,),
-                  SizedBox(width:5),
-                  Text('Option', style: TextStyle(fontSize: 30),),
-                ]),),
-              
-              SizedBox(height:15),
-              
+                  Container( 
+                    width: MediaQuery.of(context).size.width,
+                    // alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                      Icon(Icons.settings, color: Colors.orange,size: 40,),
+                      SizedBox(width:5),
+                      Text('Option', style: TextStyle(fontSize: 30),),
+                    ]),),
+                  
+                  SizedBox(height:15),
+                  
 
 
-              Container(child: Text('Matière pour le test: ', style: TextStyle(fontSize: 20))),
+                  Container(child: Text('Matière pour le test: ', style: TextStyle(fontSize: 20))),
 
 SizedBox(height:15),
-               Row(
-                 mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                             Container(
-                                height: 35,
-                                width: 80,   
-                                color: Colors.white,
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                 Container(
+                                    height: 35,
+                                    width: 80,   
+                                    color: Colors.white,
   
-                                child:                        
-                                    textFieldDialogue(
-                                    _focusNode, quizStartController, _hint,
-                                    (String newValue) {
-                                  setState(() {
-                                    _hint = newValue;
-                                    maxValuewait = int.parse(_hint2) +1 - int.parse(newValue);  
-                                    _numberQuestion = 10;                                    
-                                  },);
-                                },
-                                ),
-                              ),
-                            
-
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Container(child: Text('à')),
-                            ),
-                             Container(
-                                height: 35,
-                                width: 80,
-                                color: Colors.white,
-                                child: textFieldDialogue(
-                                    _focusNode2, quizEndController, _hint2,
-                                    (String newValue) {
-
-                                  setState(() {
-
-                                    _hint2 = newValue;
-
-                                     maxValuewait = int.parse(newValue) +1- int.parse(_hint);
-                                     _numberQuestion = 10;
-                                  });
-                                },
-                                ),
+                                    child:                        
+                                        textFieldDialogue(
+                                        _focusNode, quizStartController, _hint,
+                                        (String newValue) {
+                                      setState(() {
+                                        _hint = newValue;
+                                        maxValuewait = int.parse(_hint2) +1 - int.parse(newValue);  
+                                        _numberQuestion = 10;                                    
+                                      },);
+                                    },
+                                    ),
+                                  ),
                                 
-                              ),
-                            
-                          ],
-                        ),
-                        SizedBox(height: 20),
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                            Text('Nombre de questions: ', style: TextStyle(fontSize: 20)), 
-                            
-                            Container(
-                              // color: Colors.white,
-                              
-                              height: 30,
-                              // width: 65,
-                              padding: EdgeInsets.only(left: 8, ),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(
-                    width: 1.0,
-                    color: Colors.black38,
-                  ),
-                  borderRadius:  BorderRadius.all(
-                    Radius.circular(4),
-                    ),
-                              ),
-                              // alignment: Alignment.center,
-                              child: 
-                              
-                               DropdownButton(
-                                  // focusColor: Colors.white,
-                                  
-                                      items:
-                                      //  maxValuewait <20 ? drop1 :
-                                      //         maxValuewait < 30 ? drop2:
-                                      //         maxValuewait <50 ? drop3:
-                                      //          drop4 ,
-                                      drop2,
-                                      
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _numberQuestion = value;
-                                    });
-                                  },
-                                  value: _numberQuestion,
-                                  elevation: 8,
-                                  style: TextStyle( color: Colors.black, fontSize: 20),
-                                  isDense: true,
-                                  
-                                  iconSize: 40.0,
-                                  // dropdownColor: Colors.orange
+
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Container(child: Text('à')),
                                 ),
-                              
+                                 Container(
+                                    height: 35,
+                                    width: 80,
+                                    color: Colors.white,
+                                    child: textFieldDialogue(
+                                        _focusNode2, quizEndController, _hint2,
+                                        (String newValue) {
+
+                                      setState(() {
+
+                                        _hint2 = newValue;
+
+                                         maxValuewait = int.parse(newValue) +1- int.parse(_hint);
+                                         _numberQuestion = 10;
+                                      });
+                                    },
+                                    ),
+                                    
+                                  ),
+                                
+                              ],
                             ),
-                          ]) 
-                          ),
-                    
-                        
-
-
-
-                        SizedBox(height: 40),
-
-
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-
-                            children: <Widget>[
-                            // FlatButton(
-                            //   onPressed: () {
-                            //     //  close the dialog
-                            //     Navigator.of(context).pop();
-                            //   },
-                            //   child: Icon(Icons.arrow_back, color: Colors.orange,),
-                            // ),
-                            // SizedBox(width: 50),
+                            SizedBox(height: 20),
                             Container(
-                              height: 40,
-                            width: 140,
-                            
-                            decoration: BoxDecoration(
-                              color: Colors.orange,
-                              borderRadius:  BorderRadius.all(
-                                        Radius.circular(7),
-                                        ),
-                            ),
-                              child: FlatButton(
-                                  child: Text('Lancer', style: TextStyle(color: Colors.white)),
-                                  onPressed: () {
-                                    int sta = int.parse(_hint);
-                                    int end = int.parse(_hint2);
-                                    sta < end && sta > 0 && end < 1000 ?
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (BuildContext context) => MyQuiz(
-                                          difficulty: dropdownValue,
-                                          indexFirstWord: sta,
-                                          indexLastWord: end,
-                                          numberQuestion: _numberQuestion,
-                                        ),
-                                      ),
-                                    ): showDialog(context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                      title: Text('Erreur de valeurs'),
-                                      content: 
-                                      
-                                      Text('range index incorrect'));
-                                    }
-                                    );
-                                  }),
-                            )
-                          ]),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                Text('Nombre de questions: ', style: TextStyle(fontSize: 20)), 
+                                
+                                Container(
+                                  // color: Colors.white,
+                                  
+                                  // height: 30,
+                                  // width: 65,
+                                  padding: EdgeInsets.only(left: 8, ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(
+                        width: 1.0,
+                        color: Colors.black38,
+                      ),
+                      borderRadius:  BorderRadius.all(
+                        Radius.circular(4),
                         ),
-                      ]),
-            ],),
-          ),
+                                  ),
+                                  // alignment: Alignment.center,
+                                  child: 
+                                  
+                                   DropdownButton(
+                                      // focusColor: Colors.white,
+                                      
+                                          items:
+                                           maxValuewait <20 ? drop1 :
+                                                  maxValuewait < 30 ? drop2:
+                                                  maxValuewait <50 ? drop3:
+                                                   drop4 ,
+                                          
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _numberQuestion = value;
+                                        });
+                                      },
+                                      value: _numberQuestion,
+                                      elevation: 8,
+                                      style: TextStyle( color: kcolorblacktext, fontSize: 18),
+                                      isDense: true,
+                                      
+                                      iconSize: 40.0,
+                                      // dropdownColor: Colors.orange
+                                      // icon: ,
+                                    ),
+                                  
+                                ),
+                              ]) 
+                              ),
+                        
+                            
 
-          ),
+
+
+                            SizedBox(height: 40),
+
+
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+
+                                children: <Widget>[
+                                // FlatButton(
+                                //   onPressed: () {
+                                //     //  close the dialog
+                                //     Navigator.of(context).pop();
+                                //   },
+                                //   child: Icon(Icons.arrow_back, color: Colors.orange,),
+                                // ),
+                                // SizedBox(width: 50),
+                                Container(
+                                  height: 40,
+                                width: 140,
+                                
+                                decoration: BoxDecoration(
+                                  color: Colors.orange,
+                                  borderRadius:  BorderRadius.all(
+                                            Radius.circular(7),
+                                            ),
+                                ),
+                                  child: FlatButton(
+                                      child: Text('Lancer', style: TextStyle(color: Colors.white, fontSize: 19)),
+                                      onPressed: () {
+                                        int sta = int.parse(_hint);
+                                        int end = int.parse(_hint2);
+                                        sta < end && sta > 0 && end < 1000 ?
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (BuildContext context) => MyQuiz(
+                                              difficulty: dropdownValue,
+                                              indexFirstWord: sta,
+                                              indexLastWord: end,
+                                              numberQuestion: _numberQuestion,
+                                            ),
+                                          ),
+                                        ): showDialog(context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                          title: Text('Erreur de valeurs'),
+                                          content: 
+                                          
+                                          Text('range index incorrect'));
+                                        }
+                                        );
+                                      }),
+                                )
+                              ]),
+                            ),
+                          ]),
+                ],),
+              ),
+
+              ),
+            ),
         ),
-      
+      ),
+      ),
     );
   }
   @override

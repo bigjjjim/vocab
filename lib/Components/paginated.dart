@@ -413,7 +413,7 @@ class PaginatedState extends State<Paginated>  {
 
     // CARD
     return Container(
-      height: MediaQuery.of(context).size.height,
+      height: MediaQuery.of(context).size.height*0.815,
       width: MediaQuery.of(context).size.width ,
       color: kcolorbackground,
       // child: Card(
@@ -445,8 +445,8 @@ class PaginatedState extends State<Paginated>  {
             ),
           ),
           Container(
-            height: MediaQuery.of(context).size.height * 0.55,
-            width: MediaQuery.of(context).size.width*0.8,
+            height: MediaQuery.of(context).size.height * 0.57,
+            width: MediaQuery.of(context).size.width*0.9,
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               dragStartBehavior: widget.dragStartBehavior,
@@ -470,7 +470,7 @@ class PaginatedState extends State<Paginated>  {
             child: IconTheme.merge(
               data: const IconThemeData(opacity: 0.54),
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.15,
+                height: MediaQuery.of(context).size.height * 0.13,
                 child: SingleChildScrollView(
                   dragStartBehavior: widget.dragStartBehavior,
                   scrollDirection: Axis.horizontal,
