@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:vocab/Components/constant.dart';
 import 'package:vocab/Components/tabledata.dart' as tab;
 import 'package:vocab/Components/datasource.dart' as tabsource;
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 FirebaseUser loggedInUser;
@@ -23,11 +24,38 @@ class _HomeTableState extends State<HomeTable> {
   int _rowsPerPage = Paginated.defaultRowsPerPage;
   int _rowsPerPage1 = Paginated.defaultRowsPerPage;
 
+  // int _pageNumber = 0;
+  
+
   @override
   void initState() {
     super.initState();
     getCurrentUser();
+    // _loadPage();
+
   }
+
+  // _loadPage() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   setState(() {
+      
+  //     _pageNumber = (prefs.getInt('pageNumber') ?? 0);
+  //     // prefs.setInt('pageNumber', pageIndex);
+  //     print(_pageNumber);
+  //   });
+  // }
+
+  //  _setPage() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   setState(() {
+      
+  //      _pageNumber = (prefs.getInt('pageNumber') ?? 0) + 1;
+  //     prefs.setInt('pageNumber', _pageNumber);
+  //     prefs.remove('pageNumber');
+      
+  //   });
+  //   print(_pageNumber);
+  // }
 
   void getCurrentUser() async {
     try {
@@ -92,6 +120,8 @@ class _HomeTableState extends State<HomeTable> {
                   _rowsPerPage = isRowCountLessDefaultRowsPerPage
                       ? tableItemsCount
                       : defaultRowsPerPage;
+                  
+                      
                   return Paginated(
                     // horizontalMargin: 10,
                     // header: Text('Vocabulaire'),
@@ -105,9 +135,15 @@ class _HomeTableState extends State<HomeTable> {
                             });
                           },
                     columns: kTableColumns,
-                    onPageChanged: (b) => setState(() {
+                    // function: _setPage(),
+                    // initialFirstRowIndex: _pageNumber,
+                    onPageChanged: (b) => setState(()  {
                       PageStorage.of(context).writeState(context, b,
                           identifier: ValueKey('${dts.index}'));
+                          // _setPage();
+                              
+                          
+
                     }),
                     source: dts,
                     dataquiz: dts.xx,
@@ -120,8 +156,15 @@ class _HomeTableState extends State<HomeTable> {
                   return Container(
                       child: Center(child: CircularProgressIndicator()));
                 } else {
-                  return Container(
-                      child: Center(child: CircularProgressIndicator()));
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(height: 50),
+                      Container(
+                        height: 200,
+                          child: Center(child: CircularProgressIndicator())),
+                    ],
+                  );
                 }
               }),
         ),
@@ -131,6 +174,7 @@ class _HomeTableState extends State<HomeTable> {
 
   @override
   void dispose() {
+    
     super.dispose();
   }
 }

@@ -12,6 +12,7 @@ import 'package:vocab/Components/constant.dart';
 // import 'package:vocab/Pages/home4.dart';
 import 'package:vocab/authentification/sign_in.dart';
 import 'summaryQuiz.dart';
+// import 'package:connectivity/connectivity.dart';
 
 var finalScore = 0;
 var questionNumber = 0;
@@ -22,6 +23,8 @@ final List<int> indexanswerQuiz = [0, 1, 2, 3];
 Future<bool> _onBackPressed() async {
   return true;
 }
+
+
 
 class MyQuiz extends StatefulWidget {
   final String difficulty ;
@@ -97,12 +100,18 @@ class _MyQuizState extends State<MyQuiz>   {
                 child: Column(
                   children: <Widget>[
                     StreamProvider<List<Words>>.value(
+
                       value:  db.streamWord(),
-                      lazy: true,
+                      // catchError: (_, __) => null,
+                      
+                      // lazy: true,
                       
                       initialData: 
+                     
                       [Words(francais: '', portugais: '', index: 0), Words(francais: '', portugais: '', index: 0), Words(francais: '', portugais: '', index: 0), Words(francais: '', portugais: '', index: 0)],
-                      child: Container(
+                      child: 
+                      
+                      Container(
                         // height: MediaQuery.of(context).size.height,
                       
                           child: Entire(widget.numberQuestion),                                                              
@@ -209,8 +218,9 @@ class _EntireState extends State<Entire>  {
       answersList.add(answers);
     }
   
-
-    return QuizFront(question: question, 
+  
+    return 
+     QuizFront(question: question, 
     answersList: answersList, 
     answersMapQuiz: answersMapQuiz, 
     correctAnswers: correctAnswers);
@@ -346,7 +356,7 @@ class _QuizFrontState extends State<QuizFront> with SingleTickerProviderStateMix
       // height: MediaQuery.of(context).size.height,
       // margin: const EdgeInsets.all(10.0),
       alignment: Alignment.topCenter,
-      child: Column(children: <Widget>[
+      child: widget.answersMapQuiz.isEmpty?CircularProgressIndicator(): Column(children: <Widget>[
         
         Padding(padding: EdgeInsets.all(20.0)),
 

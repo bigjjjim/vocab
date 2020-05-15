@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:vocab/Pages/memoire.dart';
 import 'Pages/home4.dart';
-import 'package:vocab/authentification/login.dart';
+import 'package:vocab/authentification/login2.dart';
 import 'Pages/translator.dart';
 import 'Pages/annexe.dart';
-import 'authentification/login.dart';
+import 'authentification/login2.dart';
 import 'home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'Module/authservice.dart';
 import 'package:vocab/Pages/quizPage.dart';
 import 'Components/constant.dart';
+import 'package:flutter/services.dart';
 
 AuthService appAuth = new AuthService();
 
@@ -24,10 +25,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
- 
+ SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+      return
     
  
-    return MaterialApp(
+     MaterialApp(
        theme: ThemeData(
     textTheme: TextTheme(
       bodyText1: TextStyle(),

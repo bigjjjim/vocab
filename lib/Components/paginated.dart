@@ -9,12 +9,15 @@ import 'package:vocab/transitionQuiz.dart';
 import 'package:vocab/Pages/home4.dart';
 import 'tabledata.dart' as tab;
 import 'package:vocab/Components/datasource.dart' as tabsource;
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 
 
 class Paginated extends StatefulWidget {
   Paginated({
     Key key,
+    this.function,
     this.header,
     this.actions,
     @required this.dataquiz,
@@ -61,6 +64,8 @@ class Paginated extends StatefulWidget {
         assert(source != null),
         super(key: key);
 
+
+final function;
   final List<Words2> dataquiz;
   final Widget header;
 
@@ -84,7 +89,7 @@ class Paginated extends StatefulWidget {
 
   final double columnSpacing;
 
-  final int initialFirstRowIndex;
+   int initialFirstRowIndex;
 
   final ValueChanged<int> onPageChanged;
 
@@ -112,16 +117,50 @@ class PaginatedState extends State<Paginated>  {
   bool _rowCountApproximate;
   int _selectedRowCount;
   final Map<int, tab.DataRow> _rows = <int, tab.DataRow>{};
+int firstindex;
+    _loadPage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      
+      firstindex = (prefs.getInt('pageNumber') ?? 0);
+      // prefs.setInt('pageNumber', pageIndex);
+      print(firstindex);
+    });
+    return firstindex;
+  }
+
+   _setPage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      
+      // widget.initialFirstRowIndex = (prefs.getInt('pageNumber') ?? 0);
+      prefs.setInt('pageNumber', _firstRowIndex);
+      // prefs.remove('pageNumber');
+      
+    });
+    print(_firstRowIndex);
+  }
 
   @override
   void initState() {
+   
     super.initState();
-    setState(() {
-      _firstRowIndex = PageStorage.of(context)?.readState(context, identifier: ValueKey(
-              '${dts.index }')  ) as int ??
-          widget.initialFirstRowIndex ??
-          0;
-    });
+    _firstRowIndex = 0;
+   _loadPage().then((value) {
+
+     setState(()  {
+       print(value);
+
+      _firstRowIndex = 
+      // PageStorage.of(context)?.readState(context, identifier: ValueKey(
+      //         '${dts.index }')  ) as int ??
+               value?? 0;
+          // widget.initialFirstRowIndex ??0;
+          // 10 ??
+          
+              });
+   });
+    
 
     widget.source.addListener(_handleDataSourceChanged);
     _handleDataSourceChanged();
@@ -217,10 +256,14 @@ class PaginatedState extends State<Paginated>  {
 
   void _handlePrevious() {
     pageTo(math.max(_firstRowIndex - widget.rowsPerPage, 0));
+    //  widget.initialFirstRowIndex = _firstRowIndex;
+     _setPage();
   }
 
   void _handleNext() {
     pageTo(_firstRowIndex + widget.rowsPerPage);
+    // widget.initialFirstRowIndex = _firstRowIndex;
+    _setPage();
   }
 
   final GlobalKey _tableKey = GlobalKey();
@@ -279,7 +322,8 @@ class PaginatedState extends State<Paginated>  {
     //Gotta do all over with media query and double check when 1000 / 1000
       headerWidgets.addAll(<Widget>[
         // Container( width: MediaQuery.of(context).size.width*0.01), // to match trailing padding in case we overflow and end up scrolling
-        
+                // Container(width: MediaQuery.of(context).size.width*0.04),
+
         Container(
           height: 30,
           padding: EdgeInsets.only(left: 5),
@@ -298,7 +342,8 @@ class PaginatedState extends State<Paginated>  {
                 ),
           child: ConstrainedBox(
             constraints: const BoxConstraints(
-                minWidth: 50.0), // 40.0 for the text, 24.0 for the icon
+                minWidth: 50.0
+                ), // 40.0 for the text, 24.0 for the icon
             child:  Align(
               alignment: AlignmentDirectional.centerEnd,
               child: DropdownButtonHideUnderline(
@@ -322,7 +367,7 @@ class PaginatedState extends State<Paginated>  {
 
 
         
-        Container(width: MediaQuery.of(context).size.width*0.15),
+        // Container(width: MediaQuery.of(context).size.width*0.12),
         Container(
           height: 30,
           padding: EdgeInsets.only(left: 5, right: 5),
@@ -350,7 +395,7 @@ class PaginatedState extends State<Paginated>  {
             style: footerTextStyle,
           ),
         ),
-        Container(width: MediaQuery.of(context).size.width*0.05),
+        // Container(width: MediaQuery.of(context).size.width*0.01),
       ]);
     }
 
@@ -435,9 +480,9 @@ class PaginatedState extends State<Paginated>  {
                     : null,
                 child: Padding(
                   padding:
-                      EdgeInsetsDirectional.only(start: startPadding, end: 3.0),
+                      EdgeInsetsDirectional.only(start: 3.0, end: 3.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center ,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround ,
                     children: headerWidgets,
                   ),
                 ),
@@ -447,21 +492,25 @@ class PaginatedState extends State<Paginated>  {
           Container(
             height: MediaQuery.of(context).size.height * 0.57,
             width: MediaQuery.of(context).size.width*0.9,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              dragStartBehavior: widget.dragStartBehavior,
-              child: tab.DataTable(
-                key: _tableKey,
-                columns: widget.columns,
-                sortColumnIndex: widget.sortColumnIndex,
-                sortAscending: widget.sortAscending,
-                onSelectAll: widget.onSelectAll,
-                dataRowHeight: widget.dataRowHeight,
-                headingRowHeight: widget.headingRowHeight,
-                horizontalMargin: widget.horizontalMargin,
-                columnSpacing: widget.columnSpacing,
-                rows: _getRows(_firstRowIndex, widget.rowsPerPage),
-                // dividerThickness: 0,
+            child: Scrollbar(
+                          child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                dragStartBehavior: widget.dragStartBehavior,
+                child: 
+                tab.DataTable(
+                  
+                  key: _tableKey,
+                  columns: widget.columns,
+                  sortColumnIndex: widget.sortColumnIndex,
+                  sortAscending: widget.sortAscending,
+                  onSelectAll: widget.onSelectAll,
+                  dataRowHeight: widget.dataRowHeight,
+                  headingRowHeight: widget.headingRowHeight,
+                  horizontalMargin: widget.horizontalMargin,
+                  columnSpacing: widget.columnSpacing,
+                  rows: _getRows(_firstRowIndex, widget.rowsPerPage),
+                  // dividerThickness: 0,
+                ),
               ),
             ),
           ),

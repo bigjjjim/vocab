@@ -88,11 +88,14 @@ List<List<String>> listVerbs = [
 ["penser",	"pensar",],
 
 ["perdre",	"perder",],
+
 ["permettre",	"permitir",],
 ["pleurer",	"chorar",],
+
 ["porter",	"incidir",],
 ["poser",	"colocar",],
 ["pouvoir",	"poder",],
+
 ["prendre",	"pegar",],
 ["préparer",	"preparar",],
 ["rappeler",	"lembrar",],
@@ -104,40 +107,48 @@ List<List<String>> listVerbs = [
 ["voir", "ver"],
 ["rencontrer",	"conhecer",],
 ["rendre",	"tornar",],
+
 ["rentrer", 	"voltar", ],
 ["répéter",	"repetir",],
 ["répondre",	"responder",],
 ["ressembler",	"parecer",],
 
-["rester",	"permanecer",],
-["retourner",	"voltar",],
-["retrouver",	"encontrar",],
+["rester",	"ficar",],
+["trouver",	"encontrar",],
+["trouver (penser)", "achar"],
+
 ["réussir",	"ter sucesso",],
-["revenir",	"voltar",],
+
 ["rire",	"rir",],
+
 ["s'asseoir",	"sentar-se",],
 ["s'endormir",	"adormecer",],
+
 ["savoir",	"saber",],
+
 ["se laver",	"lavar-se",],
+
+
 
 ["se reposer",	"descansar",],
 ["se réveiller",	"acordar",],
 ["se souvenir", "recordar",],
+
 ["sortir",	"sair",],
 ["suivre",	"seguir",],
 ["tenir",	"segurar",],
+
 ["tirer",	"puxar",],
 ["tomber",	"cair",],
 ["toucher",	"tocar",],
 ["tourner",	"girar",],
 
 ["travailler",	"trabalhar",],
-["trouver",	"encontrar",],
 ["utiliser",	"usar",],
 ["vendre",	"vender",],
 ["venir",	"vir",],
+
 ["vivre",	"viver",],
-["voir",	"ver",],
 ["voler",	"roubar",],
 ["vouloir",	"querer",]
 ];
@@ -150,52 +161,54 @@ class VerbPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kcolorbackground,
-      body:  ListView.builder(
-                  itemCount: listVerbs.length,
-                  itemBuilder: (BuildContext context, int index) {
-                      return   Container(
-                        height: 55,
-                        decoration: BoxDecoration(
-                                      border:
-                                          Border(bottom: BorderSide(width: 1,color: Colors.grey[300]),),
-                                          color: index.isEven? krow1: krow2,
-                                    ),
-                        
-                          child: Row(
-                                children: <Widget>[
-                                  
-                                  Expanded(
-                                            child: ListTile(
-                                              onTap: (){
-        Navigator.of(context).pushNamed("VerbDetailPage", arguments: listVerbs[index]);
-        },
-                                      title: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+      body:  Scrollbar(
+              child: ListView.builder(
+                    itemCount: listVerbs.length,
+                    itemBuilder: (BuildContext context, int index) {
+                        return   Container(
+                          height: 55,
+                          decoration: BoxDecoration(
+                                        border:
+                                            Border(bottom: BorderSide(width: 1,color: Colors.grey[300]),),
+                                            color: index.isEven? krow1: krow2,
+                                      ),
+                          
+                            child: Row(
+                                  children: <Widget>[
+                                    
+                                    Expanded(
+                                              child: ListTile(
+                                                onTap: (){
+          Navigator.of(context).pushNamed("VerbDetailPage", arguments: listVerbs[index]);
+          },
+                                        title: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
 
-                                        children: [
-                                        Container(child: Text(listVerbs[index][0], style: stylemodeverb,),width: 110 ), 
-                                        SizedBox(width: 5),
-                                        Text('|', style: TextStyle(color: Colors.orange)),
-                                        SizedBox(width: 5),
-                                        Container(child: Text(listVerbs[index][1], style: stylemodeverb, textAlign: TextAlign.end,), width: 110),
-                                        // Icon(Icons.arrow_right)
+                                          children: [
+                                          Container(child: Text(listVerbs[index][0], style: stylemodeverb,),width: 110 ), 
+                                          SizedBox(width: 5),
+                                          Text('|', style: TextStyle(color: Colors.orange)),
+                                          SizedBox(width: 5),
+                                          Container(child: Text(listVerbs[index][1], style: stylemodeverb, textAlign: TextAlign.end,), width: 110),
+                                          // Icon(Icons.arrow_right)
 
-                                      ]) 
+                                        ]) 
+                                      ),
                                     ),
-                                  ),
-                                  // Expanded(
-                                  //                                     child: ListTile(
-                                      
-                                  //     title: 
-                                  //   ),
-                                  // ),
-                                ],
+                                    // Expanded(
+                                    //                                     child: ListTile(
+                                        
+                                    //     title: 
+                                    //   ),
+                                    // ),
+                                  ],
+                                
                               
-                            
-                          ),
-                        
-                      );
-                  }),
+                            ),
+                          
+                        );
+                    }),
+      ),
                     
             
           

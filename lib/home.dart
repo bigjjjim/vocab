@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'Pages/memoire.dart';
 import 'Pages/annexe.dart';
 import 'Pages/home4.dart';
 import 'authentification/sign_in.dart';
@@ -87,6 +86,7 @@ class _HomeState extends State<Home> {
        Scaffold(
         appBar: AppBar(
           title: new Text('Minilo'),
+           automaticallyImplyLeading: false,
           backgroundColor: Color(0xFF2e7d32),
           actions: [
             FlatButton(

@@ -278,6 +278,8 @@ SizedBox(height:15),
                                           
                                       onChanged: (value) {
                                         setState(() {
+                                          // FocusManager.instance.primaryFocus.unfocus();
+                                          FocusScope.of(context).requestFocus(new FocusNode());
                                           _numberQuestion = value;
                                         });
                                       },
@@ -329,9 +331,13 @@ SizedBox(height:15),
                                   child: FlatButton(
                                       child: Text('Lancer', style: TextStyle(color: Colors.white, fontSize: 19)),
                                       onPressed: () {
+                                        
                                         int sta = int.parse(_hint);
                                         int end = int.parse(_hint2);
-                                        sta < end && sta > 0 && end < 1000 ?
+                                       print(Text(_numberQuestion.toString()));
+
+                                        sta < end && sta > 0 && end <= 1000 ?
+                                        //internet?
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
