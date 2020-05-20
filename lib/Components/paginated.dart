@@ -5,14 +5,10 @@ import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/material.dart';
 import 'package:vocab/Components/constant.dart';
 import 'package:vocab/transitionQuiz.dart';
-// import 'package:vocab/Module/words.dart';
 import 'package:vocab/Pages/home4.dart';
 import 'tabledata.dart' as tab;
 import 'package:vocab/Components/datasource.dart' as tabsource;
 import 'package:shared_preferences/shared_preferences.dart';
-
-
-
 
 class Paginated extends StatefulWidget {
   Paginated({
@@ -41,8 +37,8 @@ class Paginated extends StatefulWidget {
     this.onRowsPerPageChanged,
     this.dragStartBehavior = DragStartBehavior.start,
     @required this.source,
-  })  : 
-  // assert(header != null),
+  })  :
+        // assert(header != null),
         assert(columns != null),
         assert(dragStartBehavior != null),
         assert(columns.isNotEmpty),
@@ -64,8 +60,7 @@ class Paginated extends StatefulWidget {
         assert(source != null),
         super(key: key);
 
-
-final function;
+  final function;
   final List<Words2> dataquiz;
   final Widget header;
 
@@ -89,7 +84,7 @@ final function;
 
   final double columnSpacing;
 
-   int initialFirstRowIndex;
+  int initialFirstRowIndex;
 
   final ValueChanged<int> onPageChanged;
 
@@ -111,31 +106,28 @@ final function;
   PaginatedState createState() => PaginatedState();
 }
 
-class PaginatedState extends State<Paginated>  {
+class PaginatedState extends State<Paginated> {
   int _firstRowIndex;
   int _rowCount;
   bool _rowCountApproximate;
   int _selectedRowCount;
+  final ScrollController scrollController = ScrollController();
+
   final Map<int, tab.DataRow> _rows = <int, tab.DataRow>{};
-int firstindex;
-    _loadPage() async {
+  int firstindex;
+  _loadPage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      
       firstindex = (prefs.getInt('pageNumber') ?? 0);
-      // prefs.setInt('pageNumber', pageIndex);
       print(firstindex);
     });
     return firstindex;
   }
 
-   _setPage() async {
+  _setPage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      
-      // widget.initialFirstRowIndex = (prefs.getInt('pageNumber') ?? 0);
       prefs.setInt('pageNumber', _firstRowIndex);
-      // prefs.remove('pageNumber');
       
     });
     print(_firstRowIndex);
@@ -143,24 +135,23 @@ int firstindex;
 
   @override
   void initState() {
-   
-    super.initState();
     _firstRowIndex = 0;
-   _loadPage().then((value) {
+    super.initState();
+    setState(() {
 
-     setState(()  {
-       print(value);
-
-      _firstRowIndex = 
-      // PageStorage.of(context)?.readState(context, identifier: ValueKey(
-      //         '${dts.index }')  ) as int ??
-               value?? 0;
-          // widget.initialFirstRowIndex ??0;
-          // 10 ??
-          
-              });
-   });
-    
+      _firstRowIndex = PageStorage.of(context)?.readState(context,
+              identifier: ValueKey('${dts.index}')) as int ??
+          0;
+     
+    });
+    _loadPage().then((value) {
+      setState(() {
+        _firstRowIndex = PageStorage.of(context)?.readState(context,
+                identifier: ValueKey('${dts.index}')) as int ??
+            value ??
+            0;
+      });
+    });
 
     widget.source.addListener(_handleDataSourceChanged);
     _handleDataSourceChanged();
@@ -179,14 +170,13 @@ int firstindex;
   @override
   void dispose() {
     widget.source.removeListener(_handleDataSourceChanged);
+    scrollController.dispose();
     super.dispose();
   }
 
   void _handleDataSourceChanged() {
     setState(() {
-      // _getRows(_firstRowIndex, _rowCount);
-      // _firstRowIndex = widget.source.initialFirstRowIndex;
-      // _firstRowIndex = widget.source.firstrowindex;
+      
       _rowCount = widget.source.rowCount;
       _rowCountApproximate = widget.source.isRowCountApproximate;
       _selectedRowCount = widget.source.selectedRowCount;
@@ -199,7 +189,6 @@ int firstindex;
     final int oldFirstRowIndex = _firstRowIndex;
     setState(() {
       final int rowsPerPage = widget.rowsPerPage;
-      // final int firstRowIndex = widget.firstRowIndex;
       _firstRowIndex = (rowIndex ~/ rowsPerPage) * rowsPerPage;
     });
     if ((widget.onPageChanged != null) && (oldFirstRowIndex != _firstRowIndex))
@@ -256,13 +245,11 @@ int firstindex;
 
   void _handlePrevious() {
     pageTo(math.max(_firstRowIndex - widget.rowsPerPage, 0));
-    //  widget.initialFirstRowIndex = _firstRowIndex;
-     _setPage();
+    _setPage();
   }
 
   void _handleNext() {
     pageTo(_firstRowIndex + widget.rowsPerPage);
-    // widget.initialFirstRowIndex = _firstRowIndex;
     _setPage();
   }
 
@@ -271,6 +258,7 @@ int firstindex;
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterialLocalizations(context));
+
     final ThemeData themeData = Theme.of(context);
     final MaterialLocalizations localizations =
         MaterialLocalizations.of(context);
@@ -278,33 +266,6 @@ int firstindex;
     // HEADER
     final List<Widget> headerWidgets = <Widget>[];
     double startPadding = 24.0;
-    // if (_selectedRowCount == 0) {
-    //   headerWidgets.add(Expanded(child: widget.header));
-    //   if (widget.header is ButtonBar) {
-    //     // We adjust the padding when a button bar is present, because the
-    //     // ButtonBar introduces 2 pixels of outside padding, plus 2 pixels
-    //     // around each button on each side, and the button itself will have 8
-    //     // pixels internally on each side, yet we want the left edge of the
-    //     // inside of the button to line up with the 24.0 left inset.
-    //     // TODO(ianh): Better magic. See https://github.com/flutter/flutter/issues/4460
-    //     startPadding = 12.0;
-    //   }
-    // } else {
-    //   headerWidgets.add(Expanded(
-    //     child: Text(localizations.selectedRowCountTitle(_selectedRowCount)),
-    //   ));
-    // }
-    // if (widget.actions != null) {
-    //   headerWidgets.addAll(
-    //     widget.actions.map<Widget>((Widget action) {
-    //       return Padding(
-    //         // 8.0 is the default padding of an icon button
-    //         padding: const EdgeInsetsDirectional.only(start: 24.0 - 8.0 * 2.0),
-    //         child: action,
-    //       );
-    //     }).toList()
-    //   );
-    // }
 
     final TextStyle footerTextStyle =
         TextStyle(fontSize: 19, color: Colors.black);
@@ -319,83 +280,61 @@ int firstindex;
           child: Text('$value  mots'),
         );
       }).toList();
-    //Gotta do all over with media query and double check when 1000 / 1000
       headerWidgets.addAll(<Widget>[
-        // Container( width: MediaQuery.of(context).size.width*0.01), // to match trailing padding in case we overflow and end up scrolling
-                // Container(width: MediaQuery.of(context).size.width*0.04),
-
         Container(
           height: 30,
           padding: EdgeInsets.only(left: 5),
           alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  // color: Colors.orange,
-                  // shape: BoxShape.rectangle,
-                  border: Border.all(
-                    width: 2.0,
-                    color: Colors.orange,
-                  ),
-                  borderRadius:  BorderRadius.all(
-                    Radius.circular(10),
-                    ),
-                    
-                ),
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 2.0,
+              color: Colors.orange,
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
+          ),
           child: ConstrainedBox(
             constraints: const BoxConstraints(
-                minWidth: 50.0
-                ), // 40.0 for the text, 24.0 for the icon
-            child:  Align(
+                minWidth: 50.0), // 40.0 for the text, 24.0 for the icon
+            child: Align(
               alignment: AlignmentDirectional.centerEnd,
               child: DropdownButtonHideUnderline(
-                child:  DropdownButton<int>(
-                  // hint: Text('mots ', style: TextStyle(color: Colors.black)) ,
-                   
+                child: DropdownButton<int>(
                   items: availableRowsPerPage.cast<DropdownMenuItem<int>>(),
-                  
                   value: widget.rowsPerPage,
-                  
                   onChanged: widget.onRowsPerPageChanged,
-                  style: footerTextStyle,
+                  style: stylegrammaireheader,
                   iconSize: 24.0,
                 ),
               ),
             ),
           ),
         ),
-      
-
-
-
-        
-        // Container(width: MediaQuery.of(context).size.width*0.12),
         Container(
           height: 30,
           padding: EdgeInsets.only(left: 5, right: 5),
           alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  // color: Colors.orange,
-                  // shape: BoxShape.rectangle,
-                  border: Border.all(
-                    width: 2.0,
-                    color: Colors.orange,
-                  ),
-                  borderRadius:  BorderRadius.all(
-                    Radius.circular(10),
-                    ),
-                    
-                ),
-          
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 2.0,
+              color: Colors.orange,
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
+          ),
           child: Text(
-            localizations.pageRowsInfoTitle(//changed source code here
+            localizations.pageRowsInfoTitle(
+              //changed source code here
               _firstRowIndex + 1,
               _firstRowIndex + widget.rowsPerPage,
               _rowCount,
               _rowCountApproximate,
             ),
-            style: footerTextStyle,
+            style: stylegrammaireheader,
           ),
         ),
-        // Container(width: MediaQuery.of(context).size.width*0.01),
       ]);
     }
 
@@ -409,40 +348,36 @@ int firstindex;
         tooltip: localizations.previousPageTooltip,
         onPressed: _firstRowIndex <= 0 ? null : _handlePrevious,
       ),
-      Container(width: MediaQuery.of(context).size.width*0.08),
+      Container(width: MediaQuery.of(context).size.width * 0.08),
       Container(
         height: 40,
         width: 140,
-        
         decoration: BoxDecoration(
           color: Colors.orange,
-          borderRadius:  BorderRadius.all(
-                    Radius.circular(7),
-                    ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(7),
+          ),
         ),
         child: FlatButton(
-            child: Text('Quiz', style: TextStyle(
-              color: Colors.white,
-              fontSize: 19,
-            ),),
+            child: Text(
+              'Quiz',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ),
             onPressed: () {
               Navigator.of(context, rootNavigator: true).push(
                 MaterialPageRoute(
-                    builder: (context) => TransitionQuiz(
-                        firstWordIndex: _firstRowIndex + 1,
-                        lastWordIndex: widget.rowsPerPage + _firstRowIndex,
-                        description:
-                            'Il y a trois niveau de difficulté (...). Aussi possible de choisir nombre de mots a prendre en compte.')
-                    // Navigator.of(context).pushNamed(MaterialPageRoute(builder: (context) => '/Quiz');
-                    // MyQuiz()
-                    // Navigator.pushNamed(context, '/MyQuiz');
-                    ),
+                  builder: (context) => TransitionQuiz(
+                    firstWordIndex: _firstRowIndex + 1,
+                    lastWordIndex: widget.rowsPerPage + _firstRowIndex,
+                  ),
+                ),
               );
             }),
       ),
-      // Container(width: 150.0),
-      
-      Container(width: MediaQuery.of(context).size.width*0.08),
+      Container(width: MediaQuery.of(context).size.width * 0.08),
       IconButton(
         color: Colors.orange,
         icon: const Icon(Icons.chevron_right),
@@ -453,90 +388,80 @@ int firstindex;
             ? null
             : _handleNext,
       ),
-      // Container(width: 5.0),
     ]);
 
     // CARD
     return Container(
-      height: MediaQuery.of(context).size.height*0.815,
-      width: MediaQuery.of(context).size.width ,
+      height: MediaQuery.of(context).size.height * 0.815,
+      width: MediaQuery.of(context).size.width,
       color: kcolorbackground,
-      // child: Card(
-      //   color: Colors.white,
-      //   semanticContainer: false,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          DefaultTextStyle(
-            style: _selectedRowCount > 0
-                ? themeData.textTheme.subhead
-                    .copyWith(color: themeData.accentColor)
-                : themeData.textTheme.title
-                    .copyWith(fontWeight: FontWeight.w400, fontSize: 15),
-            child: IconTheme.merge(
-              data: const IconThemeData(opacity: 0.54),
-              child: Ink(
-                height: MediaQuery.of(context).size.height * 0.10,
-                color: _selectedRowCount > 0
-                    ? themeData.secondaryHeaderColor
-                    : null,
-                child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.only(start: 3.0, end: 3.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround ,
-                    children: headerWidgets,
-                  ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        DefaultTextStyle(
+          style: _selectedRowCount > 0
+              ? themeData.textTheme.subhead
+                  .copyWith(color: themeData.accentColor)
+              : themeData.textTheme.title
+                  .copyWith(fontWeight: FontWeight.w400, fontSize: 15),
+          child: IconTheme.merge(
+            data: const IconThemeData(opacity: 0.54),
+            child: Ink(
+              height: MediaQuery.of(context).size.height * 0.10,
+              color:
+                  _selectedRowCount > 0 ? themeData.secondaryHeaderColor : null,
+              child: Padding(
+                padding: EdgeInsetsDirectional.only(start: 3.0, end: 3.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: headerWidgets,
                 ),
               ),
             ),
           ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.57,
-            width: MediaQuery.of(context).size.width*0.9,
-            child: Scrollbar(
-                          child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
+        ),
+        Container(
+          height: MediaQuery.of(context).size.height * 0.57,
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: Scrollbar(
+            controller: scrollController,
+            isAlwaysShown: true,
+            child: SingleChildScrollView(
+              controller: scrollController,
+              scrollDirection: Axis.vertical,
+              dragStartBehavior: widget.dragStartBehavior,
+              child: tab.DataTable(
+                key: _tableKey,
+                columns: widget.columns,
+                sortColumnIndex: widget.sortColumnIndex,
+                sortAscending: widget.sortAscending,
+                onSelectAll: widget.onSelectAll,
+                dataRowHeight: widget.dataRowHeight,
+                headingRowHeight: widget.headingRowHeight,
+                horizontalMargin: widget.horizontalMargin,
+                columnSpacing: widget.columnSpacing,
+                rows: _getRows(_firstRowIndex, widget.rowsPerPage),
+                // dividerThickness: 0,
+              ),
+            ),
+          ),
+        ),
+        DefaultTextStyle(
+          style: footerTextStyle,
+          child: IconTheme.merge(
+            data: const IconThemeData(opacity: 0.54),
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.13,
+              child: SingleChildScrollView(
                 dragStartBehavior: widget.dragStartBehavior,
-                child: 
-                tab.DataTable(
-                  
-                  key: _tableKey,
-                  columns: widget.columns,
-                  sortColumnIndex: widget.sortColumnIndex,
-                  sortAscending: widget.sortAscending,
-                  onSelectAll: widget.onSelectAll,
-                  dataRowHeight: widget.dataRowHeight,
-                  headingRowHeight: widget.headingRowHeight,
-                  horizontalMargin: widget.horizontalMargin,
-                  columnSpacing: widget.columnSpacing,
-                  rows: _getRows(_firstRowIndex, widget.rowsPerPage),
-                  // dividerThickness: 0,
+                scrollDirection: Axis.horizontal,
+                reverse: true,
+                child: Row(
+                  children: footerWidgets,
                 ),
               ),
             ),
           ),
-          DefaultTextStyle(
-            style: footerTextStyle,
-            child: IconTheme.merge(
-              data: const IconThemeData(opacity: 0.54),
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.13,
-                child: SingleChildScrollView(
-                  dragStartBehavior: widget.dragStartBehavior,
-                  scrollDirection: Axis.horizontal,
-                  reverse: true,
-                  child: Row(
-                    children: footerWidgets,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          // Expanded(child: Container(child: BottomNavigationBar())),
-          // Divider(color: Colors.orange,thickness: 1, height: 1,),
-        ]),
-
-        // height: MediaQuery.of(context).size.height * 0.1
-      // ),
+        ),
+      ]),
     );
   }
 }

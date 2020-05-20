@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vocab/authentification/sign_in.dart';
 
 class Consts {
   Consts._();
@@ -25,7 +26,7 @@ const kerror = Color(0xFFfe9b94);
 const kcorrect = Color(0xFFb7e9af);
 const kcolorblacktext = Color(0xFF353842);
 
-const stylegrammaireheader = TextStyle( fontSize: 20, color: kcolorblacktext,  fontWeight: FontWeight.w400);
+const stylegrammaireheader = TextStyle( fontSize: 20, color: kcolorblacktext,  fontWeight: FontWeight.w300);
 const stylemodeverb = TextStyle( fontSize: 18, color: kcolorblacktext,  fontWeight: FontWeight.w300);
 const styletempsverb = TextStyle( fontSize: 16, color: kcolorblacktext,  fontWeight: FontWeight.w300);
 
@@ -38,15 +39,11 @@ TextField textFieldDialogue(FocusNode focus, TextEditingController controller, S
                           keyboardType: TextInputType.number,
                           onChanged: onchanged,
                           textAlign: TextAlign.center,
-                          // style: TextStyle(textBaseline: TextBaseline.alphabetic),
                           decoration: InputDecoration.collapsed(
                             hintText: hint,
-                            // fillColor: Colors.white,
                              border: OutlineInputBorder( )
-                            // hintStyle: TextStyle(height:1.0)
                             
                           ),
-                          // onEditingComplete : validate,
                           
                           );
   }
@@ -73,7 +70,6 @@ const kMessageContainerDecoration = BoxDecoration(
 
 const kTextFieldDecoration = InputDecoration(
                 hintText: 'Enter your password',
-                // hintStyle: TextStyle(color: Colors.grey),
                 
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
@@ -89,3 +85,31 @@ const kTextFieldDecoration = InputDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(32.0)),
                 ),
               );
+
+   AppBar headerNav({BuildContext context}) {
+     return AppBar(
+       title:  Image.asset("images/miniloblanc.png", scale: 15,), 
+          automaticallyImplyLeading: false,
+          backgroundColor: Color(0xFF2e7d32),
+          actions: [
+            FlatButton(
+              child: Container(
+                width: 70,
+                height: 30,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: Color(0xFF123214),
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: Text(
+                  'Log out',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              onPressed: () {
+                handleSignOut();
+                Navigator.of(context).pushNamed('/');
+              },
+            ),
+          ]);
+   }

@@ -2616,10 +2616,223 @@
     },
 
 
+"arrêter (stop)": {  
+    "francais": { 
+                    "nominal":  ["arrêter", "arrêtant", "arrêté"],
+                    "indicatif": [["arrête",
+                        "arrêtes",
+                        "arrête",
+                        "arrêtons",
+                        "arrêtez",
+                        "arrêtent"
+                        ], ["ai arrêté",
+                            "as arrêté",
+                            "a arrêté",
+                            "avons arrêté",
+                            "avez arrêté",
+                            "ont arrêté"
+                            ],["arrêtais",
+                                "arrêtais",
+                                "arrêtait",
+                                "arrêtions",
+                                "arrêtiez",
+                                "arrêtaient"
+                                ],["avais arrêté",
+                                    "avais arrêté",
+                                    "avait arrêté",
+                                    "avions arrêté",
+                                    "aviez arrêté",
+                                    "avaient arrêté"
+                                    ], ["arrêterai",
+                                        "arrêteras",
+                                        "arrêtera",
+                                        "arrêterons",
+                                        "arrêterez",
+                                        "arrêteront"
+                                       ],["aurai arrêté",
+                                        "auras arrêté",
+                                        "aura arrêté",
+                                        "aurons arrêté",
+                                        "aurez arrêté",
+                                        "auront arrêté"
+                                           ], ["arrêtai",
+                                            "arrêtas",
+                                            "arrêta",
+                                            "arrêtâmes",
+                                            "arrêtâtes",
+                                            "arrêtèrent"
+                                               ], ["eus arrêté",
+                                                "eus arrêté",
+                                                "eut arrêté",
+                                                "eûmes arrêté",
+                                                "eûtes arrêté",
+                                                "eurent arrêté"
+                                                    ]],
+                        "subjonctif" : [["arrête",
+                            "arrêtes",
+                            "arrête",
+                            "arrêtions",
+                            "arrêtiez",
+                            "arrêtent"
+                            ],["aie arrêté",
+                                "aies arrêté",
+                                "ait arrêté",
+                                "ayons arrêté",
+                                "ayez arrêté",
+                                "aient arrêté"
+                               
+                                    ],["arrêtasse",
+                                        "arrêtasses",
+                                        "arrêtât",
+                                        "arrêtassions",
+                                        "arrêtassiez",
+                                        "arrêtassent"
+                                   ],["eusse arrêté",
+                                    "eusses arrêté",
+                                    "eût arrêté",
+                                    "eussions arrêté",
+                                    "eussiez arrêté",
+                                    "eussent arrêté"
+                                       ]],
+                        "conditionnel": [["arrêterais",
+                            "arrêterais",
+                            "arrêterait",
+                            "arrêterions",
+                            "arrêteriez",
+                            "arrêteraient"
+                           ],
+                                ["aurais arrêté",
+                                    "aurais arrêté",
+                                    "aurait arrêté",
+                                    "aurions arrêté",
+                                    "auriez arrêté",
+                                    "auraient arrêté"]],
+                        "imperatif": ["arrête",
+                            "arrêtons",
+                            "arrêtez"]},
+        "portugais":{ "nominal": ["parar", "parado", "parando"],
+                        "indicative": [["paro", 
+                            "paras", 
+                            "pára", 
+                            "paramos", 
+                            "parais", 
+                            "param"
+                            
+                                ], ["tenho parado", 
+                                    "tens parado", 
+                                    "tem parado", 
+                                    "temos parado", 
+                                    "tendes parado", 
+                                    "têm parado"
+                                ],["parava", 
+                                    "paravas", 
+                                    "parava", 
+                                    "parávamos", 
+                                    "paráveis", 
+                                    "paravam"
+                                   ],["tinha parado", 
+                                    "tinhas parado", 
+                                    "tinha parado", 
+                                    "tínhamos parado", 
+                                    "tínheis parado", 
+                                    "tinham parado"
+                                        
+                                            ],["pararei", 
+                                                "pararás", 
+                                                "parará", 
+                                                "pararemos", 
+                                                "parareis", 
+                                                "pararão"
+                                           ],["terei parado", 
+                                            "terás parado", 
+                                            "terá parado", 
+                                            "teremos parado", 
+                                            "tereis parado", 
+                                            "terão parado"
+                                               ],["parei", 
+                                                "paraste", 
+                                                "parou", 
+                                                "parámos", 
+                                                "parastes", 
+                                                "pararam"]],
+                        "subjuntivo" : [["pare", 
+                            "pares", 
+                            "pare", 
+                            "paremos", 
+                            "pareis", 
+                            "parem"
+                           ],["tenha parado", 
+                            "tenhas parado", 
+                            "tenha parado", 
+                            "tenhamos parado", 
+                            "tenhais parado", 
+                            "tenham parado"
+                                   ],["parasse", 
+                                    "parasses", 
+                                    "parasse", 
+                                    "parássemos", 
+                                    "parásseis", 
+                                    "parassem"
+                                        ],["tivesse parado", 
+                                            "tivesses parado", 
+                                            "tivesse parado", 
+                                            "tivéssemos parado", 
+                                            "tivésseis parado", 
+                                            "tivessem parado"
+                                            ],["parar", 
+                                                "parares", 
+                                                "parar", 
+                                                "pararmos", 
+                                                "parardes", 
+                                                "pararem"
+                                               ],["tiver parado", 
+                                                "tiveres parado", 
+                                                "tiver parado", 
+                                                "tivermos parado", 
+                                                "tiverdes parado", 
+                                                "tiverem parado"
+                                                    ]],
+                    "conditional": [["pararia", 
+                        "pararias", 
+                        "pararia", 
+                        "pararíamos", 
+                        "pararíeis", 
+                        "parariam"
+                       ],["teria parado", 
+                        "terias parado", 
+                        "teria parado", 
+                        "teríamos parado", 
+                        "teríeis parado", 
+                        "teriam parado"
+                           
+                            ]],
+                    "imperativo": ["pára", 
+                        "pare", 
+                        "paremos", 
+                        "parai", 
+                        "parem"],
+                    "infinitivo pessoal": [["parar", 
+                        "parares", 
+                        "parar", 
+                        "pararmos", 
+                        "parardes", 
+                        "pararem"
+                       
+                        ],["ter parado", 
+                            "teres parado", 
+                            "ter parado", 
+                            "termos parado", 
+                            "terdes parado", 
+                            "terem parado"
+                           
+                            ]]
+                          
+        } 
+                                    
+},
 
 
-
-    "arrêter": {  
+    "arrêter (police)": {  
         "francais": { 
                         "nominal":  ["arrêter", "arrêtant", "arrêté"],
                         "indicatif": [["arrête",

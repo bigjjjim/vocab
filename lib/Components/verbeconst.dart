@@ -29,39 +29,11 @@ tableDetailVerbs(name) {
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
     ),
-    //  tab.DataColumn(
-    //   label: const Text('Portugais'),
-    // ),
+   
   ];
 }
 
-//   listDetailVerb() {
 
-// return
-//   // List<tab.DataRow> listRowsPronoms =
-//    [
-//     // const <tab.DataRow>[
-//       tab.DataRow(
-//         cells: <tab.DataCell>[
-//           tab.DataCell(  Text(detail1[0][0])),
-//           tab.DataCell(  Text(detail1[1][0] ), ),
-//           tab.DataCell( Text(detail1[2][0])),
-
-//         ],),
-//         tab.DataRow(
-//         cells: <tab.DataCell>[
-//           tab.DataCell(Text(detail1[0][1])),
-//           tab.DataCell(Text(detail1[1][1])),
-//           tab.DataCell(Text(detail1[2][1])),
-//         ],),
-//         tab.DataRow(
-//         cells: <tab.DataCell>[
-//           tab.DataCell(Text(detail1[0][2])),
-//           tab.DataCell(Text(detail1[1][2])),
-//           tab.DataCell(Text(detail1[2][2])),
-//         ],),
-
-//         ];}
 
 Widget tableconjugImperaPor(size, size2, size3, data, column) {
   return Container(
@@ -75,7 +47,6 @@ Widget tableconjugImperaPor(size, size2, size3, data, column) {
       headingRowHeight: 0,
       columns: tableDetailVerbs(column),
       rows: [
-        // const <tab.DataRow>[
         tab.DataRow(
           cells: <tab.DataCell>[
             tab.DataCell(Container(width: size2, child: Text('Tu'))),
@@ -129,7 +100,6 @@ Widget tableconjugImpera(size, size2, size3, data, column) {
       headingRowHeight: 0,
       columns: tableDetailVerbs(column),
       rows: [
-        // const <tab.DataRow>[
         tab.DataRow(
           cells: <tab.DataCell>[
             tab.DataCell(Container(width: size2, child: Text('Tu'))),
@@ -168,7 +138,6 @@ Widget tableconjug(size, size2, size3, data, column) {
       ),
       alignment: Alignment.center,
       child: tab.DataTable(columns: tableDetailVerbs(column), rows: [
-        // const <tab.DataRow>[
         tab.DataRow(
           cells: <tab.DataCell>[
             tab.DataCell(Container(width: size2, child: Text('Je'))),
@@ -220,11 +189,9 @@ Widget tableconjugPor(size, size2, size3, data, column) {
       ),
       alignment: Alignment.center,
       child: tab.DataTable(columns: tableDetailVerbs(column), rows: [
-        // const <tab.DataRow>[
         tab.DataRow(
           cells: <tab.DataCell>[
             tab.DataCell(Container(
-              // width: size2,
                child: Text('Eu'))),
             tab.DataCell(
               Container(

@@ -14,9 +14,7 @@
 listpronoms(size) {
 
 return
-  // List<tab.DataRow> listRowsPronoms =
    [ 
-    // const <tab.DataRow>[
       tab.DataRow(
         cells: <tab.DataCell>[
           tab.DataCell( Container(width: size,child: Text('Je'))),
@@ -72,7 +70,6 @@ Singular'''),
 listRowPos(size) {
 return
 [ 
-    // const <tab.DataRow>[
       tab.DataRow(
         cells: <tab.DataCell>[
           tab.DataCell(Container(width: size, child: Text('Mon, Ma'))),
@@ -113,7 +110,6 @@ return
         ];
 
 }
-// const List<tab.DataRow> listRowsPoss = 
 
 
 
@@ -134,7 +130,6 @@ Plural'''),
 
 listRowPossplus(size) {
 return [ 
-    // const <tab.DataRow>[
       tab.DataRow(
         cells: <tab.DataCell>[
           tab.DataCell(Container(width: size, child: Text('Mes'))),

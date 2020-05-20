@@ -14,9 +14,7 @@ import 'tabledata.dart' as tab;
   listJours(size) {
 
 return
-  // List<tab.DataRow> listRowsPronoms =
    [ 
-    // const <tab.DataRow>[
       tab.DataRow(
         cells: <tab.DataCell>[
           tab.DataCell( Container(width: size,child: Text('Lundi'))),
@@ -70,9 +68,7 @@ const kTableMois = <tab.DataColumn>[
   listMois(size) {
 
 return
-  // List<tab.DataRow> listRowsPronoms =
    [ 
-    // const <tab.DataRow>[
       tab.DataRow(
         cells: <tab.DataCell>[
           tab.DataCell( Container(width: size,child: Text('Janvier'))),

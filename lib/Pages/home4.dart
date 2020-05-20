@@ -6,8 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:vocab/Components/constant.dart';
 import 'package:vocab/Components/tabledata.dart' as tab;
 import 'package:vocab/Components/datasource.dart' as tabsource;
-import 'package:shared_preferences/shared_preferences.dart';
-
 
 FirebaseUser loggedInUser;
 String userid;
@@ -24,38 +22,11 @@ class _HomeTableState extends State<HomeTable> {
   int _rowsPerPage = Paginated.defaultRowsPerPage;
   int _rowsPerPage1 = Paginated.defaultRowsPerPage;
 
-  // int _pageNumber = 0;
-  
-
   @override
   void initState() {
     super.initState();
     getCurrentUser();
-    // _loadPage();
-
   }
-
-  // _loadPage() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   setState(() {
-      
-  //     _pageNumber = (prefs.getInt('pageNumber') ?? 0);
-  //     // prefs.setInt('pageNumber', pageIndex);
-  //     print(_pageNumber);
-  //   });
-  // }
-
-  //  _setPage() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   setState(() {
-      
-  //      _pageNumber = (prefs.getInt('pageNumber') ?? 0) + 1;
-  //     prefs.setInt('pageNumber', _pageNumber);
-  //     prefs.remove('pageNumber');
-      
-  //   });
-  //   print(_pageNumber);
-  // }
 
   void getCurrentUser() async {
     try {
@@ -82,7 +53,6 @@ class _HomeTableState extends State<HomeTable> {
     return WillPopScope(
       onWillPop: _requestPop,
       child: Scaffold(
-        // backgroundColor: Color(0xFFf6fff6),
         body: SingleChildScrollView(
           child: StreamBuilder(
               stream: getWords().snapshots(),
@@ -109,9 +79,7 @@ class _HomeTableState extends State<HomeTable> {
                     worditems.add(item);
                   }
 
-                  dts = WordDataSource(
-                    worditems, context
-                  );
+                  dts = WordDataSource(worditems, context);
                   var tableItemsCount = dts.rowCount;
 
                   var defaultRowsPerPage = Paginated.defaultRowsPerPage;
@@ -120,11 +88,8 @@ class _HomeTableState extends State<HomeTable> {
                   _rowsPerPage = isRowCountLessDefaultRowsPerPage
                       ? tableItemsCount
                       : defaultRowsPerPage;
-                  
-                      
+
                   return Paginated(
-                    // horizontalMargin: 10,
-                    // header: Text('Vocabulaire'),
                     headingRowHeight: 0,
                     availableRowsPerPage: <int>[10, 20, 30],
                     onRowsPerPageChanged: isRowCountLessDefaultRowsPerPage
@@ -135,15 +100,9 @@ class _HomeTableState extends State<HomeTable> {
                             });
                           },
                     columns: kTableColumns,
-                    // function: _setPage(),
-                    // initialFirstRowIndex: _pageNumber,
-                    onPageChanged: (b) => setState(()  {
+                    onPageChanged: (b) => setState(() {
                       PageStorage.of(context).writeState(context, b,
                           identifier: ValueKey('${dts.index}'));
-                          // _setPage();
-                              
-                          
-
                     }),
                     source: dts,
                     dataquiz: dts.xx,
@@ -161,7 +120,7 @@ class _HomeTableState extends State<HomeTable> {
                     children: <Widget>[
                       SizedBox(height: 50),
                       Container(
-                        height: 200,
+                          height: 200,
                           child: Center(child: CircularProgressIndicator())),
                     ],
                   );
@@ -174,7 +133,6 @@ class _HomeTableState extends State<HomeTable> {
 
   @override
   void dispose() {
-    
     super.dispose();
   }
 }
@@ -187,7 +145,6 @@ const kTableColumns = <tab.DataColumn>[
     label: const Text(''),
   ),
 ];
-
 
 class WordDataSource extends tabsource.DataTableSource {
   List<Words2> xx;
@@ -204,25 +161,19 @@ class WordDataSource extends tabsource.DataTableSource {
     final Words2 word = xx[index];
     return tab.DataRow.byIndex(
         index: index,
-        // selected: word.selected,
         cells: (xx[index].quiz1 == 1)
             ? <tab.DataCell>[
-              
                 tab.DataCell(
-                  
                   Container(
-                    // color: Color(0xFFe6ffe7),
                     child: Row(children: [
                       Container(
-                          width: MediaQuery.of(context).size.width*0.35,
-
-                          // padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.1 ), //need to find work around because no context so no  MediaQuery.of(context).size.height
-                          child: Text(
-                            '${word.francais}',
-                            style: tableTextStyle,
-                          ),),
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        child: Text(
+                          '${word.francais}',
+                          style: stylegrammaireheader,
+                        ),
+                      ),
                       Container(
-                        //  width: MediaQuery.of(context).size.width*0.05,
                         child: Icon(
                           Icons.check,
                           color: Colors.green,
@@ -231,87 +182,72 @@ class WordDataSource extends tabsource.DataTableSource {
                     ]),
                   ),
                 ),
-
-                // DataCell(Container(child: Icon(Icons.check, color: Colors.green, size: 10), width: 20,)),
                 tab.DataCell(
                   Container(
                     alignment: Alignment.center,
-                    width: MediaQuery.of(context).size.width*0.4,
-                    
+                    width: MediaQuery.of(context).size.width * 0.4,
                     child: Text(
                       '${word.portugais}',
-                      style: tableTextStyle,
+                      style: stylegrammaireheader,
                     ),
                   ),
                 ),
               ]
             : (xx[index].quiz1 == -1)
                 ? <tab.DataCell>[
-                tab.DataCell(
-                  Container(
-                    child: Row(children: [
+                    tab.DataCell(
                       Container(
-                          width: MediaQuery.of(context).size.width*0.35,
-                          // padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.1 ), //need to find work around because no context so no  MediaQuery.of(context).size.height
-                          child: Text(
-                            '${word.francais}',
-                            style: tableTextStyle,
-                          )),
-                      Icon(
-                        Icons.close,
-                        color: Colors.red,
-                      )
-                    ]),
-                  ),
-                ),
-
-                // DataCell(Container(child: Icon(Icons.check, color: Colors.green, size: 10), width: 20,)),
-                tab.DataCell(
-                  Container(
-                    alignment: Alignment.center,
-                    width: MediaQuery.of(context).size.width*0.4,
-
-                    child: Text(
-                      '${word.portugais}',
-                      style: tableTextStyle,
+                        child: Row(children: [
+                          Container(
+                              width: MediaQuery.of(context).size.width * 0.35,
+                              child: Text(
+                                '${word.francais}',
+                                style: stylegrammaireheader,
+                              )),
+                          Icon(
+                            Icons.close,
+                            color: Colors.red,
+                          )
+                        ]),
+                      ),
                     ),
-                  ),
-                ),
-              ]
-                :
-                
-                
-                <tab.DataCell>[
-                tab.DataCell(
-                  Container(
-                    child: Row(children: [
+                    tab.DataCell(
                       Container(
-                          width: MediaQuery.of(context).size.width*0.35,
-                          // padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.1 ), //need to find work around because no context so no  MediaQuery.of(context).size.height
-                          child: Text(
-                            '${word.francais}',
-                            style: tableTextStyle,
-                          )),
-                      SizedBox(width: MediaQuery.of(context).size.width*0.05)
-                    ]),
-                  ),
-                ),
-
-                // DataCell(Container(child: Icon(Icons.check, color: Colors.green, size: 10), width: 20,)),
-                tab.DataCell(
-                  Container(
-                    alignment: Alignment.center,
-                    width: MediaQuery.of(context).size.width*0.4,
-
-                    child: Text(
-                      '${word.portugais}',
-                      style: tableTextStyle,
+                        alignment: Alignment.center,
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: Text(
+                          '${word.portugais}',
+                          style: stylegrammaireheader,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ]
-                  
-                  );
+                  ]
+                : <tab.DataCell>[
+                    tab.DataCell(
+                      Container(
+                        child: Row(children: [
+                          Container(
+                              width: MediaQuery.of(context).size.width * 0.35,
+                              child: Text(
+                                '${word.francais}',
+                                style: stylegrammaireheader,
+                              )),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.05)
+                        ]),
+                      ),
+                    ),
+                    tab.DataCell(
+                      Container(
+                        alignment: Alignment.center,
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: Text(
+                          '${word.portugais}',
+                          style: stylegrammaireheader,
+                        ),
+                      ),
+                    ),
+                  ]);
   }
 
   @override

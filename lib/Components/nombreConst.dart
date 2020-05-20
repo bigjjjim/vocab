@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vocab/Components/constant.dart';
 import 'tabledata.dart' as tab;
 
 
@@ -18,20 +19,18 @@ import 'tabledata.dart' as tab;
 listNombres(size) {
 
 return
-  // List<tab.DataRow> listRowsPronoms =
    [ 
-    // const <tab.DataRow>[
       tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell( Container(width: size,child: Text('1'))),
+          tab.DataCell( Container(width: size,child: Text('1',))),
           tab.DataCell( Container(width: size,child: Text('Un', ), ),),
-          tab.DataCell( Container(width: size,child: Text('Um'))),
+          tab.DataCell( Container(width: size,child: Text('Um', ))),
         ],),
         tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('2')),
-          tab.DataCell(Text('Deux')),
-          tab.DataCell(Text('Dois')),
+          tab.DataCell(Text('2', )),
+          tab.DataCell(Text('Deux',)),
+          tab.DataCell(Text('Dois', )),
         ],),
         tab.DataRow(
         cells: <tab.DataCell>[
