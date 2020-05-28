@@ -114,7 +114,7 @@ class _TransitionQuizState extends State<TransitionQuiz> {
                           ],
                         ),
                         SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.25),
+                            height: MediaQuery.of(context).size.height * 0.2),
                         Container(
                           width: MediaQuery.of(context).size.width,
                           child: Row(

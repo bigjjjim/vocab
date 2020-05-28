@@ -6,11 +6,36 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:vocab/Components/constant.dart';
 import 'package:vocab/Components/tabledata.dart' as tab;
 import 'package:vocab/Components/datasource.dart' as tabsource;
+// import 'package:audioplayers/audio_cache.dart';
+// import 'package:audioplayers/audioplayers.dart';
+// import 'package:flutter_tts/flutter_tts.dart';
+
 
 FirebaseUser loggedInUser;
 String userid;
 var isRowCountLessDefaultRowsPerPage;
 WordDataSource dts;
+// FlutterTts tts = FlutterTts();
+
+// class AudioPlayer extends StatefulWidget {
+//   @override
+//   _AudioPlayerState createState() => _AudioPlayerState();
+// }
+
+// class _AudioPlayerState extends State<AudioPlayer> {
+//   @override
+//   Widget build(BuildContext context) {
+// flutterTts.setLanguage("en-US");
+// speak(text) async{
+//         var result = flutterTts.speak(text);
+//         // if (result == 1) setState(() => ttsState = TtsState.playing);
+//         return result;
+//      }
+//     return Container(
+      
+//     );
+//   }
+// }
 
 class HomeTable extends StatefulWidget {
   @override
@@ -21,6 +46,8 @@ class _HomeTableState extends State<HomeTable> {
   final _auth = FirebaseAuth.instance;
   int _rowsPerPage = Paginated.defaultRowsPerPage;
   int _rowsPerPage1 = Paginated.defaultRowsPerPage;
+
+
 
   @override
   void initState() {
@@ -50,6 +77,7 @@ class _HomeTableState extends State<HomeTable> {
 
   @override
   Widget build(BuildContext context) {
+    
     return WillPopScope(
       onWillPop: _requestPop,
       child: Scaffold(
@@ -112,18 +140,26 @@ class _HomeTableState extends State<HomeTable> {
                   );
                 } else if (snapshots.connectionState ==
                     ConnectionState.waiting) {
-                  return Container(
-                      child: Center(child: CircularProgressIndicator()));
-                } else {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  return Theme(
+          data: Theme.of(context).copyWith(accentColor: Colors.orange),
+          child:
+                  Column(
                     children: <Widget>[
-                      SizedBox(height: 50),
-                      Container(
-                          height: 200,
-                          child: Center(child: CircularProgressIndicator())),
+                      SizedBox(height:50),
+                      Center(child: CircularProgressIndicator()),
                     ],
-                  );
+                  ));
+          
+                } else {
+                  return Theme(
+          data: Theme.of(context).copyWith(accentColor: Colors.orange),
+          child:
+                  Column(
+                    children: <Widget>[
+                      SizedBox(height:50),
+                      Center(child: CircularProgressIndicator()),
+                    ],
+                  ));
                 }
               }),
         ),
@@ -151,8 +187,14 @@ class WordDataSource extends tabsource.DataTableSource {
   WordDataSource(this.xx, this.context);
   int index;
   BuildContext context;
-
+  
+//    speak() async {
+//   tts.speak('Hello World');
+// }
+  // AudioCache audioCache = AudioCache();
+  // AudioPlayer advancedPlayer = AudioPlayer();
   @override
+ 
   tab.DataRow getRow(int index) {
     xx.sort((a, b) => (a.index).compareTo(b.index));
 
@@ -168,11 +210,13 @@ class WordDataSource extends tabsource.DataTableSource {
                     child: Row(children: [
                       Container(
                         width: MediaQuery.of(context).size.width * 0.35,
-                        child: Text(
-                          '${word.francais}',
-                          style: stylegrammaireheader,
-                        ),
+                        child:  Text(
+                            '${word.francais}',
+                            style: stylegrammaireheader,
+                          ),
+                        
                       ),
+// _Btn(txt: 'p', onPressed: () => audioCache.play('testdong.mp3') ),
                       Container(
                         child: Icon(
                           Icons.check,
@@ -276,3 +320,17 @@ DocumentReference getWords() {
       .collection('wordsscore')
       .document('wordssc');
 }
+
+// class _Btn extends StatelessWidget {
+//   final String txt;
+//   final VoidCallback onPressed;
+
+//   const _Btn({Key key, this.txt, this.onPressed}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return ButtonTheme(
+//         minWidth: 48.0,
+//         child: RaisedButton(child: Text(txt), onPressed: onPressed));
+//   }
+// }

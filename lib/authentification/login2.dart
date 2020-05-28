@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
     showDialog(
         context: context,
         builder: (dialogContex) {
-          String errorMessage = 'Password must be of at least 6 character';
+          String errorMessage = 'Le mot de passe doit être d\'au moins 6 charactère';
           bool errorShowing = false;
           return StatefulBuilder(builder: (context, setState) {
             return Dialog(
@@ -120,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Colors.black, width: 2.0)),
-                                    hintText: "Password",
+                                    hintText: "Mot de passe",
                                     hintStyle:
                                         TextStyle(color: Colors.grey[400]),
                                     border: UnderlineInputBorder()),
@@ -154,16 +154,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                             offset: Offset(1, 1))
                                       ],
                                       borderRadius: BorderRadius.circular(40),
-                                      gradient: LinearGradient(colors: <Color>[
-                                        Colors.white,
-                                        Colors.green
-                                      ]),
+                                      // gradient: LinearGradient(colors: <Color>[
+                                      //   Colors.white,
+                                      //   Colors.green
+                                      // ]),
+                                      color: kbackgroundAppbar
 
                                       // color: Color(0xffFF6996)
                                     ),
                                     child: RawMaterialButton(
                                       child: Text(
-                                        'Create account',
+                                        'Créer un compte',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontFamily: 'Lato',
@@ -192,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       } else {
                                                         setState(() {
                                                           errorMessage =
-                                                              "Check that the email entered is valid";
+                                                              "Vérifier que l'email soit valide";
                                                           errorShowing = true;
                                                         });
                                                       }
@@ -201,21 +202,44 @@ class _LoginScreenState extends State<LoginScreen> {
                                         } else {
                                           setState(() {
                                             errorMessage =
-                                                "Password must be of at least 6 characters";
+                                                'Le mot de passe doit être d\'au moins 6 charactère';
                                             errorShowing = true;
                                           });
                                         }
                                       },
                                     ),
                                   ),
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                        left: 10.0, right: 10.0),
+                                    height: 37.0,
+                                    margin: EdgeInsets.only(right: 15.0),
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.grey[400],
+                                            blurRadius: 1.0,
+                                            offset: Offset(1, 1))
+                                      ],
+                                      borderRadius: BorderRadius.circular(40),
+                                      // gradient: LinearGradient(colors: <Color>[
+                                      //   Colors.white,
+                                      //   Colors.green
+                                      // ]),
+                                      color: kbackgroundAppbar
+
+                                      // color: Color(0xffFF6996)
+                                    ),
+                                    child:
                                   RawMaterialButton(
-                                    fillColor: Colors.white12,
+                                    // fillColor: Colors.white12,
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(40)),
-                                    child: Text('Log in',
+                                    child: Text('Connexion',
                                         style: TextStyle(
                                             fontFamily: 'Lato',
+                                            color: Colors.white,
                                             fontWeight: FontWeight.bold)),
                                     onPressed: () {
                                       handleLogInEmail(
@@ -236,14 +260,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   } else {
                                                     setState(() {
                                                       errorMessage =
-                                                          "*Email or Password invalide";
+                                                          "*Email ou mot de passe invalide";
                                                       errorShowing = true;
                                                     });
                                                   }
                                                 })
                                               });
                                     },
-                                  ),
+                                  ),),
                                 ],
                               ),
                             )
@@ -278,32 +302,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Center(
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.8,
-                height: MediaQuery.of(context).size.height * 0.7,
+                height: MediaQuery.of(context).size.height * 0.85,
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Column(
                         children: <Widget>[
-                          // Padding(
-                          //   padding: const EdgeInsets.only(
-                          //       top: 0, left: 8.0, right: 8.0),
-                          //   child: SvgPicture.asset('assets/logoSvg.svg'),
-                          // ),
-                          // Text('Minilo + image',
-                          //     textAlign: TextAlign.center,
-                          //     style: TextStyle(
-                          //         foreground: Paint()
-                          //           ..shader = LinearGradient(
-                          //             colors: <Color>[
-                          //               Colors.white,
-                          //               Colors.green
-                          //             ],
-                          //           ).createShader(
-                          //               Rect.fromLTWH(0.0, 0.0, 300.0, 7.0)),
-                          //         fontSize: 20.0,
-                          //         fontWeight: FontWeight.bold,
-                          //         fontFamily: 'Lato')),
+                          
 
                           Image.asset(
                             'images/minilo.png',
@@ -325,7 +331,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               height: 15.0,
                             ),
                             Container(
-                              width: MediaQuery.of(context).size.width * 0.6,
+                              width: MediaQuery.of(context).size.width * 0.7,
                               height:
                                   MediaQuery.of(context).size.height * 0.095,
                               child: RawMaterialButton(
@@ -348,7 +354,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       Padding(
                                         padding:
                                             const EdgeInsets.only(left: 8.0),
-                                        child: Text('Email sign in',
+                                        child: Text('Connexion Email',
                                             style: TextStyle(
                                                 fontFamily: 'Lato',
                                                 fontSize: MediaQuery.of(context)
@@ -395,7 +401,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     visible: isVisible,
                     child: Container(
                       child: Text(
-                        "*Please accept the term and conditions.",
+                        "*Veuillez accepter les termes et conditions.",
                         style: TextStyle(color: Color(0xffFF6996)),
                       ),
                     ),
@@ -420,7 +426,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         activeColor: Color(0xff524A87),
                       ),
                       Text(
-                        "By signing in, you accept the",
+                        "J'accepte la",
                         style:
                             TextStyle(color: Color(0xff524A87), fontSize: 13.0),
                       ),
@@ -429,7 +435,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               MaterialTapTargetSize.shrinkWrap,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 3.0),
-                            child: Text('Privacy Policy',
+                            child: Text('Politique de Confidentialité',
                                 style: TextStyle(
                                     decoration: TextDecoration.underline,
                                     color: Color(0xff524A87),
@@ -437,7 +443,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           onPressed: () {
                             _launchURL(
-                                'https://www.websitepolicies.com/policies/view/YucwwyFJ');
+                                'https://www.websitepolicies.com/policies/view/V2iu3pLL');
                           }),
                     ],
                   ),
@@ -445,14 +451,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text('and the',
+                      Text('et les',
                           style: TextStyle(
                               color: Color(0xff524A87), fontSize: 13.0)),
                       RawMaterialButton(
                           child: Padding(
                             padding: const EdgeInsets.only(
                                 bottom: 33.0, left: 10.0, right: 3.0),
-                            child: Text('Terms and Conditions',
+                            child: Text('Termes et Conditions',
                                 style: TextStyle(
                                     decoration: TextDecoration.underline,
                                     color: Color(0xff524A87),
@@ -462,7 +468,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             _launchURL(
                                 'https://www.websitepolicies.com/policies/view/YucwwyFJ');
                           }),
-                      Text('of Minilo.',
+                      Text('de Minilo.',
                           style: TextStyle(
                               color: Color(0xff524A87), fontSize: 13.0))
                     ],
@@ -502,7 +508,7 @@ class _LoginScreenState extends State<LoginScreen> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       highlightElevation: 0,
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.6,
+        width: MediaQuery.of(context).size.width * 0.7,
         height: MediaQuery.of(context).size.height * 0.095,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -515,7 +521,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: Text(
-                  'Facebook sign in',
+                  'Connexion Facebook',
                   style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.04,
                       color: Colors.grey,
@@ -558,7 +564,7 @@ class _LoginScreenState extends State<LoginScreen> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       highlightElevation: 0,
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.6,
+        width: MediaQuery.of(context).size.width * 0.7,
         height: MediaQuery.of(context).size.height * 0.092,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(32, 17, 32, 17),
@@ -570,7 +576,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 8, right: 16),
                 child: Text(
-                  'Google Sign In',
+                  'Connexion Google',
                   style: TextStyle(
                     fontFamily: 'Lato',
                     fontSize: MediaQuery.of(context).size.width * 0.04,

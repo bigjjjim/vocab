@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:vocab/Components/constant.dart';
+// import 'package:vocab/Components/constant.dart';
 import 'tabledata.dart' as tab;
+
 
 
  const kTableNombres = <tab.DataColumn>[
@@ -22,7 +23,11 @@ return
    [ 
       tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell( Container(width: size,child: Text('1',))),
+          tab.DataCell( Container(width: size,child: Row(
+            children: <Widget>[
+              Text('1',),
+            ],
+          ))),
           tab.DataCell( Container(width: size,child: Text('Un', ), ),),
           tab.DataCell( Container(width: size,child: Text('Um', ))),
         ],),

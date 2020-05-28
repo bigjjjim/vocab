@@ -47,12 +47,19 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
-
+    signingConfigs {
+        release {
+            storeFile file("C:/Program Files/Java/jdk1.8.0_231/bin/my-key.keystore")
+            storePassword "EG3AyZZC"
+            keyAlias "alias_name"
+            keyPassword "EG3AyZZC"
+        }
+    }
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
     }
     packagingOptions {

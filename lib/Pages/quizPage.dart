@@ -18,7 +18,7 @@ List<int> scorelist = [];
 final List<int> indexanswerQuiz = [0, 1, 2, 3];
 
 Future<bool> _onBackPressed() async {
-  return true;
+  return false;
 }
 
 class MyQuiz extends StatefulWidget {
@@ -269,9 +269,13 @@ class _QuizFrontState extends State<QuizFront>
           color[questionNumber] = -1;
         });
       }
-      Future.delayed(const Duration(milliseconds: 500), () {
+      scorelist.length < widget.question.length?
+      Future.delayed(const Duration(milliseconds: 200), () {
+         
         updateQuestion();
-      });
+      }):updateQuestion();
+      
+      
 
       return scorelist;
     }
@@ -281,9 +285,16 @@ class _QuizFrontState extends State<QuizFront>
     return Container(
       alignment: Alignment.topCenter,
       child: widget.answersMapQuiz.isEmpty
-          ? CircularProgressIndicator()
+          ? SizedBox(
+                          child:  
+                          Theme(
+          data: Theme.of(context).copyWith(accentColor: Colors.orange),
+          child: CircularProgressIndicator()),
+                          width: 60,
+                          height: 60,
+                        )
           : Column(children: <Widget>[
-              Padding(padding: EdgeInsets.all(20.0)),
+              Padding(padding: EdgeInsets.all(10.0)),
               Container(
                 alignment: Alignment.centerRight,
                 child: Row(
@@ -297,11 +308,12 @@ class _QuizFrontState extends State<QuizFront>
                 ),
               ),
               Padding(padding: EdgeInsets.all(5.0)),
-              LinearProgressIndicator(
-                value: (questionNumber / widget.question.length),
-                backgroundColor: Color(0xFFe6ffe7),
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
-              ),
+               LinearProgressIndicator(
+                  value: (questionNumber / widget.question.length),
+                  backgroundColor: Color(0xFFe6ffe7),
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+                ),
+              
               Padding(padding: EdgeInsets.all(20.0)),
               ClipRRect(
                 child: Container(
@@ -369,7 +381,7 @@ class _QuizFrontState extends State<QuizFront>
                     : color4[questionNumber] == -1 ? kerror : Colors.white,
                 word: widget.answersList[questionNumber][indexanswerQuiz[3]],
               ),
-              Padding(padding: EdgeInsets.all(25.0)),
+              Padding(padding: EdgeInsets.all(13.0)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[

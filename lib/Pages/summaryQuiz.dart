@@ -105,55 +105,61 @@ class _SummaryState extends State<Summary> {
               ),
               Padding(padding: EdgeInsets.all(10.0)),
               Container(
-                height: MediaQuery.of(context).size.height * 0.7,
+                height: MediaQuery.of(context).size.height * 0.6,
                 width: MediaQuery.of(context).size.width * 0.9,
-                child: ListView.builder(
-                  itemCount: widget.listscore.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Container(
-                        child: Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.35,
-                                      child: Text(
-                                        widget.listinQuiz[index][3].francais,
-                                        style: stylegrammaireheader,
-                                        textAlign: TextAlign.center,
-                                      )),
-                                ),
-                                widget.listscore[index] == 1
-                                    ? Icon(
-                                        Icons.close,
-                                        color: Colors.red,
-                                      )
-                                    : Icon(
-                                        Icons.check,
-                                        color: Colors.green,
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                                      child: ListView.builder(
+                        itemCount: widget.listscore.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Container(
+                              child: Card(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                            width: MediaQuery.of(context).size.width *
+                                                0.35,
+                                            child: Text(
+                                              widget.listinQuiz[index][3].francais,
+                                              style: stylegrammaireheader,
+                                              textAlign: TextAlign.center,
+                                            )),
                                       ),
-                                Expanded(
-                                  child: Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.35,
-                                      child: Text(
-                                          widget.listinQuiz[index][3].portugais,
-                                          textAlign: TextAlign.center,
-                                          style: stylegrammaireheader)),
+                                      widget.listscore[index] == 1
+                                          ? Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            )
+                                          : Icon(
+                                              Icons.close,
+                                              color: Colors.red,
+                                            ),
+                                      Expanded(
+                                        child: Container(
+                                            width: MediaQuery.of(context).size.width *
+                                                0.35,
+                                            child: Text(
+                                                widget.listinQuiz[index][3].portugais,
+                                                textAlign: TextAlign.center,
+                                                style: stylegrammaireheader)),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
+                          );
+                        },
                       ),
-                    );
-                  },
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: 20),
@@ -168,8 +174,11 @@ class _SummaryState extends State<Summary> {
                         finalScore = 0;
                         scorelist = [];
 
-                        Navigator.of(context)
-                            .popUntil((route) => route.isFirst);
+                        // Navigator.of(context)
+                        //     .popUntil((route) => route.isFirst);
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
                       },
                       child: Text(
                         "retour à la liste",
@@ -178,6 +187,7 @@ class _SummaryState extends State<Summary> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 10)
                 ],
               ),
             ],
