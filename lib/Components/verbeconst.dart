@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:vocab/Components/constant.dart';
 import 'tabledata.dart' as tab;
+import 'package:vocab/Pages/home4.dart';
 
 const kTableVerbs = <tab.DataColumn>[
   tab.DataColumn(
@@ -18,16 +20,43 @@ List<List<String>> detail1 = [
   ['sou', 'es', 'e', 'samos', 'sao', 'sao']
 ];
 
-tableDetailVerbs(name) {
+tableDetailVerbsFr(name) {
   return [
+   
     tab.DataColumn(
+      label: Expanded(
+              child: MaterialButton(
+                onPressed: ()=> speakingFrench(name),
+                              child: Text(
+          '$name',
+          style: styleheadertable,
+        ),
+              ),
+      ),
+    ),
+     tab.DataColumn(
       label: const Text(''),
     ),
+   
+  ];
+}
+
+tableDetailVerbsPt(name) {
+  return [
+   
     tab.DataColumn(
-      label: Text(
-        '$name',
-        style: TextStyle(fontWeight: FontWeight.bold),
+      label: Expanded(
+              child: MaterialButton(
+                onPressed: ()=> speakingPortugais(name),
+                              child: Text(
+          '$name',
+          style: styleheadertable,
+        ),
+              ),
       ),
+    ),
+     tab.DataColumn(
+      label: const Text(''),
     ),
    
   ];
@@ -45,37 +74,57 @@ Widget tableconjugImperaPor(size, size2, size3, data, column) {
     alignment: Alignment.center,
     child: tab.DataTable(
       headingRowHeight: 0,
-      columns: tableDetailVerbs(column),
+      columns: tableDetailVerbsPt(column),
       rows: [
         tab.DataRow(
           cells: <tab.DataCell>[
-            tab.DataCell(Container(width: size2, child: Text('Tu'))),
-            tab.DataCell(
-              Container(width: size3, child: Text(data[0])),
+            tab.DataCell( MaterialButton(
+                onPressed:() => speakingPortugais('Tu') ,
+                child: Container(width: size2, child: Text('Tu', style: styleRowTable))),),
+            tab.DataCell( MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed:() => speakingPortugais(data[0]) ,
+                child:
+              Container(width: size3, child: Text(data[0], style: styleRowTable)),),
             ),
           ],
         ),
         tab.DataRow(
           cells: <tab.DataCell>[
-            tab.DataCell(Container(width: size2, child: Text('Ele/Ela'))),
-            tab.DataCell(
-              Container(width: size3, child: Text(data[1])),
+            tab.DataCell(MaterialButton(
+                onPressed:() => speakingPortugais('Ele/ ela') ,
+                child:Container(width: size2, child: Text('Ele, ela', style: styleRowTable))),),
+            tab.DataCell(MaterialButton(
+              padding: EdgeInsets.all(0),
+                onPressed:() => speakingPortugais(data[1]) ,
+                child:
+              Container(width: size3, child: Text(data[1], style: styleRowTable)),),
             ),
           ],
         ),
         tab.DataRow(
           cells: <tab.DataCell>[
-            tab.DataCell(Container(width: size2, child: Text('Nós'))),
-            tab.DataCell(
-              Container(width: size3, child: Text(data[2])),
+            tab.DataCell(MaterialButton(
+                onPressed:() => speakingPortugais('Nós') ,
+                child:Container(width: size2, child: Text('Nós', style: styleRowTable))),),
+            tab.DataCell(MaterialButton(
+              padding: EdgeInsets.all(0),
+                onPressed:() => speakingPortugais(data[2]) ,
+                child:
+              Container(width: size3, child: Text(data[2], style: styleRowTable)),),
             ),
           ],
         ),
         tab.DataRow(
           cells: <tab.DataCell>[
-            tab.DataCell(Container(width: size2, child: Text('Eles/Elas'))),
-            tab.DataCell(
-              Container(width: size3, child: Text(data[2])),
+            tab.DataCell(MaterialButton(
+                onPressed:() => speakingPortugais('Eles/elas') ,
+                child:Container(width: size2, child: Text('Eles, elas', style: styleRowTable))),),
+            tab.DataCell(MaterialButton(
+              padding: EdgeInsets.all(0),
+                onPressed:() => speakingPortugais(data[3]) ,
+                child:
+              Container(width: size3, child: Text(data[3], style: styleRowTable)),),
             ),
           ],
         ),
@@ -98,29 +147,46 @@ Widget tableconjugImpera(size, size2, size3, data, column) {
     alignment: Alignment.center,
     child: tab.DataTable(
       headingRowHeight: 0,
-      columns: tableDetailVerbs(column),
+      columns: tableDetailVerbsFr(column),
       rows: [
         tab.DataRow(
           cells: <tab.DataCell>[
-            tab.DataCell(Container(width: size2, child: Text('Tu'))),
-            tab.DataCell(
-              Container(width: size3, child: Text(data[0])),
+            tab.DataCell( MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed:() => speakingFrench('Tu') ,
+                child: Container(width: size2, child: Text('Tu', style: styleRowTable))),),
+            tab.DataCell( MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed:() => speakingFrench(data[0]) ,
+                child: 
+              Container(width: size3, child: Text(data[0], style: styleRowTable)),)
             ),
           ],
         ),
         tab.DataRow(
           cells: <tab.DataCell>[
-            tab.DataCell(Container(width: size2, child: Text('Nous'))),
-            tab.DataCell(
-              Container(width: size3, child: Text(data[1])),
+            tab.DataCell( MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed:() => speakingFrench('Nous') ,
+                child: Container(width: size2, child: Text('Nous', style: styleRowTable))),),
+            tab.DataCell( MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed:() => speakingFrench(data[1]) ,
+                child: 
+              Container(width: size3, child: Text(data[1], style: styleRowTable)),)
             ),
           ],
         ),
         tab.DataRow(
           cells: <tab.DataCell>[
-            tab.DataCell(Container(width: size2, child: Text('Vous'))),
-            tab.DataCell(
-              Container(width: size3, child: Text(data[2])),
+            tab.DataCell( MaterialButton(
+                onPressed:() => speakingFrench("Vous") ,
+                child: Container(width: size2, child: Text('Vous', style: styleRowTable))),),
+            tab.DataCell( MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed:() => speakingFrench(data[2]) ,
+                child: 
+              Container(width: size3, child: Text(data[2], style: styleRowTable)),),
             ),
           ],
         ),
@@ -137,43 +203,89 @@ Widget tableconjug(size, size2, size3, data, column) {
         border: Border.all(width: 1, color: Colors.orange),
       ),
       alignment: Alignment.center,
-      child: tab.DataTable(columns: tableDetailVerbs(column), rows: [
+      child: tab.DataTable(columns: tableDetailVerbsFr(column), rows: [
         tab.DataRow(
           cells: <tab.DataCell>[
-            tab.DataCell(Container(width: size2, child: Text('Je'))),
+            tab.DataCell(MaterialButton(
+              onPressed: () => speakingFrench('Je'),
+              child: 
+              Container(width: size2, child: 
+              Text('Je', style: styleRowTable))),),
             tab.DataCell(
-              Container(width: size3, child: Text(data[0])),
+              MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed:() => speakingFrench(data[0]) ,
+                child: 
+                Container(
+                  width: size3, child:
+                 Text(data[0], style: styleRowTable)))
+                 ,
             ),
           ],
         ),
         tab.DataRow(
           cells: <tab.DataCell>[
-            tab.DataCell(Text('Tu')),
-            tab.DataCell(Text(data[1])),
+            tab.DataCell(MaterialButton(
+              onPressed: () => speakingFrench('Tu'),
+              child: Container(
+                  width: size2, child:Text('Tu', style: styleRowTable)),),),
+            tab.DataCell(MaterialButton(
+              padding: EdgeInsets.all(0),
+              onPressed: () => speakingFrench(data[1]),
+              child: Container(
+                  width: size3, child:Text(data[1], style: styleRowTable)),),),
           ],
         ),
         tab.DataRow(
           cells: <tab.DataCell>[
-            tab.DataCell(Text('Il/Elle')),
-            tab.DataCell(Text(data[2])),
+            tab.DataCell(MaterialButton(
+              onPressed: () => speakingFrench('Il/Elle'),
+              child:Container(
+                  width: size2, child:Text('Il, elle', style: styleRowTable)),),),
+            tab.DataCell(MaterialButton(
+              padding: EdgeInsets.all(0),
+              onPressed: () => speakingFrench(data[2]),
+              child:Container(
+                  width: size3, child:Text(data[2], style: styleRowTable)),),),
           ],
         ),
         tab.DataRow(
           cells: <tab.DataCell>[
-            tab.DataCell(Text('Nous')),
-            tab.DataCell(Text(data[3])),
+            tab.DataCell(MaterialButton(
+              onPressed: () => speakingFrench('Nous'),
+              child:Container(
+                  width: size2, child:Text('Nous', style: styleRowTable)),),),
+            tab.DataCell(MaterialButton(
+              padding: EdgeInsets.all(0),
+              onPressed: () => speakingFrench(data[3]),
+              child:Container(
+                  width: size3, child:Text(data[3], style: styleRowTable)),),),
           ],
         ),
         tab.DataRow(
           cells: <tab.DataCell>[
-            tab.DataCell(Text('Vous')),
-            tab.DataCell(Text(data[4])),
+            tab.DataCell(MaterialButton(
+              onPressed: () => speakingFrench('Vous'),
+              child:Container(
+                  width: size2, child:Text('Vous', style: styleRowTable)),),),
+            tab.DataCell(MaterialButton(
+              padding: EdgeInsets.all(0),
+              onPressed: () => speakingFrench(data[4]),
+              child:Container(
+                  width: size3, child:Text(data[4], style: styleRowTable)),),),
           ],
         ),
         tab.DataRow(
           cells: <tab.DataCell>[
-            tab.DataCell(Text('Ils')),
-            tab.DataCell(Text(data[5])),
+            tab.DataCell(MaterialButton(
+              onPressed: () => speakingFrench('Ils/Elles'),
+              child:Container(
+                  width: size2, child:Text('Ils, elles', style: styleRowTable)),),),
+            tab.DataCell(MaterialButton(
+              padding: EdgeInsets.all(0),
+              onPressed: () => speakingFrench(data[5]),
+              child:Container(
+                  width: size3, child:Text(data[5], style: styleRowTable)),)),
           ],
         ),
       ]));
@@ -188,46 +300,103 @@ Widget tableconjugPor(size, size2, size3, data, column) {
         border: Border.all(width: 1, color: Colors.orange),
       ),
       alignment: Alignment.center,
-      child: tab.DataTable(columns: tableDetailVerbs(column), rows: [
+      child: tab.DataTable(columns: tableDetailVerbsPt(column), rows: [
         tab.DataRow(
           cells: <tab.DataCell>[
-            tab.DataCell(Container(
-               child: Text('Eu'))),
+            tab.DataCell(MaterialButton(
+              onPressed: () => speakingPortugais('Eu'),
+              child:Container(
+                width: size2,
+               child: Text('Eu', style: styleRowTable))),),
             tab.DataCell(
-              Container(
+              MaterialButton(
+                              padding: EdgeInsets.all(0),
+
+              onPressed: () => speakingPortugais(data[0]),
+              child:Container(
                 width: size3, 
-                child: Text(data[0], textAlign: TextAlign.left,)),
+                child: Text(data[0], textAlign: TextAlign.left, style: styleRowTable))),
             ),
           ],
         ),
         tab.DataRow(
           cells: <tab.DataCell>[
-            tab.DataCell(Text('Tu')),
-            tab.DataCell(Text(data[1])),
+            tab.DataCell(MaterialButton(
+              onPressed: () => speakingPortugais('Tu'),
+              child:Container(
+                width: size2, 
+                child:Text('Tu', style: styleRowTable)),),),
+            tab.DataCell(MaterialButton(
+                            padding: EdgeInsets.all(0),
+
+              onPressed: () => speakingPortugais(data[1]),
+              child:Container(
+                width: size3, 
+                child:Text(data[1], style: styleRowTable)),),)
           ],
         ),
         tab.DataRow(
           cells: <tab.DataCell>[
-            tab.DataCell(Text('Ele/Ela')),
-            tab.DataCell(Text(data[2])),
+            tab.DataCell(MaterialButton(
+              onPressed: () => speakingPortugais('Ele/ela'),
+              child:Container(
+                width: size2, 
+                child:Text('Ele, ela', style: styleRowTable)),),),
+            tab.DataCell(MaterialButton(
+                            padding: EdgeInsets.all(0),
+
+              onPressed: () => speakingPortugais(data[2]),
+              child:Container(
+                width: size3, 
+                child:Text(data[2], style: styleRowTable)),),),
           ],
         ),
         tab.DataRow(
           cells: <tab.DataCell>[
-            tab.DataCell(Text('Nós')),
-            tab.DataCell(Text(data[3])),
+            tab.DataCell(MaterialButton(
+              onPressed: () => speakingPortugais('Nós'),
+              child:Container(
+                width: size2, 
+                child:Text('Nós', style: styleRowTable)),),),
+            tab.DataCell(MaterialButton(
+                            padding: EdgeInsets.all(0),
+
+              onPressed: () => speakingPortugais(data[3]),
+              child:Container(
+                width: size3, 
+                child:Text(data[3], style: styleRowTable)),),),
           ],
         ),
         tab.DataRow(
           cells: <tab.DataCell>[
-            tab.DataCell(Text('Vós')),
-            tab.DataCell(Text(data[4])),
+            tab.DataCell(MaterialButton(
+              onPressed: () => speakingPortugais('Vós'),
+              child:Container(
+                width: size2, 
+                child:Text('Vós', style: styleRowTable)),),),
+            tab.DataCell(MaterialButton(
+                            padding: EdgeInsets.all(0),
+
+              onPressed: () => speakingPortugais(data[4]),
+              child:Container(
+                width: size3, 
+                child:Text(data[4], style: styleRowTable)),),),
           ],
         ),
         tab.DataRow(
           cells: <tab.DataCell>[
-            tab.DataCell(Text('Eles/Elas')),
-            tab.DataCell(Text(data[5])),
+            tab.DataCell(MaterialButton(
+              onPressed: () => speakingPortugais('Eles/ elas'),
+              child:Container(
+                width: size2, 
+                child:Text('Eles, elas', style: styleRowTable)),),),
+            tab.DataCell(MaterialButton(
+                            padding: EdgeInsets.all(0),
+
+              onPressed: () => speakingPortugais(data[5]),
+              child:Container(
+                width: size3, 
+                child:Text(data[5], style: styleRowTable)),),),
           ],
         ),
       ]));

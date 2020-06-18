@@ -11,7 +11,7 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+2
+version: 1.0.0+3
 
 environment:
   sdk: ">=2.0.0 <3.0.0"
@@ -36,7 +36,7 @@ dependencies:
   flutter_facebook_login: ^3.0.0
   shared_preferences: ^0.5.7+2
   # audioplayers: ^0.15.1
-  # flutter_tts: ^1.2.0
+  flutter_tts: ^1.2.0
 
   
 
@@ -67,13 +67,14 @@ flutter:
    - images/facebook_logo.png
    - images/google_logo.png
    - assets/data.json
-   - assets/testdong.mp3
+   - assets/sounds/
    - images/mini.png
    - images/minilo.png
    - images/minilomini.png
    - images/minilivre.png
    - images/minireading.png
    - images/miniloblanc.png
+   - data.json
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

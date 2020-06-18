@@ -3,7 +3,8 @@ import 'package:vocab/Components/constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:vocab/Pages/home4.dart';
-import 'quizPage.dart';
+// import 'quizPage.dart';
+import 'quizFuture.dart';
 
 FirebaseUser loggedInUser;
 
@@ -68,7 +69,7 @@ class _SummaryState extends State<Summary> {
       onWillPop: () async => false,
       child: Scaffold(
         backgroundColor: kcolorbackground,
-        appBar: headerNav(context: context),
+        appBar: headerNavNoInfo(context: context),
         body: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

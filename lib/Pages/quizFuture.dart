@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
 import 'dart:async';
-import 'package:provider/provider.dart';
 import 'package:vocab/Components/buttonQuiz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:vocab/Components/constant.dart';
-// import 'package:vocab/authentification/sign_in.dart';
 import 'summaryQuiz.dart';
+import 'dart:convert';
 
 var finalScore = 0;
 var questionNumber = 0;
@@ -46,13 +43,10 @@ class _MyQuizState extends State<MyQuiz> {
   Widget build(BuildContext context) {
     int start = widget.indexFirstWord;
     int end = widget.indexLastWord;
-
-    final db = DatabaseServiceQuiz(start, end);
-
     return WillPopScope(
         onWillPop: _onBackPressed,
         child: Scaffold(
-          appBar: headerNav(context: context),
+          appBar: headerNavNoInfo(context: context),
           body: Container(
             height: MediaQuery.of(context).size.height,
             color: kcolorbackground,
@@ -60,17 +54,8 @@ class _MyQuizState extends State<MyQuiz> {
               child: Container(
                 child: Column(
                   children: <Widget>[
-                    StreamProvider<List<Words>>.value(
-                      value: db.streamWord(),
-                      initialData: [
-                        Words(francais: '', portugais: '', index: 0),
-                        Words(francais: '', portugais: '', index: 0),
-                        Words(francais: '', portugais: '', index: 0),
-                        Words(francais: '', portugais: '', index: 0)
-                      ],
-                      child: Container(
-                        child: Entire(widget.numberQuestion),
-                      ),
+                    Container(
+                      child: Entire(widget.numberQuestion, start, end),
                     ),
                   ],
                 ),
@@ -88,7 +73,9 @@ class _MyQuizState extends State<MyQuiz> {
 
 class Entire extends StatefulWidget {
   final int numberQuestion;
-  Entire(this.numberQuestion);
+  Entire(this.numberQuestion, this.start, this.end);
+  final int start;
+  final int end;
 
   @override
   _EntireState createState() => _EntireState();
@@ -97,75 +84,96 @@ class Entire extends StatefulWidget {
 class _EntireState extends State<Entire> {
   @override
   Widget build(BuildContext context) {
-    final _wordsback = Provider.of<List<Words>>(
-      context,
-    );
-    List<Words> getListForEachElement(int i, List l) {
-      final List<Words> list2 = List<Words>.from(l);
-      list2.remove(l[i]);
-      list2.shuffle();
-      final List<Words> list3 = list2.sublist(0, 3);
-      list3.add(l[i]);
-      return list3;
-    }
+    // questionNumber = 0;
+    return FutureBuilder(
+        future: DefaultAssetBundle.of(context).loadString('data.json'),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.waiting:
+              return Center(child: CircularProgressIndicator());
+              break;
+            default:
+              // Completed with error
+              if (snapshot.hasError)
+                return Container(child: Text(snapshot.error.toString()));
+              // Completed with data
+              var new_data = json.decode(snapshot.data);
+              List<Words> listWordsJson = [];
+              var i;
+              for (i = 1; i <= 1000; i++) {
+                Words singleWord = Words(
+                    francais: new_data[i.toString()]['francais'],
+                    portugais: new_data[i.toString()]['portugais'],
+                    index: new_data[i.toString()]['index']);
+                listWordsJson.add(singleWord);
+              }
+              List<Words> getListForEachElement(int i, List l) {
+                final List<Words> list2 = List<Words>.from(l);
+                list2.remove(l[i]);
+                list2.shuffle();
+                final List<Words> list3 = list2.sublist(0, 3);
+                list3.add(l[i]);
+                return list3;
+              }
+              List<List<Words>> answersQuiz() {
+                int quizLength = widget.numberQuestion;
 
-    List<List<Words>> answersQuiz() {
-      int quizLength = widget.numberQuestion;
+                List<Words> newList = List<Words>.from(
+                    listWordsJson.sublist(widget.start - 1, widget.end));
+                newList.shuffle();
+                List<Words> listQuiz = newList.length > quizLength
+                    ? newList.sublist(0, quizLength)
+                    : newList;
+                final List<List<Words>> answersQuiz = [];
 
-      List<Words> newList = List<Words>.from(_wordsback);
-      newList.shuffle();
-      List<Words> listQuiz = newList.length > quizLength
-          ? newList.sublist(0, quizLength)
-          : newList;
-      final List<List<Words>> answersQuiz = [];
+                for (int i = 0; i < listQuiz.length; i++) {
+                  List<Words> transit = [];
+                  transit = getListForEachElement(i, listQuiz);
+                  answersQuiz.add(transit);
+                }
 
-      for (int i = 0; i < listQuiz.length; i++) {
-        List<Words> transit = [];
-        transit = getListForEachElement(i, listQuiz);
-        answersQuiz.add(transit);
-      }
+                return answersQuiz;
+              }
+              final List<List<Words>> answersMapQuiz = answersQuiz();
 
-      return answersQuiz; //return list of list of 4 words for quiz
-    }
+              var r = Random(56);
 
-    final List<List<Words>> answersMapQuiz = answersQuiz();
+              int lengthFirstLang = (answersMapQuiz.length / 2).round();
+              List question = [];
+              List<List> answersList = [];
+              List answers = [];
+              List correctAnswers = [];
 
-    var r = Random(56);
+              for (int i = 0; i < lengthFirstLang; i++) {
+                question.add(answersMapQuiz[i][3].francais);
+                correctAnswers.add(answersMapQuiz[i][3].portugais);
+                answers = [];
+                answers.add(answersMapQuiz[i][0].portugais);
+                answers.add(answersMapQuiz[i][1].portugais);
+                answers.add(answersMapQuiz[i][2].portugais);
+                answers.add(answersMapQuiz[i][3].portugais);
+                answersList.add(answers);
+              }
 
-    int lengthFirstLang = (answersMapQuiz.length / 2).round();
-    List question = [];
-    List<List> answersList = [];
-    List answers = [];
-    List correctAnswers = [];
+              for (int i = lengthFirstLang; i < answersMapQuiz.length; i++) {
+                question.add(answersMapQuiz[i][3].portugais);
+                correctAnswers.add(answersMapQuiz[i][3].francais);
+                answers = [];
 
-    for (int i = 0; i < lengthFirstLang; i++) {
-      question.add(answersMapQuiz[i][3].francais);
-      correctAnswers.add(answersMapQuiz[i][3].portugais);
-      answers = [];
-      answers.add(answersMapQuiz[i][0].portugais);
-      answers.add(answersMapQuiz[i][1].portugais);
-      answers.add(answersMapQuiz[i][2].portugais);
-      answers.add(answersMapQuiz[i][3].portugais);
-      answersList.add(answers);
-    }
-
-    for (int i = lengthFirstLang; i < answersMapQuiz.length; i++) {
-      question.add(answersMapQuiz[i][3].portugais);
-      correctAnswers.add(answersMapQuiz[i][3].francais);
-      answers = [];
-
-      answers.add(answersMapQuiz[i][0].francais);
-      answers.add(answersMapQuiz[i][1].francais);
-      answers.add(answersMapQuiz[i][2].francais);
-      answers.add(answersMapQuiz[i][3].francais);
-      answersList.add(answers);
-    }
-
-    return QuizFront(
-        question: question,
-        answersList: answersList,
-        answersMapQuiz: answersMapQuiz,
-        correctAnswers: correctAnswers);
+                answers.add(answersMapQuiz[i][0].francais);
+                answers.add(answersMapQuiz[i][1].francais);
+                answers.add(answersMapQuiz[i][2].francais);
+                answers.add(answersMapQuiz[i][3].francais);
+                answersList.add(answers);
+              }
+              return QuizFront(
+                  question: question,
+                  answersList: answersList,
+                  answersMapQuiz: answersMapQuiz,
+                  correctAnswers: correctAnswers);
+          }
+        });
   }
 }
 
@@ -175,39 +183,6 @@ class Words {
   final int index;
   Words({this.francais, this.portugais, this.index});
 
-  factory Words.fromFirestore(DocumentSnapshot doc) {
-    Map data = doc.data;
-    return Words(
-        index: data['index'] ?? '',
-        francais: data['francais'] ?? '',
-        portugais: data['portugais'] ?? '');
-  }
-}
-
-class DatabaseServiceQuiz {
-  DatabaseServiceQuiz(this.start, this.end);
-  final Firestore _db = Firestore.instance;
-  int start;
-  int end;
-  var x;
-  var i;
-  Stream<List<Words>> streamWord() {
-    var ref = _db
-        .collection('words')
-        .orderBy('index')
-        .where('index')
-        .startAt([start]).endAt([end]);
-
-    print(ref
-        .snapshots()
-        .map((list) => list.documents.map((doc) => Words.fromFirestore(doc))));
-    print('functio called');
-
-    x = ref.snapshots().map((list) =>
-        list.documents.map((doc) => Words.fromFirestore(doc)).toList());
-    // ..shuffle()
-    return x;
-  }
 }
 
 class QuizFront extends StatefulWidget {
@@ -269,13 +244,11 @@ class _QuizFrontState extends State<QuizFront>
           color[questionNumber] = -1;
         });
       }
-      scorelist.length < widget.question.length?
-      Future.delayed(const Duration(milliseconds: 200), () {
-         
-        updateQuestion();
-      }):updateQuestion();
-      
-      
+      scorelist.length < widget.question.length
+          ? Future.delayed(const Duration(milliseconds: 200), () {
+              updateQuestion();
+            })
+          : updateQuestion();
 
       return scorelist;
     }
@@ -286,13 +259,12 @@ class _QuizFrontState extends State<QuizFront>
       alignment: Alignment.topCenter,
       child: widget.answersMapQuiz.isEmpty
           ? SizedBox(
-                          child:  
-                          Theme(
-          data: Theme.of(context).copyWith(accentColor: Colors.orange),
-          child: CircularProgressIndicator()),
-                          width: 60,
-                          height: 60,
-                        )
+              child: Theme(
+                  data: Theme.of(context).copyWith(accentColor: Colors.orange),
+                  child: CircularProgressIndicator()),
+              width: 60,
+              height: 60,
+            )
           : Column(children: <Widget>[
               Padding(padding: EdgeInsets.all(10.0)),
               Container(
@@ -308,12 +280,11 @@ class _QuizFrontState extends State<QuizFront>
                 ),
               ),
               Padding(padding: EdgeInsets.all(5.0)),
-               LinearProgressIndicator(
-                  value: (questionNumber / widget.question.length),
-                  backgroundColor: Color(0xFFe6ffe7),
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
-                ),
-              
+              LinearProgressIndicator(
+                value: (questionNumber / widget.question.length),
+                backgroundColor: Color(0xFFe6ffe7),
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+              ),
               Padding(padding: EdgeInsets.all(20.0)),
               ClipRRect(
                 child: Container(

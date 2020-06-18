@@ -154,7 +154,7 @@ class _HomeState extends State<Home> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.list),
-                title: Text('Annexe'),
+                title: Text('Annexes'),
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.search),

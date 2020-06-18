@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart' show DragStartBehavior;
@@ -421,9 +422,9 @@ class PaginatedState extends State<Paginated> {
         Container(
           height: MediaQuery.of(context).size.height * 0.57,
           width: MediaQuery.of(context).size.width * 0.9,
-          child: Scrollbar(
+          child: CupertinoScrollbar(
             controller: scrollController,
-            isAlwaysShown: true,
+           isAlwaysShown: true,
             child: SingleChildScrollView(
               controller: scrollController,
               scrollDirection: Axis.vertical,

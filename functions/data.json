@@ -31,7 +31,7 @@
   "5": {
     "index": 5,
     "francais": "ici",
-    "portugais": "aqui/cá",
+    "portugais": "aqui, cá",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -184,7 +184,7 @@
   },
   "27": {
     "index": 27,
-    "francais": "bon/-onne",
+    "francais": "bon, bonne",
     "portugais": "bom, boa",
     "quiz1" : 0,
     "quiz2" : 0
@@ -234,7 +234,7 @@
   "34": {
     "index": 34,
     "francais": "jamais",
-    "portugais": "nunca",
+    "portugais": "nunca, jamais",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -283,7 +283,7 @@
   "41": {
     "index": 41,
     "francais": "merci",
-    "portugais": "obrigado",
+    "portugais": "obrigado/-a",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -415,7 +415,7 @@
   },
   "60": {
     "index": 60,
-    "francais": "monsieur/madame",
+    "francais": "monsieur, madame",
     "portugais": "senhor/-a",
     "quiz1" : 0,
     "quiz2" : 0
@@ -437,7 +437,7 @@
   "63": {
     "index": 63,
     "francais": "peut-être",
-    "portugais": "talvez",
+    "portugais": "talvez, se calhar",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -472,14 +472,14 @@
   "68": {
     "index": 68,
     "francais": "quelque chose",
-    "portugais": "algo",
+    "portugais": "algo, alguma coisa",
     "quiz1" : 0,
     "quiz2" : 0
   },
   "69": {
     "index": 69,
-    "francais": "quelque chose",
-    "portugais": "alguma coisa",
+    "francais": "manger",
+    "portugais": "comer",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -548,7 +548,7 @@
   },
   "79": {
     "index": 79,
-    "francais": "aucune personne, quiconque",
+    "francais": "(aucune) personne",
     "portugais": "nenhuma pessoa",
     "quiz1" : 0,
     "quiz2" : 0
@@ -814,15 +814,15 @@
   },
   "117": {
     "index": 117,
-    "francais": "ami/-mie",
-    "portugais": "amigo/-ga",
+    "francais": "ami/-ie",
+    "portugais": "amigo/-a",
     "quiz1" : 0,
     "quiz2" : 0
   },
   "118": {
     "index": 118,
-    "francais": "nouveau/-velle",
-    "portugais": "novo/-va",
+    "francais": "nouveau/-elle",
+    "portugais": "novo/-a",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -843,7 +843,7 @@
   "121": {
     "index": 121,
     "francais": "sérieux/-ieuse",
-    "portugais": "sério/-ria",
+    "portugais": "sério/-a",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -856,14 +856,14 @@
   },
   "123": {
     "index": 123,
-    "francais": "plaire/déplaire",
-    "portugais": "cair bem/mal",
+    "francais": "plaire, déplaire",
+    "portugais": "cair bem, mal",
     "quiz1" : 0,
     "quiz2" : 0
   },
   "124": {
     "index": 124,
-    "francais": "désolé/-ée, pardon",
+    "francais": "désolé(e), pardon",
     "portugais": "desculpa, perdão",
     "quiz1" : 0,
     "quiz2" : 0
@@ -1017,8 +1017,8 @@
   },
   "146": {
     "index": 146,
-    "francais": "c'est pour moi",
-    "portugais": "sobra pra mim",
+    "francais": "un village",
+    "portugais": "uma vila",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -1164,8 +1164,8 @@
   },
   "167": {
     "index": 167,
-    "francais": "porter",
-    "portugais": "portar",
+    "francais": "porter, transporter",
+    "portugais": "levar, transportar",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -1221,7 +1221,7 @@
   "175": {
     "index": 175,
     "francais": "mort/-orte",
-    "portugais": "morto/-ta",
+    "portugais": "morto/-a",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -1234,7 +1234,7 @@
   },
   "177": {
     "index": 177,
-    "francais": "chanceux, heureux, content",
+    "francais": "content, heureux",
     "portugais": "feliz",
     "quiz1" : 0,
     "quiz2" : 0
@@ -1382,7 +1382,7 @@
   "198": {
     "index": 198,
     "francais": "dès que",
-    "portugais": "logo que",
+    "portugais": "assim que",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -1396,7 +1396,7 @@
   "200": {
     "index": 200,
     "francais": "rapide",
-    "portugais": "rápido/-da",
+    "portugais": "rápido/-a",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -1466,7 +1466,7 @@
   "210": {
     "index": 210,
     "francais": "calme",
-    "portugais": "calmo/-ma",
+    "portugais": "calmo/-a",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -1487,7 +1487,7 @@
   "213": {
     "index": 213,
     "francais": "croire",
-    "portugais": "acreditar",
+    "portugais": "crer, acreditar",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -1542,8 +1542,8 @@
   },
   "221": {
     "index": 221,
-    "francais": "vieux/vieille",
-    "portugais": "velho/-lha",
+    "francais": "vieux, vieille",
+    "portugais": "velho/-a",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -1556,8 +1556,8 @@
   },
   "223": {
     "index": 223,
-    "francais": "idiot/idiote",
-    "portugais": "idiota",
+    "francais": "une chaise",
+    "portugais": "uma cadeira",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -1857,7 +1857,7 @@
   },
   "266": {
     "index": 266,
-    "francais": "faux/fausse",
+    "francais": "faux, fausse",
     "portugais": "errado/-a",
     "quiz1" : 0,
     "quiz2" : 0
@@ -1906,7 +1906,7 @@
   },
   "273": {
     "index": 273,
-    "francais": "suffisant(e)",
+    "francais": "suffisant/-ante",
     "portugais": "suficiente",
     "quiz1" : 0,
     "quiz2" : 0
@@ -1955,7 +1955,7 @@
   },
   "280": {
     "index": 280,
-    "francais": "lã-bas, plus loin",
+    "francais": "là-bas, plus loin",
     "portugais": "além",
     "quiz1" : 0,
     "quiz2" : 0
@@ -2228,8 +2228,8 @@
   },
   "319": {
     "index": 319,
-    "francais": "beau/belle",
-    "portugais": "lindo/-a",
+    "francais": "beau, belle",
+    "portugais": "bonito, lindo, belo /-a",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -2256,7 +2256,7 @@
   },
   "323": {
     "index": 323,
-    "francais": "spécial(e)",
+    "francais": "spécial/-iale",
     "portugais": "especial",
     "quiz1" : 0,
     "quiz2" : 0
@@ -2305,8 +2305,8 @@
   },
   "330": {
     "index": 330,
-    "francais": "beau/belle",
-    "portugais": "bonito/-a, belo/-a",
+    "francais": "la table",
+    "portugais": "a mesa",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -2340,8 +2340,8 @@
   },
   "335": {
     "index": 335,
-    "francais": "fou/folle",
-    "portugais": "louco/-a",
+    "francais": "fou, folle",
+    "portugais": "louco, maluco, doido /-a",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -2494,8 +2494,8 @@
   },
   "357": {
     "index": 357,
-    "francais": "oncle/tante",
-    "portugais": "tio/tia",
+    "francais": "oncle, tante",
+    "portugais": "tio, tia",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -2529,7 +2529,7 @@
   },
   "362": {
     "index": 362,
-    "francais": "être sûr/sûre",
+    "francais": "être sûr/-ûre",
     "portugais": "estar seguro/-a",
     "quiz1" : 0,
     "quiz2" : 0
@@ -2550,8 +2550,8 @@
   },
   "365": {
     "index": 365,
-    "francais": "général/généraux",
-    "portugais": "general/generais",
+    "francais": "l'oreille",
+    "portugais": "a orelha",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -2620,7 +2620,7 @@
   },
   "375": {
     "index": 375,
-    "francais": "joindre, allumer, appeler",
+    "francais": "joindre, appeler",
     "portugais": "ligar",
     "quiz1" : 0,
     "quiz2" : 0
@@ -2774,8 +2774,8 @@
   },
   "397": {
     "index": 397,
-    "francais": "croire",
-    "portugais": "crer",
+    "francais": "un oeil, des yeux",
+    "portugais": "um olho, olhos",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -2817,7 +2817,7 @@
   "403": {
     "index": 403,
     "francais": "je vous prie de m'excuser",
-    "portugais": "Peço que me desculpe",
+    "portugais": "peço que me desculpe",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -2936,7 +2936,7 @@
   "420": {
     "index": 420,
     "francais": "idiot(e), stupide",
-    "portugais": "estúpido",
+    "portugais": "idiota, estúpido/-a",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -3005,7 +3005,7 @@
   },
   "430": {
     "index": 430,
-    "francais": "amusant/-e",
+    "francais": "amusant/-ante",
     "portugais": "engraçado/-a",
     "quiz1" : 0,
     "quiz2" : 0
@@ -3124,7 +3124,7 @@
   },
   "447": {
     "index": 447,
-    "francais": "chaud/-de",
+    "francais": "chaud/-aude",
     "portugais": "quente",
     "quiz1" : 0,
     "quiz2" : 0
@@ -3201,15 +3201,15 @@
   },
   "458": {
     "index": 458,
-    "francais": "bref/brève",
+    "francais": "bref, brève",
     "portugais": "breve",
     "quiz1" : 0,
     "quiz2" : 0
   },
   "459": {
     "index": 459,
-    "francais": "ouvrir",
-    "portugais": "abrir",
+    "francais": "porter des lunettes",
+    "portugais": "usar óculos",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -3376,7 +3376,7 @@
   },
   "483": {
     "index": 483,
-    "francais": "maudit/-te",
+    "francais": "maudit/-ite",
     "portugais": "maldito/-a",
     "quiz1" : 0,
     "quiz2" : 0
@@ -3474,8 +3474,8 @@
   },
   "497": {
     "index": 497,
-    "francais": "la garde",
-    "portugais": "a guarda",
+    "francais": "chanceux",
+    "portugais": "sortudo",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -3509,8 +3509,8 @@
   },
   "502": {
     "index": 502,
-    "francais": "colonel/-s (m)",
-    "portugais": "coronel/-éis (m)",
+    "francais": "une assiette",
+    "portugais": "um prato",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -3572,7 +3572,7 @@
   },
   "511": {
     "index": 511,
-    "francais": "plein/-ne",
+    "francais": "plein/-eine",
     "portugais": "cheio/-a",
     "quiz1" : 0,
     "quiz2" : 0
@@ -3607,8 +3607,8 @@
   },
   "516": {
     "index": 516,
-    "francais": "petit(e) copin(e)",
-    "portugais": "namorado/-a",
+    "francais": "petit copin, petite copine",
+    "portugais": "namorado, namorada",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -3733,8 +3733,8 @@
   },
   "534": {
     "index": 534,
-    "francais": "un(e) sergent",
-    "portugais": "um(a) sargento",
+    "francais": "un couteau",
+    "portugais": "uma faca",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -3824,8 +3824,8 @@
   },
   "547": {
     "index": 547,
-    "francais": "bar/-s (m)",
-    "portugais": "bar/-ares (m)",
+    "francais": "une fourchette",
+    "portugais": "um garfo",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -3845,8 +3845,8 @@
   },
   "550": {
     "index": 550,
-    "francais": "un/en secret",
-    "portugais": "um/em segredo",
+    "francais": "un, en secret",
+    "portugais": "um, em segredo",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -4034,8 +4034,8 @@
   },
   "577": {
     "index": 577,
-    "francais": "noir/-e",
-    "portugais": "negro/-a",
+    "francais": "noir/-re",
+    "portugais": "negro, preto /-a",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -4062,8 +4062,8 @@
   },
   "581": {
     "index": 581,
-    "francais": "la base",
-    "portugais": "a base",
+    "francais": "une cuillère",
+    "portugais": "uma colher",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -4076,7 +4076,7 @@
   },
   "583": {
     "index": 583,
-    "francais": "humain/-e",
+    "francais": "humain/-aine",
     "portugais": "humano/-a",
     "quiz1" : 0,
     "quiz2" : 0
@@ -4118,8 +4118,8 @@
   },
   "589": {
     "index": 589,
-    "francais": "un vaisseau",
-    "portugais": "uma nave",
+    "francais": "une lampe",
+    "portugais": "uma lâmpada, um candeeiro",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -4349,8 +4349,8 @@
   },
   "622": {
     "index": 622,
-    "francais": "fou/folle",
-    "portugais": "maluco",
+    "francais": "tu me manques",
+    "portugais": "tenho saudades tuas",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -4370,7 +4370,7 @@
   },
   "625": {
     "index": 625,
-    "francais": "égal/-ale",
+    "francais": "égal/-le",
     "portugais": "igual",
     "quiz1" : 0,
     "quiz2" : 0
@@ -4496,7 +4496,7 @@
   },
   "643": {
     "index": 643,
-    "francais": "intelligent/-ente",
+    "francais": "intelligent/-te",
     "portugais": "inteligente",
     "quiz1" : 0,
     "quiz2" : 0
@@ -4524,7 +4524,7 @@
   },
   "647": {
     "index": 647,
-    "francais": "principal/-ale/-aux",
+    "francais": "principal(e)/-aux",
     "portugais": "principal/-ais (mf)",
     "quiz1" : 0,
     "quiz2" : 0
@@ -4615,15 +4615,15 @@
   },
   "660": {
     "index": 660,
-    "francais": "entier-/-ière",
+    "francais": "entier/-ière",
     "portugais": "inteiro",
     "quiz1" : 0,
     "quiz2" : 0
   },
   "661": {
     "index": 661,
-    "francais": "le shérif",
-    "portugais": "o xerife",
+    "francais": "un briquet",
+    "portugais": "um isqueiro",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -4685,7 +4685,7 @@
   },
   "670": {
     "index": 670,
-    "francais": "courage/-s",
+    "francais": "courage/-s (m)",
     "portugais": "coragem/-ens (f)",
     "quiz1" : 0,
     "quiz2" : 0
@@ -4706,7 +4706,7 @@
   },
   "673": {
     "index": 673,
-    "francais": "une(e) ennemi/-ie",
+    "francais": "un(e) ennemi/-ie",
     "portugais": "um(a) inimigo/-a",
     "quiz1" : 0,
     "quiz2" : 0
@@ -4902,8 +4902,8 @@
   },
   "701": {
     "index": 701,
-    "francais": "noir/-e",
-    "portugais": "preto/-a",
+    "francais": "un souvenir",
+    "portugais": "uma recordação",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -5056,7 +5056,7 @@
   },
   "723": {
     "index": 723,
-    "francais": "dé, donnée, ouvert/-erte",
+    "francais": "dé, donnée",
     "portugais": "dado",
     "quiz1" : 0,
     "quiz2" : 0
@@ -5189,8 +5189,8 @@
   },
   "742": {
     "index": 742,
-    "francais": "un détective",
-    "portugais": "um detective",
+    "francais": "de l'eau froide",
+    "portugais": "água fria",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -5245,8 +5245,8 @@
   },
   "750": {
     "index": 750,
-    "francais": "jamais",
-    "portugais": "jamais",
+    "francais": "sur le divant",
+    "portugais": "no divã",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -5322,8 +5322,8 @@
   },
   "761": {
     "index": 761,
-    "francais": "un cinéma",
-    "portugais": "um cinema",
+    "francais": "sauter",
+    "portugais": "saltar",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -5357,7 +5357,7 @@
   },
   "766": {
     "index": 766,
-    "francais": "fin/-ne, rusé/-ée",
+    "francais": "fin(e), rusé(e)",
     "portugais": "esperto/-a",
     "quiz1" : 0,
     "quiz2" : 0
@@ -5392,8 +5392,8 @@
   },
   "771": {
     "index": 771,
-    "francais": "fou/folle",
-    "portugais": "doido/-a",
+    "francais": "réfléchir",
+    "portugais": "reflectir",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -5455,22 +5455,22 @@
   },
   "780": {
     "index": 780,
-    "francais": "fermer",
-    "portugais": "fermer",
+    "francais": "un stylo",
+    "portugais": "uma caneta",
     "quiz1" : 0,
     "quiz2" : 0
   },
   "781": {
     "index": 781,
-    "francais": "ouvert/-te",
-    "portugais": "aberto/-a",
+    "francais": "ouvrir, ouvert/-te",
+    "portugais": "abrir, aberto/-a",
     "quiz1" : 0,
     "quiz2" : 0
   },
   "782": {
     "index": 782,
-    "francais": "fermé/-ée",
-    "portugais": "fechado/-a",
+    "francais": "fermer, fermé/-ée",
+    "portugais": "fechar, fechado/-a",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -5497,8 +5497,8 @@
   },
   "786": {
     "index": 786,
-    "francais": "un/-e juge",
-    "portugais": "um/-a juiz",
+    "francais": "un(e) juge",
+    "portugais": "um(a) juiz",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -5553,7 +5553,7 @@
   },
   "794": {
     "index": 794,
-    "francais": "la mémoire, le souvenir",
+    "francais": "la mémoire",
     "portugais": "a memória",
     "quiz1" : 0,
     "quiz2" : 0
@@ -5581,8 +5581,8 @@
   },
   "798": {
     "index": 798,
-    "francais": "Salut",
-    "portugais": "tchau",
+    "francais": "un cahier",
+    "portugais": "um caderno",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -5623,8 +5623,8 @@
   },
   "804": {
     "index": 804,
-    "francais": "un commandant",
-    "portugais": "um major",
+    "francais": "un crayon",
+    "portugais": "um lápis",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -5728,8 +5728,8 @@
   },
   "819": {
     "index": 819,
-    "francais": "tomber",
-    "portugais": "calhar",
+    "francais": "un oiseau",
+    "portugais": "um pássaro",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -6078,7 +6078,7 @@
   },
   "869": {
     "index": 869,
-    "francais": "le/la patron/-onne",
+    "francais": "le patron, la patronne",
     "portugais": "o patrão",
     "quiz1" : 0,
     "quiz2" : 0
@@ -6540,7 +6540,7 @@
   },
   "935": {
     "index": 935,
-    "francais": "une(e) collègue, pote",
+    "francais": "un(e) collègue, pote",
     "portugais": "um(a) colega",
     "quiz1" : 0,
     "quiz2" : 0
@@ -6617,8 +6617,8 @@
   },
   "946": {
     "index": 946,
-    "francais": "croire",
-    "portugais": "crer",
+    "francais": "prendre le soleil",
+    "portugais": "apanhar sol",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -6694,7 +6694,7 @@
   },
   "957": {
     "index": 957,
-    "francais": "abondant/-ante, à bout",
+    "francais": "abondant/-ante",
     "portugais": "farto/-a",
     "quiz1" : 0,
     "quiz2" : 0
@@ -6750,8 +6750,8 @@
   },
   "965": {
     "index": 965,
-    "francais": "prendre quelqu'un en stop",
-    "portugais": "dar boleia",
+    "francais": "la poste",
+    "portugais": "o correio",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -6820,7 +6820,7 @@
   },
   "975": {
     "index": 975,
-    "francais": "gros/-osse, gras/-asse",
+    "francais": "gros/-osse",
     "portugais": "gordo/-a",
     "quiz1" : 0,
     "quiz2" : 0
@@ -6890,7 +6890,7 @@
   },
   "985": {
     "index": 985,
-    "francais": "amoureux/-euse, passioné/-ée",
+    "francais": "amoureux/-se, passioné/-ée",
     "portugais": "apaixonado/-a",
     "quiz1" : 0,
     "quiz2" : 0
@@ -6925,7 +6925,7 @@
   },
   "990": {
     "index": 990,
-    "francais": "un commencement, un principe",
+    "francais": "un principe, commencement",
     "portugais": "um princípio",
     "quiz1" : 0,
     "quiz2" : 0
@@ -6961,7 +6961,7 @@
   "995": {
     "index": 995,
     "francais": "se promener",
-    "portugais": "passear-se",
+    "portugais": "passear",
     "quiz1" : 0,
     "quiz2" : 0
   },
@@ -6995,8 +6995,8 @@
   },
   "1000": {
     "index": 1000,
-    "francais": "definitivamente",
-    "portugais": "définitivement",
+    "francais": "définitivement",
+    "portugais": "definitivamente",
     "quiz1" : 0,
     "quiz2" : 0
   }

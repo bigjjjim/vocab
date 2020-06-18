@@ -94,12 +94,12 @@ class GrammairePage extends StatelessWidget {
                       children: <Widget>[
                         SizedBox(height: 20),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
+                          width: MediaQuery.of(context).size.width * 0.85,
                           alignment: Alignment.center,
                           child: tab.DataTable(
                             columns: kTablePronColumns,
                             rows: listpronoms(
-                                MediaQuery.of(context).size.width * 0.3),
+                                ),
                           ),
                         ),
                         SizedBox(height: 20),
@@ -112,12 +112,12 @@ class GrammairePage extends StatelessWidget {
                       children: <Widget>[
                         SizedBox(height: 20),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
+                          width: MediaQuery.of(context).size.width * 0.85,
                           alignment: Alignment.center,
                           child: tab.DataTable(
                               columns: kTablePossColumns,
                               rows: listRowPos(
-                                  MediaQuery.of(context).size.width * 0.3)),
+                                  )),
                         ),
                       ],
                     ),
@@ -129,12 +129,12 @@ class GrammairePage extends StatelessWidget {
                       children: <Widget>[
                         SizedBox(height: 20),
                         Container(
-                            width: MediaQuery.of(context).size.width * 0.8,
+                            width: MediaQuery.of(context).size.width * 0.85,
                             alignment: Alignment.center,
                             child: tab.DataTable(
                               columns: kTablePossColumnsPlu,
                               rows: listRowPossplus(
-                                  MediaQuery.of(context).size.width * 0.3),
+                                  ),
                             )),
                       ],
                     ),
@@ -193,25 +193,25 @@ class GrammairePage extends StatelessWidget {
                         ),
                         SizedBox(height: 20),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
+                          width: MediaQuery.of(context).size.width * 0.85,
                           alignment: Alignment.center,
                           child: tab.DataTable(
                               columns: kTableArtInDef,
                               rows: listRowartInd(
-                                  MediaQuery.of(context).size.width * 0.3)),
+                                  )),
                         ),
                         SizedBox(height: 20),
 
                         Container(
                           child: Text(
                             'Contractions:',
-                            style: TextStyle( fontSize: 20, color: kcolorblacktext,  fontWeight: FontWeight.w300, decoration: TextDecoration.underline)
+                            style: TextStyle( fontSize: 20, color: kcolorblacktext,  fontWeight: FontWeight.w500, decoration: TextDecoration.underline)
                             
                           ),
                         ),
                         SizedBox(height: 20),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
+                          width: MediaQuery.of(context).size.width * 0.85,
                           alignment: Alignment.center,
                           child: tab.DataTable(
                               columns: kTablecontraction1,
@@ -237,12 +237,12 @@ class GrammairePage extends StatelessWidget {
                             )),
                         SizedBox(height: 20),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
+                          width: MediaQuery.of(context).size.width * 0.85,
                           alignment: Alignment.center,
                           child: tab.DataTable(
                               columns: kTableArtDef,
                               rows: listRowartdef(
-                                  MediaQuery.of(context).size.width * 0.3)),
+                                  )),
                         ),
                         SizedBox(height: 20),
                         Container(
@@ -259,12 +259,12 @@ class GrammairePage extends StatelessWidget {
                         Container(
                           child: Text(
                             'Contractions:',
-                            style: TextStyle( fontSize: 20, color: kcolorblacktext,  fontWeight: FontWeight.w300, decoration: TextDecoration.underline),
+                            style: TextStyle( fontSize: 20, color: kcolorblacktext,  fontWeight: FontWeight.w500, decoration: TextDecoration.underline),
                           ),
                         ),
                         SizedBox(height: 20),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
+                          width: MediaQuery.of(context).size.width * 0.85,
                           alignment: Alignment.center,
                           child: tab.DataTable(
                               columns: kTablecontraction2,
@@ -273,7 +273,7 @@ class GrammairePage extends StatelessWidget {
                         ),
                         SizedBox(height: 40),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
+                          width: MediaQuery.of(context).size.width * 0.85,
                           alignment: Alignment.center,
                           child: tab.DataTable(
                               columns: kTablecontraction3,

@@ -1,234 +1,254 @@
 import 'package:flutter/material.dart';
 // import 'package:vocab/Components/constant.dart';
 import 'tabledata.dart' as tab;
+import 'constant.dart';
+import 'package:vocab/Pages/home4.dart';
 
 
 
- const kTableNombres = <tab.DataColumn>[
+var kTableNombres = <tab.DataColumn>[
        tab.DataColumn(
-    label: const Text('#'),
+    label:  Text('#', style: styleheadertable),
   ),
    tab.DataColumn(
-    label: const Text('Nombres'),
+    label: MaterialButton(
+      padding: EdgeInsets.all(0),
+       onPressed: () => speakingFrench("Nombres"),
+      child: Text('Nombres',style: styleheadertable)),
   ),
    tab.DataColumn(
-    label: const Text('Números'),
+    label: MaterialButton(
+       onPressed: () => speakingPortugais("Números"),
+      child: Text('Números', style: styleheadertable, )),
   ),
   ];
 
-   
-listNombres(size) {
+List listNombresFlat = [['1','Un', 'Um'],['2', 'Deux', 'Dois'],['3', 'Trois', 'Três'],
+['4', 'Quatre', 'Quatro'],['5', 'Cinq', 'Cinco'],['6', 'Six', "Seis"],
+['7', 'Sept', 'Sete'],['8', 'Huit', 'Oito'],['9', 'Neuf', 'Nove'],
+['10', 'Dix', 'Dez'],['11', 'Onze', 'Onze'],['12', 'Douze', 'Doze'],
+['13', 'Treize', 'Treze'],['14', 'Quatorze', 'Catorze'],['15', 'Quinze', 'Quinze'],
+['16', 'Seize', 'Dezasseis'],['17', 'Dix-sept', 'Dezassete'],['18', 'Dix-huit', 'Dezoito'],
+['19', 'Dix-neuf', 'Dezanove'],['20', 'Vingt', 'Vinte'],['21', 'Vingt-et-un', 'Vinte-e-um'],
+['22', 'Vingt-deux', 'Vinte-e-dois'],['30', 'Trente', 'Trinta'],['40', 'Quarante', 'Quarenta'],
+['50', 'Cinquante', 'Cinquenta'], ['60', 'Soixante', 'Sessenta'],['70', 'Soixante-dix', 'Setenta'],
+['80', 'Quatre-vingt', 'Oitenta'], ['90', 'Quatre-vingt-dix', 'Noventa'],['100', 'Cent', 'Cem'],
+['1000', 'Milles', 'Mil'], ['1000000', 'Un million', 'Um milhão'],['1000000000', 'Un milliard', 'Um bilhão'],
 
-return
-   [ 
-      tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell( Container(width: size,child: Row(
-            children: <Widget>[
-              Text('1',),
-            ],
-          ))),
-          tab.DataCell( Container(width: size,child: Text('Un', ), ),),
-          tab.DataCell( Container(width: size,child: Text('Um', ))),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('2', )),
-          tab.DataCell(Text('Deux',)),
-          tab.DataCell(Text('Dois', )),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('3')),
-          tab.DataCell(Text('Trois')),
-          tab.DataCell(Text('Três')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('4')),
-          tab.DataCell(Text('Quatre')),
-          tab.DataCell(Text('Quatro')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('5')),
-          tab.DataCell(Text('Cinq')),
-          tab.DataCell(Text('Cinco')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('6')),
-          tab.DataCell(Text('Six')),
-          tab.DataCell(Text('Seis')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('7')),
-          tab.DataCell(Text('Sept')),
-          tab.DataCell(Text('Sete')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('8')),
-          tab.DataCell(Text('Huit')),
-          tab.DataCell(Text('Oito')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('9')),
-          tab.DataCell(Text('Neuf')),
-          tab.DataCell(Text('Nove')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('10')),
-          tab.DataCell(Text('Dix')),
-          tab.DataCell(Text('Dez')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('11')),
-          tab.DataCell(Text('Onze')),
-          tab.DataCell(Text('Onze')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('12')),
-          tab.DataCell(Text('Douze')),
-          tab.DataCell(Text('Doze')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('13')),
-          tab.DataCell(Text('Treize')),
-          tab.DataCell(Text('Treze')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('14')),
-          tab.DataCell(Text('Quatorze')),
-          tab.DataCell(Text('Catorze')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('15')),
-          tab.DataCell(Text('Quinze')),
-          tab.DataCell(Text('Quinze')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('16')),
-          tab.DataCell(Text('Seize')),
-          tab.DataCell(Text('Dezasseis')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('17')),
-          tab.DataCell(Text('Dix-sept')),
-          tab.DataCell(Text('Dezassete')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('18')),
-          tab.DataCell(Text('Dix-huit')),
-          tab.DataCell(Text('Dezoito')),
-        ],),
+]; 
+   
+// listNombres(size) {
+
+// return
+//    [ 
+//       tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell( Container(width: size,child: Row(
+//             children: <Widget>[
+//               Text('1',style: styleRowTable),
+//             ],
+//           ))),
+//           tab.DataCell( Container(width: size,child: Text('Un',style: styleRowTable ), ),),
+//           tab.DataCell( Container(width: size,child: Text('Um', style: styleRowTable))),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('2', style: styleRowTable)),
+//           tab.DataCell(Text('Deux',style: styleRowTable)),
+//           tab.DataCell(Text('Dois',style: styleRowTable )),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('3',style: styleRowTable)),
+//           tab.DataCell(Text('Trois',style: styleRowTable)),
+//           tab.DataCell(Text('Três',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('4',style: styleRowTable)),
+//           tab.DataCell(Text('Quatre',style: styleRowTable)),
+//           tab.DataCell(Text('Quatro',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('5',style: styleRowTable)),
+//           tab.DataCell(Text('Cinq',style: styleRowTable)),
+//           tab.DataCell(Text('Cinco',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('6',style: styleRowTable)),
+//           tab.DataCell(Text('Six',style: styleRowTable)),
+//           tab.DataCell(Text('Seis',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('7',style: styleRowTable)),
+//           tab.DataCell(Text('Sept',style: styleRowTable)),
+//           tab.DataCell(Text('Sete',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('8',style: styleRowTable)),
+//           tab.DataCell(Text('Huit',style: styleRowTable)),
+//           tab.DataCell(Text('Oito',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('9',style: styleRowTable)),
+//           tab.DataCell(Text('Neuf',style: styleRowTable)),
+//           tab.DataCell(Text('Nove',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('10',style: styleRowTable)),
+//           tab.DataCell(Text('Dix',style: styleRowTable)),
+//           tab.DataCell(Text('Dez',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('11',style: styleRowTable)),
+//           tab.DataCell(Text('Onze',style: styleRowTable)),
+//           tab.DataCell(Text('Onze',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('12',style: styleRowTable)),
+//           tab.DataCell(Text('Douze',style: styleRowTable)),
+//           tab.DataCell(Text('Doze',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('13',style: styleRowTable)),
+//           tab.DataCell(Text('Treize',style: styleRowTable)),
+//           tab.DataCell(Text('Treze',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('14',style: styleRowTable)),
+//           tab.DataCell(Text('Quatorze',style: styleRowTable)),
+//           tab.DataCell(Text('Catorze',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('15',style: styleRowTable)),
+//           tab.DataCell(Text('Quinze',style: styleRowTable)),
+//           tab.DataCell(Text('Quinze',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('16',style: styleRowTable)),
+//           tab.DataCell(Text('Seize',style: styleRowTable)),
+//           tab.DataCell(Text('Dezasseis',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('17',style: styleRowTable)),
+//           tab.DataCell(Text('Dix-sept',style: styleRowTable)),
+//           tab.DataCell(Text('Dezassete',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('18',style: styleRowTable)),
+//           tab.DataCell(Text('Dix-huit',style: styleRowTable)),
+//           tab.DataCell(Text('Dezoito',style: styleRowTable)),
+//         ],),
        
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('19')),
-          tab.DataCell(Text('Dix-Neuf')),
-          tab.DataCell(Text('Dezanove')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('20')),
-          tab.DataCell(Text('Vingt')),
-          tab.DataCell(Text('Vinte')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('21')),
-          tab.DataCell(Text('Vingt-et-un')),
-          tab.DataCell(Text('Vinte-e-um')),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('19',style: styleRowTable)),
+//           tab.DataCell(Text('Dix-Neuf',style: styleRowTable)),
+//           tab.DataCell(Text('Dezanove',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('20',style: styleRowTable)),
+//           tab.DataCell(Text('Vingt',style: styleRowTable)),
+//           tab.DataCell(Text('Vinte',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('21',style: styleRowTable)),
+//           tab.DataCell(Text('Vingt-et-un',style: styleRowTable)),
+//           tab.DataCell(Text('Vinte-e-um',style: styleRowTable)),
           
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('21')),
-          tab.DataCell(Text('Vingt-deux')),
-          tab.DataCell(Text('Vinte-e-dois')),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('21',style: styleRowTable)),
+//           tab.DataCell(Text('Vingt-deux',style: styleRowTable)),
+//           tab.DataCell(Text('Vinte-e-dois',style: styleRowTable)),
           
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('30')),
-          tab.DataCell(Text('Trente')),
-          tab.DataCell(Text('Trinta')),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('30',style: styleRowTable)),
+//           tab.DataCell(Text('Trente',style: styleRowTable)),
+//           tab.DataCell(Text('Trinta',style: styleRowTable)),
           
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('40')),
-          tab.DataCell(Text('Quarante')),
-          tab.DataCell(Text('Quarenta')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('50')),
-          tab.DataCell(Text('Cinquante')),
-          tab.DataCell(Text('Cinquenta')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('60')),
-          tab.DataCell(Text('Soixante')),
-          tab.DataCell(Text('Sessenta')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('70')),
-          tab.DataCell(Text('Soixante-dix')),
-          tab.DataCell(Text('Setenta')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('80')),
-          tab.DataCell(Text('Quatre-vingt')),
-          tab.DataCell(Text('Oitenta')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('90')),
-          tab.DataCell(Text('Quatre-vingt-dix')),
-          tab.DataCell(Text('Noventa')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('100')),
-          tab.DataCell(Text('Cent')),
-          tab.DataCell(Text('Cem')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('1000')),
-          tab.DataCell(Text('Milles')),
-          tab.DataCell(Text('Mil')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('1000 000')),
-          tab.DataCell(Text('Un million')),
-          tab.DataCell(Text('Um milhão')),
-        ],),
-        tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Text('1000 000 000')),
-          tab.DataCell(Text('Un milliard')),
-          tab.DataCell(Text('Um bilhão')),
-        ],),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('40',style: styleRowTable)),
+//           tab.DataCell(Text('Quarante',style: styleRowTable)),
+//           tab.DataCell(Text('Quarenta',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('50',style: styleRowTable)),
+//           tab.DataCell(Text('Cinquante',style: styleRowTable)),
+//           tab.DataCell(Text('Cinquenta',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('60',style: styleRowTable)),
+//           tab.DataCell(Text('Soixante',style: styleRowTable)),
+//           tab.DataCell(Text('Sessenta',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('70',style: styleRowTable)),
+//           tab.DataCell(Text('Soixante-dix',style: styleRowTable)),
+//           tab.DataCell(Text('Setenta',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('80',style: styleRowTable)),
+//           tab.DataCell(Text('Quatre-vingt',style: styleRowTable)),
+//           tab.DataCell(Text('Oitenta',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('90',style: styleRowTable)),
+//           tab.DataCell(Text('Quatre-vingt-dix',style: styleRowTable)),
+//           tab.DataCell(Text('Noventa',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('100',style: styleRowTable)),
+//           tab.DataCell(Text('Cent',style: styleRowTable)),
+//           tab.DataCell(Text('Cem',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('1000',style: styleRowTable)),
+//           tab.DataCell(Text('Milles',style: styleRowTable)),
+//           tab.DataCell(Text('Mil',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('1000 000',style: styleRowTable)),
+//           tab.DataCell(Text('Un million',style: styleRowTable)),
+//           tab.DataCell(Text('Um milhão',style: styleRowTable)),
+//         ],),
+//         tab.DataRow(
+//         cells: <tab.DataCell>[
+//           tab.DataCell(Text('1000 000 000',style: styleRowTable)),
+//           tab.DataCell(Text('Un milliard',style: styleRowTable)),
+//           tab.DataCell(Text('Um bilhão',style: styleRowTable)),
+//         ],),
         
 
 
-   ];
-}
+//    ];
+// }

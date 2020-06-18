@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vocab/Components/constant.dart';
+import 'package:flutter/cupertino.dart';
+import 'home4.dart';
+
 
 List<List<String>> listVerbs = [
   [
@@ -468,7 +471,7 @@ class VerbPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kcolorbackground,
-      body: Scrollbar(
+      body: CupertinoScrollbar(
         child: ListView.builder(
             itemCount: listVerbs.length,
             itemBuilder: (BuildContext context, int index) {
@@ -488,28 +491,65 @@ class VerbPage extends StatelessWidget {
                             Navigator.of(context).pushNamed("VerbDetailPage",
                                 arguments: listVerbs[index]);
                           },
+                          // contentPadding: EdgeInsets.only(left:40),
                           title: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                    child: Text(
-                                      listVerbs[index][0],
-                                      style: stylegrammaireheader,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Row(
+                                
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    MaterialButton(
+                                     padding: EdgeInsets.all(0),
+
+                                      onPressed: () => speakingFrench("${listVerbs[index][0]}"),
+                                                                      child: Container(
+                                          child: Text(
+                                            listVerbs[index][0],
+                                            style: styleMainTable,
+                                          ),
+                                          width: 110),
                                     ),
-                                    width: 110),
-                                SizedBox(width: 5),
-                                Text('|',
-                                    style: TextStyle(color: Colors.orange)),
-                                SizedBox(width: 5),
-                                Container(
-                                    child: Text(
-                                      listVerbs[index][1],
-                                      style: stylegrammaireheader,
-                                      textAlign: TextAlign.end,
+                                    SizedBox(width: 5),
+                                    Text('|',
+                                        style: TextStyle(color: Colors.orange)),
+                              //       IconButton(icon: Icon(Icons.search, color: Colors.orange), 
+                              //       onPressed:() {
+                              //   Navigator.of(context).pushNamed("VerbDetailPage",
+                              //       arguments: listVerbs[index]);
+                              // }, ),
+                                    SizedBox(width: 5),
+                                    MaterialButton(
+                                      padding: EdgeInsets.all(0),
+                                      onPressed: () => speakingPortugais("${listVerbs[index][1]}"),
+                                                                      child: Container(
+                                          child: Text(
+                                            listVerbs[index][1],
+                                            style: styleMainTable,
+                                            textAlign: TextAlign.end,
+                                          ),
+                                          width: 110),
                                     ),
-                                    width: 110),
-                              ])),
+                                    //  SizedBox(width: 40),
+                        ]),
+                             Container(
+                              //  width: 20,
+                               alignment: Alignment.centerRight,
+                               child: 
+                              //  IconButton(
+                                //  alignment: Alignment.centerRight,
+                                //  icon:
+                                  Icon(Icons.arrow_forward_ios, color: Colors.orange, size: 15.0,), 
+                                //       onPressed:() {
+                                //   Navigator.of(context).pushNamed("VerbDetailPage",
+                                //       arguments: listVerbs[index]);
+                                // }, ),
+                             ),],
+                            
+                          ),
+                              ),
                     ),
+
                   ],
                 ),
               );

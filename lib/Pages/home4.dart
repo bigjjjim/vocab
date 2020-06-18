@@ -8,14 +8,35 @@ import 'package:vocab/Components/tabledata.dart' as tab;
 import 'package:vocab/Components/datasource.dart' as tabsource;
 // import 'package:audioplayers/audio_cache.dart';
 // import 'package:audioplayers/audioplayers.dart';
-// import 'package:flutter_tts/flutter_tts.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 
 FirebaseUser loggedInUser;
 String userid;
 var isRowCountLessDefaultRowsPerPage;
 WordDataSource dts;
-// FlutterTts tts = FlutterTts();
+FlutterTts tts = FlutterTts();
+FlutterTts ttsP = FlutterTts();
+speakingFrench(text) async{
+  tts.setLanguage("fr-FR");
+  var text1 = cleanString(text);
+        var result = await tts.speak(text1);
+        // if (result == 1) setState(() => ttsState = TtsState.playing);
+        return result;
+     }
+     speakingPortugais(text) async{
+  tts.setLanguage("pt-PT");
+  var text1 = cleanString(text);
+        var result = await tts.speak(text1);
+        // if (result == 1) setState(() => ttsState = TtsState.playing);
+        return result;
+     }
+
+  cleanString(String mot) {
+  var motList = mot.split('/');
+  String motCleaned = motList[0];
+  return motCleaned;
+}
 
 // class AudioPlayer extends StatefulWidget {
 //   @override
@@ -25,9 +46,11 @@ WordDataSource dts;
 // class _AudioPlayerState extends State<AudioPlayer> {
 //   @override
 //   Widget build(BuildContext context) {
-// flutterTts.setLanguage("en-US");
-// speak(text) async{
-//         var result = flutterTts.speak(text);
+// tts.setLanguage("fr-FR");
+
+// speaking(text) async{
+//   tts.setLanguage("fr-FR");
+//         var result = await tts.speak(text);
 //         // if (result == 1) setState(() => ttsState = TtsState.playing);
 //         return result;
 //      }
@@ -187,10 +210,11 @@ class WordDataSource extends tabsource.DataTableSource {
   WordDataSource(this.xx, this.context);
   int index;
   BuildContext context;
-  
+  // AudioPlayer audio = AudioPlayer();
 //    speak() async {
 //   tts.speak('Hello World');
 // }
+// FlutterTts ftt = FlutterTts();
   // AudioCache audioCache = AudioCache();
   // AudioPlayer advancedPlayer = AudioPlayer();
   @override
@@ -208,15 +232,19 @@ class WordDataSource extends tabsource.DataTableSource {
                 tab.DataCell(
                   Container(
                     child: Row(children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.35,
-                        child:  Text(
-                            '${word.francais}',
-                            style: stylegrammaireheader,
-                          ),
-                        
+                     MaterialButton(
+                       padding: EdgeInsets.all(0),
+                       onPressed: () => speakingFrench('${word.francais}'),
+                      //  () => audioCache.play('sounds/${word.index}.m4a'),
+                            child: Container(
+                          width: MediaQuery.of(context).size.width * 0.35,
+                          child:  Text(
+                              '${word.francais}',
+                              style: styleMainTable,
+                            ),
+                          
+                        ),
                       ),
-// _Btn(txt: 'p', onPressed: () => audioCache.play('testdong.mp3') ),
                       Container(
                         child: Icon(
                           Icons.check,
@@ -228,12 +256,23 @@ class WordDataSource extends tabsource.DataTableSource {
                 ),
                 tab.DataCell(
                   Container(
-                    alignment: Alignment.center,
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    child: Text(
-                      '${word.portugais}',
-                      style: stylegrammaireheader,
+                    // alignment: Alignment.center,
+                    
+                    child:
+                     MaterialButton(
+                      padding: EdgeInsets.all(0),
+
+                       onPressed: () => speakingPortugais('${word.portugais}'),
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              width: MediaQuery.of(context).size.width * 0.4,
+                                              child: Text(
+                        '${word.portugais}',
+                        style: styleMainTable,
+                        textAlign: TextAlign.center
                     ),
+                                            ),
+                     ),
                   ),
                 ),
               ]
@@ -241,27 +280,51 @@ class WordDataSource extends tabsource.DataTableSource {
                 ? <tab.DataCell>[
                     tab.DataCell(
                       Container(
-                        child: Row(children: [
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.35,
-                              child: Text(
+                        child: Row(
+                          
+                          children: [
+                          // Container(
+                            
+                          //     width: MediaQuery.of(context).size.width * 0.35,
+                          //     child:
+                              MaterialButton(
+                       padding: EdgeInsets.all(0),
+                       onPressed: () => speakingFrench('${word.francais}'),
+                      //  () => audioCache.play('sounds/${word.index}.m4a'),
+                       
+                                              child: Container(
+                                                   width: MediaQuery.of(context).size.width * 0.35,
+
+                                                child: Text(
                                 '${word.francais}',
-                                style: stylegrammaireheader,
-                              )),
-                          Icon(
-                            Icons.close,
-                            color: Colors.red,
-                          )
+                                style: styleMainTable,
+                                // textAlign: TextAlign.left,
+                              ),
+                                              )),
+                          Container(
+                            child: Icon(
+                              Icons.close,
+                              color: Colors.red,
+                            ),
+                          ),
                         ]),
                       ),
                     ),
                     tab.DataCell(
                       Container(
-                        alignment: Alignment.center,
+                        
+                        child: MaterialButton(
+                          padding: EdgeInsets.all(0),
+                       onPressed: () => speakingPortugais('${word.portugais}'),
+                                                  child: Container(
+                                                    alignment: Alignment.center,
                         width: MediaQuery.of(context).size.width * 0.4,
-                        child: Text(
-                          '${word.portugais}',
-                          style: stylegrammaireheader,
+                                                    child: Text(
+                            '${word.portugais}',
+                            style: styleMainTable,
+                            textAlign: TextAlign.center
+                          ),
+                                                  ),
                         ),
                       ),
                     ),
@@ -270,12 +333,23 @@ class WordDataSource extends tabsource.DataTableSource {
                     tab.DataCell(
                       Container(
                         child: Row(children: [
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.35,
-                              child: Text(
+                          // Container(
+                          //     width: MediaQuery.of(context).size.width * 0.35,
+                              // child: 
+                              MaterialButton(
+                       padding: EdgeInsets.all(0),
+                       onPressed: () => speakingFrench('${word.francais}'),
+                      //  => audioCache.play('sounds/${word.index}.m4a'),
+                                              child:Container(
+                                                // margin: EdgeInsets.all(0),
+                                                width: MediaQuery.of(context).size.width * 0.35,
+
+                                                child: Text(
                                 '${word.francais}',
-                                style: stylegrammaireheader,
-                              )),
+                                style: styleMainTable,
+                              ),
+                                              )),
+                              // ),
                           SizedBox(
                               width: MediaQuery.of(context).size.width * 0.05)
                         ]),
@@ -283,11 +357,19 @@ class WordDataSource extends tabsource.DataTableSource {
                     ),
                     tab.DataCell(
                       Container(
-                        alignment: Alignment.center,
+                        
+                        child: MaterialButton(
+                          padding: EdgeInsets.all(0),
+                       onPressed: () => speakingPortugais('${word.portugais}'),
+                                                  child: Container(
+                                                    alignment: Alignment.center,
                         width: MediaQuery.of(context).size.width * 0.4,
-                        child: Text(
-                          '${word.portugais}',
-                          style: stylegrammaireheader,
+                                                    child: Text(
+                            '${word.portugais}',
+                            style: styleMainTable,
+                            textAlign: TextAlign.center,
+                          ),
+                                                  ),
                         ),
                       ),
                     ),
@@ -321,16 +403,16 @@ DocumentReference getWords() {
       .document('wordssc');
 }
 
-// class _Btn extends StatelessWidget {
-//   final String txt;
-//   final VoidCallback onPressed;
+class _Btn extends StatelessWidget {
+  final String txt;
+  final VoidCallback onPressed;
 
-//   const _Btn({Key key, this.txt, this.onPressed}) : super(key: key);
+  const _Btn({Key key, this.txt, this.onPressed}) : super(key: key);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return ButtonTheme(
-//         minWidth: 48.0,
-//         child: RaisedButton(child: Text(txt), onPressed: onPressed));
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return ButtonTheme(
+        minWidth: 48.0,
+        child: RaisedButton(child: Text(txt), onPressed: onPressed));
+  }
+}

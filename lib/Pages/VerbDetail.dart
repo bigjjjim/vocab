@@ -4,6 +4,7 @@ import 'package:vocab/Components/tabledata.dart' as tab;
 import 'dart:convert';
 import 'package:vocab/Components/constant.dart';
 import 'dart:math' as math;
+import 'home4.dart';
 
 
 class Verbdetail extends StatelessWidget {
@@ -58,37 +59,69 @@ print(verb[0]);
     child:
                                           tab.DataTable(
                                               headingRowHeight: 0,
-                                              columns: tableDetailVerbs(""),
+                                              columns: tableDetailVerbsFr(""),
                                               rows: [
                                                 tab.DataRow(
                                                   cells: <tab.DataCell>[
-                                                    tab.DataCell(Container(child: Text('Infinitif', ), width:  MediaQuery.of(context).size.width*0.3,)),
-                                                    tab.DataCell(
+                                                    tab.DataCell( MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed:() => speakingFrench("Infinitif") ,
+                child: Container(child: Text('Infinitif', style: styleRowTable, ),
+                 width:  MediaQuery.of(context).size.width*0.3,
+                 )),),
+                                                    tab.DataCell( MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed:() => speakingFrench(new_data['${verb[0]}']
+                                                            ['francais']['nominal'][0]) ,
+                child: 
                                                       Container(
                                                         child: Text(new_data['${verb[0]}']
-                                                            ['francais']['nominal'][0],), width: MediaQuery.of(context).size.width*0.3
-                                                      ),
+                                                            ['francais']['nominal'][0],style: styleRowTable), 
+                                                            width: MediaQuery.of(context).size.width*0.25
+                                                      ),),
                                                     ),
                                                   ],
                                                 ),
                                                 tab.DataRow(
                                                   cells: <tab.DataCell>[
-                                                    tab.DataCell(
-                                                        Text('Participe présent', )),
-                                                    tab.DataCell(
+                                                    tab.DataCell(MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed:() => speakingFrench('Participe présent') ,
+                child: 
+                                                      Container(width: MediaQuery.of(context).size.width*0.3,
+                                                      child:
+                                                        Text('Participe présent',style: styleRowTable )),),),
+                                                    tab.DataCell(MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed:() => speakingFrench(new_data['${verb[0]}']
+                                                          ['francais']['nominal'][1]) ,
+                child: 
+                                                      Container(width: MediaQuery.of(context).size.width*0.25,
+                                                      child:
                                                       Text(new_data['${verb[0]}']
-                                                          ['francais']['nominal'][1]),
+                                                          ['francais']['nominal'][1], style: styleRowTable),),),
                                                     ),
                                                   ],
                                                 ),
                                                 tab.DataRow(
                                                   cells: <tab.DataCell>[
-                                                    tab.DataCell(
-                                                        Text('Participe passé',)),
-                                                    tab.DataCell(
+                                                    tab.DataCell(MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed:() => speakingFrench('Participe passé') ,
+                child: 
+                                                      Container(width: MediaQuery.of(context).size.width*0.3,
+                                                      child:
+                                                        Text('Participe passé',style: styleRowTable)),),),
+                                                    tab.DataCell(MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed:() => speakingFrench(new_data['${verb[0]}']
+                                                          ['francais']['nominal'][2]) ,
+                child: 
+                                                      Container(width: MediaQuery.of(context).size.width*0.25,
+                                                      child:
                                                       Text(new_data['${verb[0]}']
-                                                          ['francais']['nominal'][2]),
-                                                    ),
+                                                          ['francais']['nominal'][2], style: styleRowTable),
+                                                    ),),),
                                                   ],
                                                 ),
                                               ]),)
@@ -105,7 +138,7 @@ print(verb[0]);
                                             tableconjug(
                                              MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                               new_data['${verb[0]}']['francais']
                                                   ['indicatif'][0],
                                               'Présent'),
@@ -116,7 +149,7 @@ print(verb[0]);
                                              tableconjug(
                                           MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['francais']['indicatif']
                                               [1],
                                           'Passé composé'),
@@ -129,7 +162,7 @@ print(verb[0]);
                                              tableconjug(
                                          MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['francais']['indicatif']
                                               [2],
                                           'Imparfait')
@@ -141,17 +174,17 @@ print(verb[0]);
                                              tableconjug(
                                          MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['francais']['indicatif']
                                               [3],
-                                          'Plus-que-parfait')]),
+                                          'Plus - que - parfait')]),
 
                                            ExpansionTile(title: Text('       Future simple', style: styletempsverb),
                                           children: <Widget>[
                                              tableconjug(
                                         MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['francais']['indicatif']
                                               [4],
                                           'Future simple')]),
@@ -161,7 +194,7 @@ print(verb[0]);
                                              tableconjug(
                                          MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['francais']['indicatif']
                                               [5],
                                           'Future antérieur')]),
@@ -173,7 +206,7 @@ print(verb[0]);
                                              tableconjug(
                                          MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['francais']['indicatif']
                                               [6],
                                           'Passé simple')]),
@@ -185,7 +218,7 @@ print(verb[0]);
                                              tableconjug(
                                         MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['francais']['indicatif']
                                               [5],
                                           'Passé antérieur')]),
@@ -200,7 +233,7 @@ print(verb[0]);
                                              tableconjug(
                                          MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['francais']['subjonctif']
                                               [0],
                                           'Présent')]),
@@ -211,7 +244,7 @@ print(verb[0]);
                                              tableconjug(
                                          MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['francais']['subjonctif']
                                               [1],
                                           'Passé composé')]),
@@ -222,7 +255,7 @@ print(verb[0]);
                                              tableconjug(
                                         MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['francais']['subjonctif']
                                               [2],
                                           'Imparfait')]),
@@ -233,10 +266,10 @@ print(verb[0]);
                                              tableconjug(
                                          MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['francais']['subjonctif']
                                               [3],
-                                          'Plus-que-parfait')]),],
+                                          'Plus - que - parfait')]),],
 
                                      
                                       ),
@@ -248,7 +281,7 @@ print(verb[0]);
                                              tableconjug(
                                          MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['francais']['conditionnel']
                                               [0],
                                           'Présent')]),
@@ -258,10 +291,10 @@ print(verb[0]);
                                              tableconjug(
                                          MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['francais']['conditionnel']
                                               [1],
-                                          'Présent')]),
+                                          'Passé')]),
                                           
                                           
                                           ],),
@@ -299,35 +332,58 @@ print(verb[0]);
     child:
                                           tab.DataTable(
                                               headingRowHeight: 0,
-                                              columns: tableDetailVerbs(""),
+                                              columns: tableDetailVerbsFr(""),
                                               rows: [
                                                 tab.DataRow(
                                                   cells: <tab.DataCell>[
-                                                    tab.DataCell(Container(width: MediaQuery.of(context).size.width * 0.2, child: Text('Infinitivo')),),
-                                                    tab.DataCell(Container(width: MediaQuery.of(context).size.width * 0.3, child:
+                                                    tab.DataCell(MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed:() => speakingPortugais('Infinitivo') ,
+                child: Container(width: MediaQuery.of(context).size.width * 0.3, 
+                child: Text('Infinitivo', style: styleRowTable)),),),
+                                                    tab.DataCell(
+                                                      MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed:() => speakingPortugais(new_data['${verb[0]}']
+                                                          ['portugais']['nominal'][0]) ,
+                child: Container(width: MediaQuery.of(context).size.width * 0.25, child:
                                                       Text(new_data['${verb[0]}']
-                                                          ['portugais']['nominal'][0]),),
+                                                          ['portugais']['nominal'][0], style: styleRowTable),),
+                                                    ),),
+                                                  ],
+                                                ),
+                                                tab.DataRow(
+                                                  cells: <tab.DataCell>[
+                                                    tab.DataCell(MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed:() => speakingPortugais('Participio') ,
+                child: Container(width: MediaQuery.of(context).size.width * 0.3, child:
+                                                        Text('Participio', style: styleRowTable)),),),
+                                                    tab.DataCell(MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed:() => speakingPortugais(new_data['${verb[0]}']
+                                                          ['portugais']['nominal'][1]) ,
+                child: Container(width: MediaQuery.of(context).size.width * 0.25, child:
+                                                      Text(new_data['${verb[0]}']
+                                                          ['portugais']['nominal'][1], style: styleRowTable),),),
                                                     ),
                                                   ],
                                                 ),
                                                 tab.DataRow(
                                                   cells: <tab.DataCell>[
-                                                    tab.DataCell(
-                                                        Text('Participio')),
-                                                    tab.DataCell(
+                                                    tab.DataCell(MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed:() => speakingPortugais('Gerundio') ,
+                child: Container(width: MediaQuery.of(context).size.width * 0.3, child:
+                                                        Text('Gerundio', style: styleRowTable)),),),
+                                                    tab.DataCell(MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed:() => speakingPortugais(new_data['${verb[0]}']
+                                                          ['portugais']['nominal'][2]) ,
+                child: Container(width: MediaQuery.of(context).size.width * 0.25, child:
                                                       Text(new_data['${verb[0]}']
-                                                          ['portugais']['nominal'][1]),
-                                                    ),
-                                                  ],
-                                                ),
-                                                tab.DataRow(
-                                                  cells: <tab.DataCell>[
-                                                    tab.DataCell(
-                                                        Text('Gerundio')),
-                                                    tab.DataCell(
-                                                      Text(new_data['${verb[0]}']
-                                                          ['portugais']['nominal'][2]),
-                                                    ),
+                                                          ['portugais']['nominal'][2], style: styleRowTable),
+                                                    ),),),
                                                   ],
                                                 ),
                                               ]),)
@@ -344,7 +400,7 @@ print(verb[0]);
                                             tableconjugPor(
                                              MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                               new_data['${verb[0]}']['portugais']
                                                   ['indicative'][0],
                                               'Present'),
@@ -355,7 +411,7 @@ print(verb[0]);
                                              tableconjugPor(
                                           MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['portugais']['indicative']
                                               [1],
                                           'Perfeito'),
@@ -368,10 +424,10 @@ print(verb[0]);
                                              tableconjugPor(
                                          MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['portugais']['indicative']
                                               [2],
-                                          'Imperfeito')
+                                          'Imper -feito')
                                           ],
                                           ),
 
@@ -379,19 +435,19 @@ print(verb[0]);
                                           children: <Widget>[
                                              tableconjugPor(
                                          MediaQuery.of(context).size.width * 0.8,
-                                              MediaQuery.of(context).size.width * 0.05,
+                                              MediaQuery.of(context).size.width * 0.15,
                                               // 30.0,
-                                              MediaQuery.of(context).size.width * 0.6,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['portugais']['indicative']
                                               [3],
-                                          'Mais-que-perfeito')]),
+                                          'Mais - que - perfeito')]),
 
                                            ExpansionTile(title: Text('       Futuro', style: styletempsverb),
                                           children: <Widget>[
                                              tableconjugPor(
                                          MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['portugais']['indicative']
                                               [4],
                                           'Futuro')]),
@@ -401,7 +457,7 @@ print(verb[0]);
                                              tableconjugPor(
                                          MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['portugais']['indicative']
                                               [5],
                                           'Futuro anterior')]),
@@ -412,7 +468,7 @@ print(verb[0]);
                                              tableconjugPor(
                                          MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['portugais']['indicative']
                                               [6],
                                           'Pretérito')]),
@@ -431,7 +487,7 @@ print(verb[0]);
                                             tableconjugPor(
                                               MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                               new_data['${verb[0]}']['portugais']
                                                   ['subjuntivo'][0],
                                               'Present'),
@@ -443,7 +499,7 @@ print(verb[0]);
                                             tableconjugPor(
                                               MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                               new_data['${verb[0]}']['portugais']
                                                   ['subjuntivo'][1],
                                               'Perfeito'),
@@ -454,10 +510,10 @@ print(verb[0]);
                                             tableconjugPor(
                                               MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                               new_data['${verb[0]}']['portugais']
                                                   ['subjuntivo'][2],
-                                              'Imperfeito'),
+                                              'Imper -feito'),
                                         ]),
 
                                          ExpansionTile(title: Text('       Mais-que-perfeito', style: styletempsverb),
@@ -465,17 +521,17 @@ print(verb[0]);
                                             tableconjugPor(
                                               MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                               new_data['${verb[0]}']['portugais']
                                                   ['subjuntivo'][3],
-                                              'Mais-que-perfeito'),
+                                              'Mais - que - perfeito'),
                                         ]),
                                         ExpansionTile(title: Text('       Futuro', style: styletempsverb),
                                           children: <Widget>[
                                             tableconjugPor(
                                               MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                               new_data['${verb[0]}']['portugais']
                                                   ['subjuntivo'][4],
                                               'Futuro'),
@@ -485,7 +541,7 @@ print(verb[0]);
                                             tableconjugPor(
                                               MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                               new_data['${verb[0]}']['portugais']
                                                   ['subjuntivo'][5],
                                               'Futuro anterior'),
@@ -501,10 +557,10 @@ print(verb[0]);
                                             tableconjugPor(
                                               MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                               new_data['${verb[0]}']['portugais']
                                                   ['conditional'][0],
-                                              'Condicional'),
+                                              'Cond.'),
                                           ],
                                           ),
                                           ExpansionTile(title: Text('       Condicional perfeito', style: styletempsverb),
@@ -512,10 +568,10 @@ print(verb[0]);
                                             tableconjugPor(
                                               MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                               new_data['${verb[0]}']['portugais']
                                                   ['conditional'][1],
-                                              'Condicional perfeito'),
+                                              'Cond. Perfeito'),
                                           ],
                                           ),
 
@@ -526,10 +582,10 @@ print(verb[0]);
                                         title: Text("   Imperativo", style: stylemodeverb),
                                         
                                           children: <Widget>[
-                                           tableconjugImpera(
+                                           tableconjugImperaPor(
                                             MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                           new_data['${verb[0]}']['portugais']['imperativo']
                                               ,
                                           '')]
@@ -544,7 +600,7 @@ ExpansionTile(
                                             tableconjugPor(
                                               MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                               new_data['${verb[0]}']['portugais']
                                                   ['infinitivo pessoal'][0],
                                               'Presente'),
@@ -555,7 +611,7 @@ ExpansionTile(
                                             tableconjugPor(
                                               MediaQuery.of(context).size.width * 0.8,
                                               MediaQuery.of(context).size.width * 0.15,
-                                              MediaQuery.of(context).size.width * 0.4,
+                                              MediaQuery.of(context).size.width * 0.3,
                                               new_data['${verb[0]}']['portugais']
                                                   ['infinitivo pessoal'][1],
                                               'Perfeito'),

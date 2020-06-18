@@ -136,6 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: TextStyle(color: Color(0xffFF6996)),
                               ),
                             ),
+                            SizedBox(height: 30,),
                             Container(
                               margin: EdgeInsets.only(top: 0.0, bottom: 0.0),
                               child: Row(

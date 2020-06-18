@@ -4,9 +4,12 @@ import 'package:vocab/Components/joursConst.dart';
 import 'package:vocab/Components/constant.dart';
 import 'dart:math' as math;
 
+import 'package:vocab/Pages/home4.dart';
+
 class JoursPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: kcolorbackground,
       body: Theme(
@@ -30,11 +33,36 @@ class JoursPage extends StatelessWidget {
                     children: <Widget>[
                       SizedBox(height: 20),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.8,
+                        width: MediaQuery.of(context).size.width * 0.85,
                         alignment: Alignment.center,
                         child: tab.DataTable(
                             columns: kTableJours,
-                            rows: listJours(MediaQuery.of(context).size.width * 0.3)),
+                            rows: 
+                            // listJours(MediaQuery.of(context).size.width * 0.3)
+                            
+          listJoursFlat // Loops through dataColumnText, each iteration assigning the value to element
+              .map(
+                ((element) => tab.DataRow(
+                      cells: <tab.DataCell>[
+                        tab.DataCell(MaterialButton(
+                          padding: EdgeInsets.all(0),
+                          onPressed: () => speakingFrench("${element[0]}"),
+                          child: Text(element[0], style: styleRowTable))),
+                          
+                           //Extracting from Map element the value
+                        tab.DataCell(
+                          MaterialButton(
+                            padding: EdgeInsets.all(0),
+                          onPressed: () => speakingPortugais("${element[1]}"),
+                            child: Text(element[1], style: styleRowTable))
+                          ),
+                        
+                      ],
+                    )),
+              )
+              .toList(),
+
+                            ),
                       ),
                       SizedBox(height: 20),
                       Container(
@@ -64,11 +92,35 @@ class JoursPage extends StatelessWidget {
                     children: <Widget>[
                       SizedBox(height: 20),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.8,
+                        width: MediaQuery.of(context).size.width * 0.85,
                         alignment: Alignment.center,
                         child: tab.DataTable(
                             columns: kTableMois,
-                            rows: listMois(MediaQuery.of(context).size.width * 0.3)),
+                            rows: 
+                            // listMois(MediaQuery.of(context).size.width * 0.3)
+                            listMoisFlat // Loops through dataColumnText, each iteration assigning the value to element
+              .map(
+                ((element) => tab.DataRow(
+                      cells: <tab.DataCell>[
+                        tab.DataCell(MaterialButton(
+                          padding: EdgeInsets.all(0),
+                          onPressed: () => speakingFrench("${element[0]}"),
+                          child: Text(element[0], style: styleRowTable))),
+                          
+                           //Extracting from Map element the value
+                        tab.DataCell(
+                          MaterialButton(
+                            padding: EdgeInsets.all(0),
+                          onPressed: () => speakingPortugais("${element[1]}"),
+                            child: Text(element[1], style: styleRowTable))
+                          ),
+                        
+                      ],
+                    )),
+              )
+              .toList(),
+                            ),
+                            
                       ),
                    
                      SizedBox(height: 20),

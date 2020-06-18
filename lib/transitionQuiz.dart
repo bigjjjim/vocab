@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vocab/Components/dropdownlists.dart';
-import 'Pages/quizPage.dart';
+// import 'Pages/quizPage.dart';
+import 'Pages/quizFuture.dart';
 import 'package:vocab/Components/constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -83,7 +84,7 @@ class _TransitionQuizState extends State<TransitionQuiz> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: headerNav(context: context),
+      appBar: headerNavNoInfo(context: context),
       body: DefaultTextStyle(
         style: stylegrammaireheader,
         child: Container(
@@ -254,7 +255,7 @@ class _TransitionQuizState extends State<TransitionQuiz> {
                                         int end = int.parse(_hint2);
                                         print(Text(_numberQuestion.toString()));
 
-                                        sta < end && sta > 0 && end <= 1000
+                                        sta < end && sta > 0 && end <= 1000 && end - sta > 4
                                             ? Navigator.push(
                                                 context,
                                                 MaterialPageRoute(

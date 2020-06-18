@@ -22,15 +22,15 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
-      theme: ThemeData(
-        textTheme: TextTheme(
-          bodyText1: stylegrammaireheader,
-          bodyText2: stylemodeverb,
-        ).apply(
-          bodyColor: kcolorblacktext,
+      // theme: ThemeData(
+      //   textTheme: TextTheme(
+      //     bodyText1: stylegrammaireheader,
+      //     bodyText2: stylemodeverb,
+      //   ).apply(
+      //     bodyColor: kcolorblacktext,
           
-        ),
-      ),
+      //   ),
+      // ),
       routes: {
         '/': (BuildContext context) => _handleWindowDisplay(),
         '/homeTable': (BuildContext context) => HomeTable(),

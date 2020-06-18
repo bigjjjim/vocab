@@ -1,65 +1,77 @@
- import 'package:flutter/material.dart';
- import 'tabledata.dart' as tab;
+import 'package:flutter/material.dart';
+import 'package:vocab/Components/constant.dart';
+import 'tabledata.dart' as tab;
+import 'package:vocab/Pages/home4.dart';
  
-  const kTablePronColumns = <tab.DataColumn>[
+  var kTablePronColumns = <tab.DataColumn>[
   tab.DataColumn(
-    label: const Text('Pronoms'),
+    label: speakButtonF('Pronoms')
+    //  Text('Pronoms', style: styleheadertable),
   ),
   tab.DataColumn(
-    label: const Text('Pronomes'),
+    label:  speakButtonP('Pronomes')
+    // Text('Pronomes', style: styleheadertable),
   ),
 ];
  
+ speakButtonF(String mot) {
+return MaterialButton(onPressed:()=> speakingFrench(mot),
+child: Text(mot, style: styleRowTable),);
+ }
+ speakButtonP(String mot) {
+return MaterialButton(onPressed:()=> speakingPortugais(mot),
+child: Text(mot, style: styleRowTable),);
+ }
 
-listpronoms(size) {
+listpronoms() {
 
 return
    [ 
       tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell( Container(width: size,child: Text('Je'))),
-          tab.DataCell( Container(width: size,child: Text('Eu', ), ),),
+          tab.DataCell(speakButtonF('Je')),
+          tab.DataCell(speakButtonP('Eu')),          
         ],),
         tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('Tu')),
-          tab.DataCell(Text('Tu')),
+          tab.DataCell(speakButtonF('Tu')),
+          tab.DataCell(speakButtonP('Tu')),
         ],
               ),
               tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('Il, Elle')),
-          tab.DataCell(Text('Ele, Ela')),
+          tab.DataCell(speakButtonF('Il, elle')),
+          tab.DataCell(speakButtonP('Ele, ela')),
         ],
               ),
               tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('Nous')),
-          tab.DataCell(Text('Nós')),
+          tab.DataCell(speakButtonF('Nous')),
+          tab.DataCell(speakButtonP('Nós')),
         ],
               ),
               tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('Vous')),
-          tab.DataCell(Text('Vós')),
+          tab.DataCell(speakButtonF('Vous')),
+          tab.DataCell(speakButtonP('Vós')),
         ],
               ),
               tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('Ils, Elles')),
-          tab.DataCell(Text('Eles, Elas')),
+          tab.DataCell(speakButtonF('Ils, elles')),
+          tab.DataCell(speakButtonP('Eles, elas')),
         ],
               ),];
 }
 
-  const kTablePossColumns = <tab.DataColumn>[
+  var kTablePossColumns = <tab.DataColumn>[
   tab.DataColumn(
-    label: const Text('''Pronoms
+    label:  speakButtonF('''Pronoms
 Possessifs
 Singulier'''),
   ),
   tab.DataColumn(
-    label: const Text('''Pronomes
+    label:  speakButtonP('''Pronomes
 Possessivos
 Singular'''),
   ),
@@ -67,43 +79,43 @@ Singular'''),
 
 
 
-listRowPos(size) {
+listRowPos() {
 return
 [ 
       tab.DataRow(
-        cells: <tab.DataCell>[
-          tab.DataCell(Container(width: size, child: Text('Mon, Ma'))),
-          tab.DataCell(Container(width: size, child: Text('Meu, Minha'))),
+        cells: <tab.DataCell>[ 
+          tab.DataCell(speakButtonF('Mon, ma')),
+          tab.DataCell(speakButtonP('Meu, minha')),
         ],),
         
         tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('Ton, Ta')),
-          tab.DataCell(Text('Teu, Tua')),
+          tab.DataCell(speakButtonF('Ton, ta')),
+          tab.DataCell(speakButtonP('Teu, tua')),
         ],),
 
         tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('Son, Sa')),
-          tab.DataCell(Text('Seu, Sua')),
+          tab.DataCell(speakButtonF('Son, sa')),
+          tab.DataCell(speakButtonP('Seu, sua')),
         ],),
 
         tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('Notre')),
-          tab.DataCell(Text('Nosso, Nossa')),
+          tab.DataCell(speakButtonF('Notre')),
+          tab.DataCell(speakButtonP('Nosso')),
         ],),
 
         tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('Votre')),
-          tab.DataCell(Text('Vosso, Vossa')),
+          tab.DataCell(speakButtonF('Votre')),
+          tab.DataCell(speakButtonP('Vosso')),
         ],),
 
         tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('Leur')),
-          tab.DataCell(Text('Seu, Sua')),
+        tab.DataCell(speakButtonF('Leur')),
+          tab.DataCell(speakButtonP('Seu, sua')),
         ],),
         
         
@@ -114,56 +126,56 @@ return
 
 
 
-         const kTablePossColumnsPlu = <tab.DataColumn>[
+        var kTablePossColumnsPlu = <tab.DataColumn>[
   tab.DataColumn(
-    label: const Text('''Pronoms
+    label: speakButtonF('''Pronoms
 Possessifs
 Pluriel'''),
   ),
   tab.DataColumn(
-    label: const Text('''Pronomes
+    label: speakButtonP('''Pronomes
 Possessivos
 Plural'''),
   ),
 ];
 
 
-listRowPossplus(size) {
+listRowPossplus() {
 return [ 
       tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Container(width: size, child: Text('Mes'))),
-          tab.DataCell(Container(width: size, child: Text('Meus, Minhas'))),
+          tab.DataCell(speakButtonF('Mes')),
+          tab.DataCell(speakButtonP('Meus, minhas')),
         ],),
         
         tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('Tes')),
-          tab.DataCell(Text('Teus, Tuas')),
+          tab.DataCell(speakButtonF('Tes')),
+          tab.DataCell(speakButtonP('Teus, tuas')),
         ],),
 
         tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('Ses')),
-          tab.DataCell(Text('Seus, Suas')),
+          tab.DataCell(speakButtonF('Ses')),
+          tab.DataCell(speakButtonP('Seus, suas')),
         ],),
 
         tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('Nos')),
-          tab.DataCell(Text('Nossos, Nossas')),
+          tab.DataCell(speakButtonF('Nos')),
+          tab.DataCell(speakButtonP('Nossos, nossas')),
         ],),
 
         tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('Vos')),
-          tab.DataCell(Text('Vossos, Vossas')),
+          tab.DataCell(speakButtonF('Vos')),
+          tab.DataCell(speakButtonP('Vossos, vossas')),
         ],),
 
         tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('Leurs')),
-          tab.DataCell(Text('Seus, Suas')),
+          tab.DataCell(speakButtonF('Leurs')),
+          tab.DataCell(speakButtonP('Seus, suas')),
         ],),
         
         
@@ -172,59 +184,56 @@ return [
 }
  
 
- const kTableArtInDef = <tab.DataColumn>[
+ var kTableArtInDef = <tab.DataColumn>[
   tab.DataColumn(
-    label: const Text('''Articles
+    label: speakButtonF('''Articles
 Indéfinis'''),
   ),
   tab.DataColumn(
-    label: const Text('''Artigos
-Indefinidos'''),
+    label: speakButtonP('''Artigos
+Indefinidos''', ),
   ),
 ];
 
-listRowartInd(size) {
+listRowartInd() {
 return [ tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Container(width: size, child:Text('Un, Une')),),
-          tab.DataCell(Container(width: size, child:Text('Um, Uma')),),
-        
+        tab.DataCell(speakButtonF('Un, une')),
+          tab.DataCell(speakButtonP('Um, uma')),
         ],),
         tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('Des')),
-          tab.DataCell(Text('Uns, Umas')),
-        
+        tab.DataCell(speakButtonF('Des')),
+          tab.DataCell(speakButtonP('Uns, umas')),
         ],) ];
         }
 
  
 
-         const kTableArtDef = <tab.DataColumn>[
+      var kTableArtDef = <tab.DataColumn>[
   tab.DataColumn(
-    label: const Text('''Articles
+    label: speakButtonF('''Articles
 Définis'''),
   ),
   tab.DataColumn(
-    label: const Text('''Artigos
+    label: speakButtonP('''Artigos
 Definidos'''),
   ),
 ];
 
 
-listRowartdef(size) {
+listRowartdef() {
 return [
   tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Container(width: size, child:Text('Le, La')),),
-          tab.DataCell(Container(width: size, child:Text('O, A')),)
+          tab.DataCell(speakButtonF('Le, la')),
+          tab.DataCell(speakButtonP('O, a')),
         
         ],),
         tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('Les')),
-          tab.DataCell(Text('Os, As')),
-        
+        tab.DataCell(speakButtonF('Les')),
+          tab.DataCell(speakButtonP('Os, as')),
         ],)
 
 ];
@@ -232,12 +241,12 @@ return [
 
 
 
-        const kTablecontraction1 = <tab.DataColumn>[
+      var kTablecontraction1 = <tab.DataColumn>[
   tab.DataColumn(
-    label: const Text('''De'''),
+    label: speakButtonP('''De'''),
   ),
   tab.DataColumn(
-    label: const Text('''Em'''),
+    label: speakButtonP('''Em'''),
   ),
 ];
 
@@ -245,46 +254,45 @@ listrowcontrac1(size) {
 return [
  tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Container( width: size, child: Text('De + Um = Dum')),),
-          tab.DataCell(Container( width: size, child: Text('Em + Um = Num')),),
+          tab.DataCell(Container(width: size,child: speakButtonP('De um = dum')),),
+          tab.DataCell(Container(width: size,child: speakButtonP('Em um = num')),)
         
         ],),
         tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('De + Uns = Duns')),
-          tab.DataCell(Text('Em + Uns = Nuns')),
+          tab.DataCell(speakButtonF('De uns = duns')),
+          tab.DataCell(speakButtonP('Em uns = nuns')),
         
         ],),
         tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('De + Uma = Duma')),
-          tab.DataCell(Text('Em + Uma = Numa')),
+          tab.DataCell(speakButtonF('De uma = duma')),
+          tab.DataCell(speakButtonP('Em uma = numa')),
         
         ],),
          tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('De + Umas = Dumas')),
-          tab.DataCell(Text('Em + Umas = Numas')),
-        
+        tab.DataCell(speakButtonF('De umas = dumas')),
+          tab.DataCell(speakButtonP('Em umas = numas')),
         ],),
 
 ];
 
 }
- const kTablecontraction3 = <tab.DataColumn>[
+ var kTablecontraction3 = <tab.DataColumn>[
        tab.DataColumn(
-    label: const Text('''A'''),
+    label: speakButtonP('''A'''),
   ),
    tab.DataColumn(
-    label: const Text('''Por'''),
+    label: speakButtonP('''Por'''),
   ),];
 
-         const kTablecontraction2 = <tab.DataColumn>[
+         var kTablecontraction2 = <tab.DataColumn>[
   tab.DataColumn(
-    label: const Text('''De'''),
+    label: speakButtonP('''De'''),
   ),
   tab.DataColumn(
-    label: const Text('''Em'''),
+    label: speakButtonP('''Em'''),
   ),
   
 ];
@@ -293,28 +301,27 @@ listrowcontract3(size) {
   return [
 tab.DataRow(
         cells: <tab.DataCell>[
-tab.DataCell(Container(width: size, child:Text('A + O = Ao')),),
-          tab.DataCell(Container(width: size, child:Text('Por + O = Pelo')),)
-        
+        tab.DataCell(Container(width: size,child: speakButtonP('A o = ao')),),
+          tab.DataCell(Container(width: size,child: speakButtonP('Por o = pelo')),)
         ],),
 
         tab.DataRow(
         cells: <tab.DataCell>[
-tab.DataCell(Text('A + A = À')),
-          tab.DataCell(Text('Por + A = Pela')),
+ tab.DataCell(Container(width: size,child: speakButtonF('A a = à')),),
+          tab.DataCell(Container(width: size,child: speakButtonP('Por a = pela')),)
         ],),
 
         tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('A + Os = Aos')),
-          tab.DataCell(Text('Por + Os = Pelos')),
+           tab.DataCell(Container(width: size,child: speakButtonF('A os = aos')),),
+          tab.DataCell(Container(width: size,child: speakButtonP('Por os = pelos')),)
 
         ],),
 
         tab.DataRow(
         cells: <tab.DataCell>[
-tab.DataCell(Text('A + As = Às')),
-          tab.DataCell(Text('Por + As = Pelas')),
+ tab.DataCell(Container(width: size,child: speakButtonF('A as = às')),),
+          tab.DataCell(Container(width: size,child: speakButtonP('Por as = pelas')),)
         ],),
   ];
 }
@@ -323,29 +330,25 @@ listrowcontract2(size) {
   return [
   tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Container(width: size, child: Text('De + O = Do')),),
-          tab.DataCell(Container(width: size, child:Text('Em + O = No')),),
-          
+          tab.DataCell(Container(width: size,child: speakButtonP('De o = do')),),
+          tab.DataCell(Container(width: size,child: speakButtonP('Em o = no')),)
         ],),
         tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('De + A = Da')),
-          tab.DataCell(Text('Em + A = Na')),
-          
+          tab.DataCell(Container(width: size,child: speakButtonF('De a = da')),),
+          tab.DataCell(Container(width: size,child: speakButtonP('Em a = na')),)
         
         ],),
         tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('De + Os = Dos')),
-          tab.DataCell(Text('Em + Os = Nos')),
-          
+          tab.DataCell(Container(width: size,child: speakButtonF('De os = dos')),),
+          tab.DataCell(Container(width: size,child: speakButtonP('Em os = nos')),)
         
         ],),
          tab.DataRow(
         cells: <tab.DataCell>[
-          tab.DataCell(Text('De + As = Das')),
-          tab.DataCell(Text('Em + As= Nas')),
-          
+          tab.DataCell(Container(width: size,child: speakButtonF('De as = das')),),
+          tab.DataCell(Container(width: size,child: speakButtonP('Em as = nas')),)
         
         ],),
 
